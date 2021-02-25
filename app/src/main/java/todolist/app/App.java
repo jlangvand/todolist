@@ -3,19 +3,13 @@
  */
 package todolist.app;
 
-import todolist.list.LinkedList;
-
-import static todolist.utilities.StringUtils.join;
-import static todolist.utilities.StringUtils.split;
-import static todolist.app.MessageUtils.getMessage;
-
-import org.apache.commons.text.WordUtils;
-
 public class App {
+
+    public void helloWorld() {
+        System.out.println("Hello, World!");
+    }
+    
     public static void main(String[] args) {
-        LinkedList tokens;
-        tokens = split(getMessage());
-        String result = join(tokens);
-        System.out.println(WordUtils.capitalize(result));
+        new App().helloWorld();
     }
 }
