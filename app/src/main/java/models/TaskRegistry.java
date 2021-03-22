@@ -1,7 +1,6 @@
-package dao;
+package models;
 
 import javafx.collections.ObservableList;
-import models.Task;
 import utilities.Priority;
 import utilities.Status;
 

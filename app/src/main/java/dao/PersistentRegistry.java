@@ -1,6 +1,6 @@
-package models;
+package dao;
 
-import dao.TaskRegistry;
+import models.TaskRegistry;
 
 public class PersistentRegistry {
   public PersistentRegistry(String fileName) {
