@@ -5,11 +5,11 @@ package todolist.app;
 
 public class App {
 
-    public void helloWorld() {
-        System.out.println("Hello, World!");
-    }
-    
-    public static void main(String[] args) {
-        new App().helloWorld();
-    }
+  public static void main(String[] args) {
+    new App().helloWorld();
+  }
+
+  public void helloWorld() {
+    System.out.println("Hello, World!");
+  }
 }
