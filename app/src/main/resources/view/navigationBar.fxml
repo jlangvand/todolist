@@ -1,11 +1,4 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-This file is the view for navigation bar. Use BorderPane.setCenter() method
-to change the area outside of the navigation bar (right side of view).
-
-This view uses JFeonix.
--->
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.image.Image?>
@@ -14,49 +7,61 @@ This view uses JFeonix.
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<!--
+This file is the view for navigation bar. Use BorderPane.setCenter() method
+to change the area outside of the navigation bar (right side of view).
+
+This view uses JFeonix.
+-->
+
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../css/navBar.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <VBox styleClass="navbar" BorderPane.alignment="CENTER">
          <children>
             <JFXButton alignment="BASELINE_LEFT" prefHeight="90.0" prefWidth="240.0" text="All Tasks">
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../Desktop/icons%20daybyday/baseline_grade_white_18dp.png" />
-                     </image></ImageView>
+                        <Image url="@../images/Star_icon.png" />
+                     </image>
+                  </ImageView>
                </graphic>
             </JFXButton>
             <JFXButton alignment="BASELINE_LEFT" prefHeight="90.0" prefWidth="240.0" text="High Priority">
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../Desktop/icons%20daybyday/baseline_error_outline_white_18dp.png" />
-                     </image></ImageView>
+                        <Image url="@../images/Exclamation_mark_icon.png" />
+                     </image>
+                  </ImageView>
                </graphic>
             </JFXButton>
             <JFXButton alignment="BASELINE_LEFT" prefHeight="90.0" prefWidth="240.0" text="Medium Priority">
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../Desktop/icons%20daybyday/baseline_remove_circle_outline_white_18dp.png" />
-                     </image></ImageView>
+                        <Image url="@../images/Minus_sign_icon.png" />
+                     </image>
+                  </ImageView>
                </graphic>
             </JFXButton>
             <JFXButton alignment="BASELINE_LEFT" prefHeight="90.0" prefWidth="240.0" text="Low Priority">
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../Desktop/icons%20daybyday/baseline_check_circle_white_18dp.png" />
-                     </image></ImageView>
+                        <Image url="@../images/Check_icon.png" />
+                     </image>
+                  </ImageView>
                </graphic>
             </JFXButton>
             <Region VBox.vgrow="ALWAYS" />
             <JFXButton alignment="BASELINE_LEFT" prefHeight="90.0" prefWidth="240.0" text="Trash">
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../Desktop/icons%20daybyday/baseline_delete_white_18dp.png" />
-                     </image></ImageView>
+                        <Image url="@../images/Trash_icon.png" />
+                     </image>
+                  </ImageView>
                </graphic>
             </JFXButton>
          </children></VBox>
