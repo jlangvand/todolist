@@ -1,4 +1,4 @@
-plugins {
+ plugins {
   id 'todolist.java-application-conventions'
   id 'application'
   id 'org.openjfx.javafxplugin' version '0.0.8'
@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     implementation 'org.apache.commons:commons-text'
+    compile 'com.jfoenix:jfoenix:9.0.10' //This is for java 9+. For java 8: compile 'com.jfoenix:jfoenix:8.0.10'
 }
 
 javafx {
