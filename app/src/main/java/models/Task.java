@@ -156,4 +156,19 @@ public class Task {
   public int hashCode() {
     return Objects.hash( getPriority(), getCategory(), getStartedDate(), getFinishedDate(), getDeadline(), getTitle());
   }
+/**Returns the all task's objects information
+ * @return A String representing the object's data.
+*/
+  @Override
+  public String toString() {
+    return "Task{" +
+            "description='" + description + '\'' +
+            ", priority=" + priority +
+            ", category='" + category + '\'' +
+            ", startedDate=" + startedDate +
+            ", finishedDate=" + finishedDate +
+            ", deadline=" + deadline +
+            ", title='" + title + '\'' +
+            '}';
+  }
 }
