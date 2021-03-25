@@ -8,9 +8,9 @@
     │   ├── java
     │   │   ├── controllers
     │   │   ├── dao
-    │   │   │   ├── TaskRegistry.java
-    │   │   ├── models
     │   │   │   ├── PersistentRegistry.java
+    │   │   ├── models
+    │   │   │   ├── TaskRegistry.java
     │   │   │   └── Task.java
     │   │   ├── todolist
     │   │   │   └── app
