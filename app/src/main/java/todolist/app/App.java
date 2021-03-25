@@ -3,13 +3,47 @@
  */
 package todolist.app;
 
-public class App {
+import javafx.application.Application;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
-  public static void main(String[] args) {
-    new App().helloWorld();
+
+public class App extends Application {
+  //Constants
+  private static final int defaultStageWidth = 1000;
+  private static final int defaultStageHeight = 650;
+
+
+  public static void main(String[] args) { launch(args); }
+
+
+  /**
+   * This method is called when the javaFX application is started.
+   * @param stage Primary stage of the application
+   * @throws IOException
+   */
+  @Override
+  public void start(Stage stage) throws IOException{
+    Scene scene = new Scene(loadFXML("navigationBar"), defaultStageWidth, defaultStageHeight);
+    stage.setScene(scene);
+    stage.show();
   }
 
-  public void helloWorld() {
-    System.out.println("Hello, World!");
+
+  /**
+   * This method loads an fxml from the path app/src/main/resources/view
+   * @param fxml Filename of fxml, without the file extension (.fxml)
+   * @return Parent object representing the view
+   * @throws IOException
+   */
+  private static Parent loadFXML(String fxml) throws IOException {
+    URL url = new File("app/src/main/resources/view/" + fxml + ".fxml").toURI().toURL();
+    return FXMLLoader.load(url);
   }
+
 }
