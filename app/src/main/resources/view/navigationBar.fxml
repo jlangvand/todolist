@@ -14,11 +14,11 @@ to change the area outside of the navigation bar (right side of view).
 This view uses JFeonix.
 -->
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@../css/navBar.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" styleClass="background" stylesheets="@../css/navBar.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <VBox styleClass="navbar" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton alignment="BASELINE_LEFT" prefHeight="90.0" prefWidth="240.0" text="All Tasks">
+            <JFXButton alignment="BASELINE_LEFT" prefHeight="90.0" prefWidth="240.0" ripplerFill="WHITE" text="All Tasks">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
