@@ -1,6 +1,7 @@
 package models;
 
 import utilities.Priority;
+import utilities.Status;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -35,6 +36,12 @@ public class Task implements Serializable {
   /** Represents the task's title.
   */
   private String title;
+
+
+
+  /*Represents the task's status
+  * */
+  private Status status;
 /** task's constructor
  * Creates a task with the specific title
  * @param title representing The task's title
@@ -101,6 +108,12 @@ public class Task implements Serializable {
   public LocalDate getFinishedDate() {
     return finishedDate;
   }
+  /**Gets task's status
+   * @return status representing the task's status
+   * */
+  public Status getStatus() {
+    return status;
+  }
 /**Sets' The task's finishedDate.
  * @param finishedDate -localDate.
 */
@@ -133,6 +146,12 @@ public class Task implements Serializable {
    */
   public void setTitle(String title) {
     this.title = title;
+  }
+  /**Sets the task's status.
+   * @param status-Status.
+   */
+  public void setStatus(Status status) {
+    this.status = status;
   }
 
   /**This is  method which check the equality of tasks.
