@@ -54,9 +54,19 @@ public class TaskRegistry {
   public ObservableList<Task> getTasksByDate(LocalDate fromDate, LocalDate toDate) {
     return null;
   }
-
+/*
+*
+* */
   public ObservableList<Task> getTasksByDate(LocalDate date) {
-    return null;
+      tasks=fileHandle.loadDate(fileName);
+      List<Task>foundTasksByDate=new ArrayList<>();
+      for(Task task:tasks) {
+        if (task.getDeadline().equals(date)) {
+          foundTasksByDate.add(task);
+        }
+      }
+      ObservableList<Task> allFoundedTasks=FXCollections.observableArrayList(foundTasksByDate);
+      return allFoundedTasks;
   }
 
   public ObservableList<Task> getTasksByPriority(Priority priority) {
