@@ -12,6 +12,10 @@ public class PersistentRegistry {
   public PersistentRegistry(String fileName) {
   }
 
+  public PersistentRegistry() {
+
+  }
+
   public TaskRegistry read() {
     return null;
   }
