@@ -2,6 +2,7 @@ package models;
 
 import utilities.Priority;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ import java.util.Objects;
 * @version 1.0
 * @since  1.0
 * */
-public class Task {
+public class Task implements Serializable {
   /** Represents the description of the task.
   */
   private String description;
@@ -41,7 +42,12 @@ public class Task {
   public Task(String title) {
     this.setTitle(title);
   }
-/**Gets the task's description.
+/*
+* Constructor without parameters
+* */
+    public Task() { }
+
+    /**Gets the task's description.
  * @return a string representing task's description.
 */
   public String getDescription() {
