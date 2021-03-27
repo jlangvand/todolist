@@ -15,6 +15,9 @@ import java.util.Objects;
 * @since  1.0
 * */
 public class Task implements Serializable {
+
+  private static final long serialVersionUID=2L;
+
   /** Represents the description of the task.
   */
   private String description;
@@ -36,6 +39,7 @@ public class Task implements Serializable {
   /** Represents the task's title.
   */
   private String title;
+
 
 
 
