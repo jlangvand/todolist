@@ -15,7 +15,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class TaskRegistry {
   private List<Task> tasks;
   PersistentRegistry fileHandle;
-  private final String fileName="TasksData.dat";
+  private final String fileName="TasksData.obj";
   private Status status;
   private Priority priority;
 /*
@@ -122,9 +122,6 @@ public class TaskRegistry {
 
   }*/
 
-  public ObservableList<Task> getTasksByPriority(Priority priority) {
-    return null;
-  }
 /*
 *
 *
@@ -162,8 +159,10 @@ public class TaskRegistry {
   }
 
   void addTask(Task task) {
+
   }
 
   void removeTask(Task task) {
+
   }
 }
