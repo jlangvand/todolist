@@ -69,6 +69,51 @@ public class TaskRegistry {
     ObservableList<Task> allFoundedTasks=FXCollections.observableArrayList(foundTasksByDate);
     return allFoundedTasks;
   }
+  /*
+  *
+  * */
+  public ObservableList<Task> getHighPriorityTasks(){
+
+    tasks=fileHandle.loadDate(fileName);
+    ArrayList<Task> highPriorityTasks=new ArrayList<>();
+    tasks.forEach(task -> {
+      if(task.getPriority().equals("HIGH"))
+        highPriorityTasks.add(task);
+    });
+    ObservableList<Task>highPriorities=FXCollections.observableArrayList(highPriorityTasks);
+    return highPriorities;
+  }
+  /*
+  *
+  *
+  *
+  * */
+  public ObservableList<Task> getMediumPriorityTasks(){
+
+    tasks=fileHandle.loadDate(fileName);
+    ArrayList<Task> mediumPriorityTasks=new ArrayList<>();
+    tasks.forEach(task -> {
+      if(task.getPriority().equals("MEDIUM"))
+        mediumPriorityTasks.add(task);
+    });
+    ObservableList<Task>mediumPriorities=FXCollections.observableArrayList(mediumPriorityTasks);
+    return mediumPriorities;
+  }
+  /*
+  *
+  *
+  * */
+  public ObservableList<Task> getLowPriorityTasks(){
+
+    tasks=fileHandle.loadDate(fileName);
+    ArrayList<Task>lowPriorityTasks=new ArrayList<>();
+    tasks.forEach(task -> {
+      if(task.getPriority().equals("LOW"))
+        lowPriorityTasks.add(task);
+    });
+    ObservableList<Task> lowPriorities=FXCollections.observableArrayList(lowPriorityTasks);
+    return lowPriorities;
+  }
   /*public ObservableList<Task> getTodayTasks(LocalDate today){
     tasks=fileHandle.loadDate(fileName);
     tasks.forEach(task->{
