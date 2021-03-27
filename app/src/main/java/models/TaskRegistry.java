@@ -41,14 +41,15 @@ public class TaskRegistry {
   * */
 
   public ObservableList<Task> getTasksByStatus(String status) {
-    ArrayList<Task> foundTaskByStatus = new ArrayList<>();
+    ArrayList<Task> foundedTaskByStatus = new ArrayList<>();
     tasks =  fileHandle.loadDate(fileName);
-    for ( Task task :  tasks)
-      if (task.getStatus().equals(status)) {
-        foundTaskByStatus.add(task);
+    tasks.forEach(task -> {
+      if(task.getStatus().equals(status)){
+        foundedTaskByStatus.add(task);
       }
-    ObservableList<Task>AllFoundTasks= FXCollections.observableArrayList(foundTaskByStatus);
-    return AllFoundTasks;
+    });
+    ObservableList<Task>AllFoundedTasks= FXCollections.observableArrayList(foundedTaskByStatus);
+    return AllFoundedTasks;
   }
 
   public ObservableList<Task> getTasksByDate(LocalDate fromDate, LocalDate toDate) {
