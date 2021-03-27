@@ -125,7 +125,35 @@ public class TaskRegistry {
   public ObservableList<Task> getTasksByPriority(Priority priority) {
     return null;
   }
-
+/*
+*
+*
+* */
+  public ObservableList<Task> getDoneTasks(){
+    tasks=fileHandle.loadDate(fileName);
+    ArrayList<Task> doneTasks=new ArrayList<>();
+    tasks.forEach(task -> {
+      if(task.getPriority().equals("DONE")){
+        doneTasks.add(task);
+      }
+    });
+    ObservableList<Task> allDoneTasks=FXCollections.observableArrayList(doneTasks);
+    return allDoneTasks;
+  }
+  /*
+  *
+  *
+  * */
+  public ObservableList<Task> getActiveTasks(){
+    tasks=fileHandle.loadDate(fileName);
+    ArrayList<Task> activeTasks=new ArrayList<>();
+    tasks.forEach(task -> {
+      if(task.getStatus().equals("ACTIVE"))
+        activeTasks.add(task);
+    });
+    ObservableList<Task> allActiveTasks=FXCollections.observableArrayList(activeTasks);
+    return allActiveTasks;
+  }
   @Override
   public String toString() {
     return "TaskRegistry{" +
