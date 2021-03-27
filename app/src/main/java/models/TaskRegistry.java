@@ -8,6 +8,7 @@ import utilities.Status;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -164,5 +165,14 @@ public class TaskRegistry {
 
   void removeTask(Task task) {
 
+    tasks=fileHandle.loadDate(fileName);
+    Iterator itr=tasks.iterator();
+      while (itr.hasNext()) {
+        Task element = (Task) itr.next();
+        if (element.getTitle().equalsIgnoreCase(task.getTitle())&& !(element.getTitle().equals(null))) {
+          itr.remove();
+          break;
+        }
+      }
   }
 }
