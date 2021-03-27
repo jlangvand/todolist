@@ -51,6 +51,7 @@ public class Task implements Serializable {
  * @param title representing The task's title
 */
   public Task(String title) {
+    super();
     this.setTitle(title);
   }
 /*
