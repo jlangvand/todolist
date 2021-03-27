@@ -27,6 +27,13 @@ application {
     // Define the main class for the application.
     mainClass = 'todolist.app.App'
 }
+ sourceSets {
+     test {
+         java {
+             srcDirs = ['src/new-test/test']
+         }
+     }
+ }
  repositories {
      jcenter()
  }
