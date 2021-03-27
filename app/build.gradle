@@ -10,29 +10,43 @@ repositories {
 
 dependencies {
     implementation 'org.apache.commons:commons-text'
-
     compile 'com.jfoenix:jfoenix:9.0.10' //This is for java 9+. For java 8: compile 'com.jfoenix:jfoenix:8.0.10'
-
-    testImplementation('org.junit.jupiter:junit-jupiter-api:5.4.2')
-    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.4.2')
 }
 
+javafx {
+    version = "13"
+    modules = [ 'javafx.controls', 'javafx.fxml']
+    configuration = 'compileOnly'
+}
+ compileJava.options.encoding = 'UTF-8'
+ tasks.withType(JavaCompile) {
+     options.encoding = 'UTF-8'
+ }
 
 application {
     // Define the main class for the application.
     mainClass = 'todolist.app.App'
 }
-
- javafx {
-     version = "13"
-     modules = [ 'javafx.controls', 'javafx.fxml' ]
+ repositories {
+     jcenter()
  }
 
+dependencies {
+    // Use JUnit Jupiter Engine for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
+    // Allow for JUnit 4 legacy
+    testCompileOnly 'junit:junit:4.12'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.5.1'
+
+}
+ dependencies {
+         testRuntime("org.junit.jupiter:junit-jupiter-engine:5.5.2")
+         testRuntime("org.junit.platform:junit-platform-runner:1.5.2")
+ }
 test{
     useJUnitPlatform()
     testLogging.showStandardStreams=true
-    testLogging{
-        events "passed","skipped","failed"
-    }
+
 }
 //mainClassName = 'HelloFX'
