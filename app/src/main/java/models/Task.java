@@ -18,6 +18,9 @@ public class Task implements Serializable {
 
   private static final long serialVersionUID=2L;
 
+  /** Represents the task's title.
+   */
+  private String title;
   /** Represents the description of the task.
   */
   private String description;
@@ -36,9 +39,6 @@ public class Task implements Serializable {
   /** Represents the task's deadline.
   */
   private LocalDate deadline;
-  /** Represents the task's title.
-  */
-  private String title;
 
 
 
@@ -192,13 +192,14 @@ public class Task implements Serializable {
   @Override
   public String toString() {
     return "Task{" +
-            "description='" + description + '\'' +
+            "title='" + title + '\'' +
+            ", description='" + description + '\'' +
             ", priority=" + priority +
             ", category='" + category + '\'' +
             ", startedDate=" + startedDate +
             ", finishedDate=" + finishedDate +
             ", deadline=" + deadline +
-            ", title='" + title + '\'' +
+            ", status=" + status +
             '}';
   }
 }
