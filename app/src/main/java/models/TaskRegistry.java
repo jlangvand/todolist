@@ -107,13 +107,6 @@ public class TaskRegistry {
   public ObservableList<Task> getLowPriorityTasks() {
     return getTasksByPriority(Priority.LOW);
   }
-  /*public ObservableList<Task> getTodayTasks(LocalDate today){
-    tasks=fileHandle.loadDate(fileName);
-    tasks.forEach(task->{
-
-    });
-
-  }*/
 
   /*
    *

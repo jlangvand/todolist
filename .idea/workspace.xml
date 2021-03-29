@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bed24bca-56db-4eaa-8081-7f1d0bec97fb" name="Default Changelist" comment="Some base classes ready for implementation">
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="bed24bca-56db-4eaa-8081-7f1d0bec97fb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/app/src/main/java/models/TaskRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/models/TaskRegistry.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -289,7 +287,7 @@
       <updated>1616421105880</updated>
       <workItem from="1616421107912" duration="3629000" />
       <workItem from="1616426813989" duration="2452000" />
-      <workItem from="1617037030256" duration="2201000" />
+      <workItem from="1617037030256" duration="2247000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanup of skeleton app">
       <created>1616426978028</created>
@@ -354,7 +352,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617039178816</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Removed some redundant logic">
+      <created>1617039256050</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1617039256050</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,7 +398,8 @@
     <MESSAGE value="Changes in file handling" />
     <MESSAGE value="Ignore local IDEA data" />
     <MESSAGE value="DRYer code with more generalised methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="DRYer code with more generalised methods" />
+    <MESSAGE value="Removed some redundant logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed some redundant logic" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
