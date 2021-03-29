@@ -54,7 +54,15 @@ public class TaskRegistry {
   }
 
   public ObservableList<Task> getTasksByDate(LocalDate fromDate, LocalDate toDate) {
-    return null;
+
+    tasks=fileHandle.loadDate(fileName);
+    List<Task>foundTasksByDate=new ArrayList<>();
+    tasks.forEach(task -> {
+      if(task.getStartedDate().isAfter(fromDate)&&task.getFinishedDate().isBefore(toDate))
+        foundTasksByDate.add(task);
+    });
+    ObservableList<Task> allFoundedTasks=FXCollections.observableArrayList(foundTasksByDate);
+    return allFoundedTasks;
   }
 /*
 *
@@ -159,8 +167,10 @@ public class TaskRegistry {
         '}';
   }
 
-  void addTask(Task task) {
-
+  void addTask(Task task) throws Exception {
+    if(task.getTitle()!=null){
+      fileHandle.saveData(fileName,task);
+    }
   }
 
   void removeTask(Task task) {
