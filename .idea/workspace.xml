@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bed24bca-56db-4eaa-8081-7f1d0bec97fb" name="Default Changelist" comment="Some base classes ready for implementation" />
+    <list default="true" id="bed24bca-56db-4eaa-8081-7f1d0bec97fb" name="Default Changelist" comment="Some base classes ready for implementation">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/models/TaskRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/models/TaskRegistry.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,7 +60,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="persistence" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -68,6 +72,32 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="2" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="develop" />
+                    <option name="lastUsedInstant" value="1617038182" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="persistence" />
+                    <option name="lastUsedInstant" value="1617038181" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
   </component>
   <component name="ProjectId" id="1q7CBUl8wLp3ZLHFsKSaNVW4bbm" />
   <component name="ProjectLevelVcsManager">
@@ -98,7 +128,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.21131639" />
     <property name="project.structure.side.proportion" value="0.32844576" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -114,7 +144,20 @@
       <recent name="models" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.todolist [test]">
+  <component name="RunManager" selected="Gradle./home/jlangvand/idatt2001/todolist [run]">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TaskRegistryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -246,7 +289,7 @@
       <updated>1616421105880</updated>
       <workItem from="1616421107912" duration="3629000" />
       <workItem from="1616426813989" duration="2452000" />
-      <workItem from="1617033794551" duration="3000" />
+      <workItem from="1617037030256" duration="2201000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanup of skeleton app">
       <created>1616426978028</created>
@@ -262,11 +305,70 @@
       <option name="project" value="LOCAL" />
       <updated>1616427231319</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Basic implementation of file handling. Breaks current tests!">
+      <created>1617036706867</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1617036706867</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fix file handling in TaskRegistry.java">
+      <created>1617037818050</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1617037818050</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Remove unused methods">
+      <created>1617037912089</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1617037912089</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix file path">
+      <created>1617038423248</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1617038423248</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Changes in file handling">
+      <created>1617038578666</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1617038578666</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Ignore local IDEA data">
+      <created>1617038670554</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1617038670554</updated>
+    </task>
+    <task id="LOCAL-00009" summary="DRYer code with more generalised methods">
+      <created>1617039178816</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1617039178816</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -284,7 +386,14 @@
     <MESSAGE value="Cleanup of skeleton app" />
     <MESSAGE value="IntelliJ project files, can be removed later" />
     <MESSAGE value="Some base classes ready for implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some base classes ready for implementation" />
+    <MESSAGE value="Basic implementation of file handling. Breaks current tests!" />
+    <MESSAGE value="Fix file handling in TaskRegistry.java" />
+    <MESSAGE value="Remove unused methods" />
+    <MESSAGE value="Fix file path" />
+    <MESSAGE value="Changes in file handling" />
+    <MESSAGE value="Ignore local IDEA data" />
+    <MESSAGE value="DRYer code with more generalised methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="DRYer code with more generalised methods" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
