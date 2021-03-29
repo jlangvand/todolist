@@ -49,8 +49,6 @@ public class TaskRegistry {
   }
 
   public ObservableList<Task> getTasksByDate(LocalDate fromDate, LocalDate toDate) {
-
-    tasks=fileHandle.loadDate(fileName);
     List<Task>foundTasksByDate=new ArrayList<>();
     tasks.forEach(task -> {
       if(task.getStartedDate().isAfter(fromDate)&&task.getFinishedDate().isBefore(toDate))
@@ -154,10 +152,8 @@ public class TaskRegistry {
         '}';
   }
 
-  void addTask(Task task) throws Exception {
-    if(task.getTitle()!=null){
-      fileHandle.saveData(fileName,task);
-    }
+  void addTask(Task task) {
+    tasks.add(task);
   }
 
   void removeTask(Task task) {
