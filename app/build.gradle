@@ -34,26 +34,22 @@ application {
          }
      }
  }
+
  repositories {
-     jcenter()
+     mavenCentral()
  }
-
-dependencies {
-    // Use JUnit Jupiter Engine for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
-    // Allow for JUnit 4 legacy
-    testCompileOnly 'junit:junit:4.12'
-    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.5.1'
-
-}
  dependencies {
-         testRuntime("org.junit.jupiter:junit-jupiter-engine:5.5.2")
-         testRuntime("org.junit.platform:junit-platform-runner:1.5.2")
+     testImplementation 'junit:junit:4.12'
+     implementation 'junit:junit:4.12'
  }
-test{
-    useJUnitPlatform()
-    testLogging.showStandardStreams=true
+ def junit5Version = "5.7.0"
+ dependencies {
+     // other deps
+     testImplementation "org.junit.jupiter:junit-jupiter:${junit5Version}"
+     testRuntimeOnly "org.junit.vintage:junit-vintage-engine:${junit5Version}"
+ }
+ test {
+     useJUnitPlatform()
 
-}
+ }
 //mainClassName = 'HelloFX'
