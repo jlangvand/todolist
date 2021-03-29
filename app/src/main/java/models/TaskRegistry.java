@@ -3,9 +3,9 @@ package models;
 import dao.PersistentRegistry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import utilities.Priority;
 import utilities.Status;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,103 +16,92 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class TaskRegistry {
   private List<Task> tasks;
   PersistentRegistry fileHandle;
-  private final String fileName="TasksData.obj";
-  private Status status;
-  private Priority priority;
-/*
-*
-*
-* */
-  public TaskRegistry() {
-    this.tasks = new ArrayList<Task>();
-    fileHandle=new PersistentRegistry();
-  }
-/*
-*
-* */
-  public ObservableList<Task> getTasks() {
-    //Object tasks=new ArrayList<>();
-    tasks=fileHandle.loadDate(fileName);
-    ObservableList<Task> allTasks= observableArrayList(tasks);
-    return allTasks;
-  }
-  /*
-  *
-  *
-  * */
+  private final String fileName = "TasksData.obj";
 
-  public ObservableList<Task> getTasksByStatus(String status) {
-    ArrayList<Task> foundedTaskByStatus = new ArrayList<>();
-    tasks =  fileHandle.loadDate(fileName);
+  /*
+   *
+   *
+   * */
+  public TaskRegistry() throws IOException {
+    fileHandle = new PersistentRegistry(fileName);
+    this.tasks = fileHandle.read();
+  }
+
+  /*
+   *
+   * */
+  public ObservableList<Task> getTasks() {
+    return observableArrayList(tasks);
+  }
+
+  /*
+   *
+   *
+   * */
+  public ObservableList<Task> getTasksByStatus(Status status) {
+    ArrayList<Task> foundTasks = new ArrayList<>();
     tasks.forEach(task -> {
-      if(task.getStatus().equals(status)){
-        foundedTaskByStatus.add(task);
+      if (task.getStatus().equals(status)) {
+        foundTasks.add(task);
       }
     });
-    ObservableList<Task>AllFoundedTasks= FXCollections.observableArrayList(foundedTaskByStatus);
-    return AllFoundedTasks;
+    return FXCollections.observableArrayList(foundTasks);
   }
 
   public ObservableList<Task> getTasksByDate(LocalDate fromDate, LocalDate toDate) {
     return null;
   }
-/*
-*
-* */
-  public ObservableList<Task> getTasksByDate(LocalDate date) {
 
-    tasks=fileHandle.loadDate(fileName);
-    List<Task>foundTasksByDate=new ArrayList<>();
-    tasks.forEach(task -> {
-      if(task.getDeadline().equals(date))
-        foundTasksByDate.add(task);
-    });
-    ObservableList<Task> allFoundedTasks=FXCollections.observableArrayList(foundTasksByDate);
-    return allFoundedTasks;
-  }
   /*
-  *
-  * */
-  public ObservableList<Task> getHighPriorityTasks(){
-
-    tasks=fileHandle.loadDate(fileName);
-    ArrayList<Task> highPriorityTasks=new ArrayList<>();
+   *
+   * */
+  public ObservableList<Task> getTasksByDate(LocalDate date) {
+    List<Task> foundTasks = new ArrayList<>();
     tasks.forEach(task -> {
-      if(task.getPriority().equals("HIGH"))
+      if (task.getDeadline().equals(date))
+        foundTasks.add(task);
+    });
+    return FXCollections.observableArrayList(foundTasks);
+  }
+
+  /*
+   *
+   * */
+  public ObservableList<Task> getHighPriorityTasks() {
+    ArrayList<Task> highPriorityTasks = new ArrayList<>();
+    tasks.forEach(task -> {
+      if (task.getPriority().equals("HIGH"))
         highPriorityTasks.add(task);
     });
-    ObservableList<Task>highPriorities=FXCollections.observableArrayList(highPriorityTasks);
-    return highPriorities;
+    return FXCollections.observableArrayList(highPriorityTasks);
   }
-  /*
-  *
-  *
-  *
-  * */
-  public ObservableList<Task> getMediumPriorityTasks(){
 
-    tasks=fileHandle.loadDate(fileName);
-    ArrayList<Task> mediumPriorityTasks=new ArrayList<>();
+  /*
+   *
+   *
+   *
+   * */
+  public ObservableList<Task> getMediumPriorityTasks() {
+    ArrayList<Task> mediumPriorityTasks = new ArrayList<>();
     tasks.forEach(task -> {
-      if(task.getPriority().equals("MEDIUM"))
+      if (task.getPriority().equals("MEDIUM"))
         mediumPriorityTasks.add(task);
     });
-    ObservableList<Task>mediumPriorities=FXCollections.observableArrayList(mediumPriorityTasks);
+    ObservableList<Task> mediumPriorities = FXCollections.observableArrayList(mediumPriorityTasks);
     return mediumPriorities;
   }
-  /*
-  *
-  *
-  * */
-  public ObservableList<Task> getLowPriorityTasks(){
 
-    tasks=fileHandle.loadDate(fileName);
-    ArrayList<Task>lowPriorityTasks=new ArrayList<>();
+  /*
+   *
+   *
+   * */
+  public ObservableList<Task> getLowPriorityTasks() {
+    ArrayList<Task> lowPriorityTasks = new ArrayList<>();
     tasks.forEach(task -> {
-      if(task.getPriority().equals("LOW"))
+      if (task.getPriority().equals("LOW"))
         lowPriorityTasks.add(task);
     });
-    ObservableList<Task> lowPriorities=FXCollections.observableArrayList(lowPriorityTasks);
+    ObservableList<Task> lowPriorities = FXCollections.observableArrayList(lowPriorityTasks);
     return lowPriorities;
   }
   /*public ObservableList<Task> getTodayTasks(LocalDate today){
@@ -123,35 +112,33 @@ public class TaskRegistry {
 
   }*/
 
-/*
-*
-*
-* */
-  public ObservableList<Task> getDoneTasks(){
-    tasks=fileHandle.loadDate(fileName);
-    ArrayList<Task> doneTasks=new ArrayList<>();
+  /*
+   *
+   *
+   * */
+  public ObservableList<Task> getDoneTasks() {
+    ArrayList<Task> doneTasks = new ArrayList<>();
     tasks.forEach(task -> {
-      if(task.getPriority().equals("DONE")){
+      if (task.getPriority().equals("DONE")) {
         doneTasks.add(task);
       }
     });
-    ObservableList<Task> allDoneTasks=FXCollections.observableArrayList(doneTasks);
-    return allDoneTasks;
+    return FXCollections.observableArrayList(doneTasks);
   }
+
   /*
-  *
-  *
-  * */
-  public ObservableList<Task> getActiveTasks(){
-    tasks=fileHandle.loadDate(fileName);
-    ArrayList<Task> activeTasks=new ArrayList<>();
+   *
+   *
+   * */
+  public ObservableList<Task> getActiveTasks() {
+    ArrayList<Task> activeTasks = new ArrayList<>();
     tasks.forEach(task -> {
-      if(task.getStatus().equals("ACTIVE"))
+      if (task.getStatus().equals("ACTIVE"))
         activeTasks.add(task);
     });
-    ObservableList<Task> allActiveTasks=FXCollections.observableArrayList(activeTasks);
-    return allActiveTasks;
+    return FXCollections.observableArrayList(activeTasks);
   }
+
   @Override
   public String toString() {
     return "TaskRegistry{" +
@@ -164,15 +151,13 @@ public class TaskRegistry {
   }
 
   void removeTask(Task task) {
-
-    tasks=fileHandle.loadDate(fileName);
-    Iterator itr=tasks.iterator();
-      while (itr.hasNext()) {
-        Task element = (Task) itr.next();
-        if (element.getTitle().equalsIgnoreCase(task.getTitle())&& !(element.getTitle().equals(null))) {
-          itr.remove();
-          break;
-        }
+    Iterator itr = tasks.iterator();
+    while (itr.hasNext()) {
+      Task element = (Task) itr.next();
+      if (element.getTitle().equalsIgnoreCase(task.getTitle()) && !(element.getTitle().equals(null))) {
+        itr.remove();
+        break;
       }
+    }
   }
 }
