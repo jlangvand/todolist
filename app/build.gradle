@@ -1,55 +1,44 @@
- plugins {
+plugins {
   id 'todolist.java-application-conventions'
   id 'application'
   id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-    implementation 'org.apache.commons:commons-text'
-    compile 'com.jfoenix:jfoenix:9.0.10' //This is for java 9+. For java 8: compile 'com.jfoenix:jfoenix:8.0.10'
+  implementation 'org.apache.commons:commons-text'
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.5.1'
+  compile 'com.jfoenix:jfoenix:9.0.10' //This is for java 9+. For java 8: compile 'com.jfoenix:jfoenix:8.0.10'
+}
+
+test {
+  useJUnitPlatform()
 }
 
 javafx {
-    version = "13"
-    modules = [ 'javafx.controls', 'javafx.fxml']
-    configuration = 'compileOnly'
+  version = "13"
+  modules = ['javafx.controls', 'javafx.fxml']
 }
- compileJava.options.encoding = 'UTF-8'
- tasks.withType(JavaCompile) {
-     options.encoding = 'UTF-8'
- }
 
 application {
-    // Define the main class for the application.
-    mainClass = 'todolist.app.App'
+  // Define the main class for the application.
+  mainClass = 'todolist.app.App'
 }
- sourceSets {
-     test {
-         java {
-             srcDirs = ['src/new-test/test']
-         }
-     }
- }
 
- repositories {
-     mavenCentral()
- }
- dependencies {
-     testImplementation 'junit:junit:4.12'
-     implementation 'junit:junit:4.12'
- }
- def junit5Version = "5.7.0"
- dependencies {
-     // other deps
-     testImplementation "org.junit.jupiter:junit-jupiter:${junit5Version}"
-     testRuntimeOnly "org.junit.vintage:junit-vintage-engine:${junit5Version}"
- }
- test {
-     useJUnitPlatform()
-
- }
-//mainClassName = 'HelloFX'
+sourceSets {
+  test {
+    java {
+      srcDir 'src/test'
+    }
+  }
+  main {
+    java {
+      srcDir 'src/main'
+    }
+  }
+}
