@@ -131,11 +131,13 @@ public class TaskRegistry {
         '}';
   }
 
-  void addTask(Task task) {
+  void addTask(Task task) throws IOException {
     tasks.add(task);
+    fileHandle.save();
   }
 
-  void removeTask(Task task) {
+  void removeTask(Task task) throws IOException {
     tasks.remove(task);
+    fileHandle.save();
   }
 }
