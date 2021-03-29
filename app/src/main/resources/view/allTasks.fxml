@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AllTasksController2" maxHeight="650"
+            maxWidth="1000" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+            styleClass="navbar" stylesheets="@../css/navBar.css" xmlns="http://javafx.com/javafx/15.0.1">
+   <children>
+      <Text fill="WHITE" layoutX="52.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="navbar"
+            text="All tasks" textAlignment="CENTER" wrappingWidth="508.5367431640625">
+         <font>
+            <Font size="39.0"/>
+         </font>
+         <effect>
+            <Blend/>
+         </effect>
+      </Text>
+      <JFXListView fx:id="allTasksList" layoutX="4.0" layoutY="162.0" prefHeight="229.0" prefWidth="592.0"
+                   styleClass="navbar"/>
+      <JFXButton fx:id="addTaskButton" alignment="BASELINE_LEFT" layoutX="30.0" layoutY="98.0" prefHeight="50.0"
+                 prefWidth="530.0" ripplerFill="WHITE" text="Add new task" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" styleClass="navbar"
+                       translateX="460.0">
+               <image>
+                  <Image url="@../images/add_task.png"/>
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND"/>
+         </cursor>
+      </JFXButton>
+   </children>
+</AnchorPane>

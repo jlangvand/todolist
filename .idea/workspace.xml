@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bed24bca-56db-4eaa-8081-7f1d0bec97fb" name="Default Changelist" comment="Some base classes ready for implementation">
-      <change beforePath="$PROJECT_DIR$/.idea/todolist.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/todolist.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/test/dao/PersistentRegistryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/dao/PersistentRegistryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/test/models/TaskRegistryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/models/TaskRegistryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/test/models/TaskTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/models/TaskTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="bed24bca-56db-4eaa-8081-7f1d0bec97fb" name="Default Changelist" comment="Some base classes ready for implementation" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -122,17 +115,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Gradle.todolist [test]">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TaskRegistryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -264,6 +246,7 @@
       <updated>1616421105880</updated>
       <workItem from="1616421107912" duration="3629000" />
       <workItem from="1616426813989" duration="2452000" />
+      <workItem from="1617033794551" duration="3000" />
     </task>
     <task id="LOCAL-00001" summary="Cleanup of skeleton app">
       <created>1616426978028</created>
