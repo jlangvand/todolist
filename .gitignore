@@ -104,3 +104,6 @@ gradle-app.setting
 *.classpath
 *.project
 *.settings
+
+# IDEA
+.idea/
