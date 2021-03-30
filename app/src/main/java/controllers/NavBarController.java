@@ -19,7 +19,7 @@ public class NavBarController implements Initializable {
 
         //Temporary, to test loading of allTasks as center of navigationBar.
         try {
-            pane.setCenter(FXMLLoader.load(new File("app/src/main/resources/view/allTasks.fxml").toURI().toURL()));
+            pane.setCenter(FXMLLoader.load(new File("src/main/resources/view/allTasks.fxml").toURI().toURL()));
         } catch (IOException e) {
             e.printStackTrace();
         }
