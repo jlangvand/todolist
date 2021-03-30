@@ -6,5 +6,8 @@ module todolist.app.main {
     opens todolist.app to javafx.fxml;
     exports todolist.app;
 
+    opens controllers to javafx.fxml;
+    exports controllers;
+
 
 }
