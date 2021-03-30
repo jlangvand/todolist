@@ -43,7 +43,7 @@ public class App extends Application {
    * @throws IOException
    */
   private static Parent loadFXML(String fxml) throws IOException {
-    URL url = new File("src/main/resources/view/" + fxml + ".fxml").toURI().toURL();
+    URL url = new File("app/src/main/resources/view/" + fxml + ".fxml").toURI().toURL();
     return FXMLLoader.load(url);
   }
 
