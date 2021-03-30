@@ -42,7 +42,16 @@ public class AllTasksController {
         //fetch the customized cell
         allTasksList.setCellFactory(cellController -> new CellController());
 
+        addTaskButton.setOnAction((event) -> {
+            System.out.println("Button clicked");
+            //add more...
+
+        });
+
     }
+
+
+
 
 
 }
