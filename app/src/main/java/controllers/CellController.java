@@ -41,7 +41,7 @@ public class CellController extends JFXListCell<Task> {
     void initialize() {
     }
 
-
+    //just test
     @FXML
     void changeStatus(MouseEvent event) {
         Image done = new Image("src/main/resources/images/Done.png", 56, 60, false, true);
