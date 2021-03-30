@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import models.Task;
+import utilities.Status;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,9 +45,16 @@ public class CellController extends JFXListCell<Task> {
     //just test
     @FXML
     void changeStatus(MouseEvent event) {
-        Image done = new Image("src/main/resources/images/Done.png", 56, 60, false, true);
-
-        cellStatus.setImage(done);
+        Task task = new Task();
+        if (task.getStatus().equals("ACTIVE")) {
+            Image done = new Image("src/main/resources/images/Done.png", 56, 60, false, true);
+            cellStatus.setImage(done);
+            task.setStatus(Status.DONE);
+        } else {
+            Image notDone = new Image("src/main/resources/images/not_Done.png", 56, 60, false, true);
+            cellStatus.setImage(notDone);
+            task.setStatus(Status.ACTIVE);
+        }
 
     }
 
