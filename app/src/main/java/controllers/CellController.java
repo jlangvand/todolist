@@ -4,7 +4,9 @@ import com.jfoenix.controls.JFXListCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import models.Task;
 
@@ -37,6 +39,15 @@ public class CellController extends JFXListCell<Task> {
 
     @FXML
     void initialize() {
+    }
+
+
+    @FXML
+    void changeStatus(MouseEvent event) {
+        Image done = new Image("src/main/resources/images/Done.png", 56, 60, false, true);
+
+        cellStatus.setImage(done);
+
     }
 
     @Override
