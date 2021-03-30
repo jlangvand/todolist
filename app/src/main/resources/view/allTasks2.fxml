@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            styleClass="background" stylesheets="@../css/NavigationBar.css" xmlns="http://javafx.com/javafx/15.0.1"
+            fx:controller="controllers.AllTasksController">
+    <center>
+        <VBox alignment="TOP_CENTER" BorderPane.alignment="TOP_CENTER">
+            <children>
+                <JFXButton fx:id="addTaskButton" text="Add new Task++++" VBox.vgrow="ALWAYS"/>
+                <JFXListView fx:id="allTasksList" styleClass="background"/>
+            </children>
+        </VBox>
+    </center>
+    <top>
+        <HBox alignment="CENTER" prefHeight="80.0" BorderPane.alignment="TOP_CENTER">
+            <children>
+                <Label styleClass="labelTitle" stylesheets="@../css/Menus.css" text="All Tasks" textAlignment="CENTER"/>
+            </children>
+        </HBox>
+    </top>
+    <right>
+        <Region maxWidth="30.0" prefHeight="326.0" prefWidth="30.0" BorderPane.alignment="CENTER"/>
+    </right>
+    <bottom>
+        <Region prefHeight="30.0" prefWidth="600.0" BorderPane.alignment="CENTER"/>
+    </bottom>
+    <left>
+        <Region maxWidth="30.0" prefHeight="296.0" prefWidth="30.0" BorderPane.alignment="CENTER"/>
+    </left>
+</BorderPane>
