@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="taskCellPane" maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="513.0" styleClass="navbar"
-            stylesheets="@../css/navBar.css" xmlns="http://javafx.com/javafx/15.0.1">
+            stylesheets="@../css/NavigationBar.css" xmlns="http://javafx.com/javafx/15.0.1">
     <children>
         <Label fx:id="cellDescription" layoutX="14.0" layoutY="2.0" prefHeight="34.0" prefWidth="466.0"
                text="Description"

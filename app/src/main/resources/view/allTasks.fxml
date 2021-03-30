@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AllTasksController2" maxHeight="650"
             maxWidth="1000" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
-            styleClass="navbar" stylesheets="@../css/navBar.css" xmlns="http://javafx.com/javafx/15.0.1">
+            styleClass="navbar" stylesheets="@../css/NavigationBar.css" xmlns="http://javafx.com/javafx/15.0.1">
    <children>
       <Text fill="WHITE" layoutX="52.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="navbar"
             text="All tasks" textAlignment="CENTER" wrappingWidth="508.5367431640625">

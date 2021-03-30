@@ -13,7 +13,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="520.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label styleClass="label1" text="Name"/>
+                  <Label styleClass="mainLabel" text="Name"/>
                   <Region prefHeight="77.0" prefWidth="55.0"/>
                   <JFXTextField promptText="Task name"/>
                   <Region prefHeight="77.0" prefWidth="143.0"/>
@@ -30,7 +30,7 @@
             </HBox>
             <HBox prefHeight="80.0" prefWidth="570.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label styleClass="label1" text="Description"/>
+                  <Label styleClass="mainLabel" text="Description"/>
                   <Region prefHeight="77.0" prefWidth="16.0"/>
                   <JFXTextArea prefHeight="80.0" prefWidth="348.0" promptText="Task descrpition"/>
                </children>
@@ -38,7 +38,7 @@
             <Region prefHeight="19.0" prefWidth="490.0"/>
             <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="520.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label prefHeight="26.0" prefWidth="87.0" styleClass="label1" text="Deadline"/>
+                  <Label prefHeight="26.0" prefWidth="87.0" styleClass="mainLabel" text="Deadline"/>
                   <Region prefHeight="77.0" prefWidth="22.0"/>
                   <JFXDatePicker prefHeight="28.0" prefWidth="151.0" promptText="Date"/>
                   <Region prefHeight="77.0" prefWidth="67.0"/>
@@ -47,11 +47,11 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="520.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label styleClass="label1" text="Category"/>
+                  <Label styleClass="mainLabel" text="Category"/>
                   <Region prefHeight="78.0" prefWidth="26.0"/>
                   <JFXTextField prefHeight="37.0" prefWidth="118.0"/>
                   <Region prefHeight="78.0" prefWidth="61.0"/>
-                  <Label prefHeight="26.0" prefWidth="68.0" styleClass="label1" text="Priority"/>
+                  <Label prefHeight="26.0" prefWidth="68.0" styleClass="mainLabel" text="Priority"/>
                   <Region prefHeight="80.0" prefWidth="22.0"/>
                   <JFXComboBox prefHeight="37.0" prefWidth="80.0" stylesheets="@../css/Menus.css"/>
                </children>

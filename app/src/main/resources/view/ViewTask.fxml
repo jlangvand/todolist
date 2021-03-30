@@ -39,7 +39,7 @@
                         <Image url="@../images/Clock_icon.png"/>
                      </image>
                   </ImageView>
-                  <Label prefHeight="26.0" prefWidth="402.0" styleClass="label1" text=" x days, 10 mins x mins"/>
+                  <Label prefHeight="26.0" prefWidth="402.0" styleClass="mainLabel" text=" x days, 10 mins x mins"/>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
@@ -49,7 +49,7 @@
                         <Image url="@../images/Minus_sign_icon.png"/>
                      </image>
                   </ImageView>
-                  <Label prefHeight="26.0" prefWidth="402.0" styleClass="label1" text=" x Priority"/>
+                  <Label prefHeight="26.0" prefWidth="402.0" styleClass="mainLabel" text=" x Priority"/>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="520.0"/>
