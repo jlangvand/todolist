@@ -8,21 +8,22 @@
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
             minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/Menus.css"
-            xmlns="http://javafx.com/javafx/15.0.1">
+            xmlns="http://javafx.com/javafx/15.0.1" fx:controller="controllers.ViewTaskController">
    <center>
       <VBox alignment="CENTER" fillWidth="false" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="520.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label styleClass="labelTitle" text="This is a task name"/>
+                  <Label fx:id="taskTitle" styleClass="labelTitle" text="This is a task name"/>
                   <Region prefHeight="77.0" prefWidth="55.0"/>
                </children>
             </HBox>
             <HBox prefHeight="35.0" prefWidth="540.0" VBox.vgrow="ALWAYS">
                <children>
                   <Region prefHeight="77.0" prefWidth="16.0"/>
-                  <JFXTextArea editable="false" prefHeight="104.0" prefWidth="407.0"
-                               text="Here is some text. This is some text lol.Here is some text . This ime text. This is some text"/>
+                  <JFXTextArea fx:id="taskDescription" editable="false" prefHeight="104.0" prefWidth="407.0"
+                               text="Here is some text. This is some text lol.Here is some text . This ime text. This is some text"
+                               unFocusColor="WHITE"/>
                </children>
             </HBox>
             <Region prefHeight="19.0" prefWidth="490.0"/>
@@ -39,7 +40,8 @@
                         <Image url="@../images/Clock_icon.png"/>
                      </image>
                   </ImageView>
-                  <Label prefHeight="26.0" prefWidth="402.0" styleClass="mainLabel" text=" x days, 10 mins x mins"/>
+                  <Label fx:id="taskDeadline" prefHeight="26.0" prefWidth="402.0" styleClass="mainLabel"
+                         text=" x days, 10 mins x mins"/>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
@@ -49,17 +51,18 @@
                         <Image url="@../images/Minus_sign_icon.png"/>
                      </image>
                   </ImageView>
-                  <Label prefHeight="26.0" prefWidth="402.0" styleClass="mainLabel" text=" x Priority"/>
+                  <Label fx:id="taskPriority" prefHeight="26.0" prefWidth="402.0" styleClass="mainLabel"
+                         text=" x Priority"/>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="520.0"/>
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="520.0">
                <children>
-                  <Label prefHeight="28.0" prefWidth="328.0" styleClass="labelKursiv" stylesheets="@../css/Menus.css"
-                         text="This task was added xxxxxxx xx:xx"/>
+                  <Label fx:id="taskStartedDate" prefHeight="28.0" prefWidth="328.0" styleClass="labelKursiv"
+                         stylesheets="@../css/Menus.css" text="This task was added xxxxxxx xx:xx" textFill="WHITE"/>
                   <Region prefHeight="60.0" prefWidth="116.0"/>
-                  <JFXButton contentDisplay="CENTER" prefHeight="53.0" prefWidth="127.0" styleClass="regularButton"
-                             text="Edit..."/>
+                  <JFXButton fx:id="editButton" contentDisplay="CENTER" prefHeight="53.0" prefWidth="127.0"
+                             styleClass="regularButton" text="Edit..."/>
                </children>
             </HBox>
          </children>

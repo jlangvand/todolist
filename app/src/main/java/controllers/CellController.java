@@ -4,12 +4,10 @@ import com.jfoenix.controls.JFXListCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import models.Task;
-import utilities.Status;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +25,7 @@ public class CellController extends JFXListCell<Task> {
     private AnchorPane taskCellPane;
 
     @FXML
-    private Label cellDescription;
+    private Label cellTitle;
 
     @FXML
     private ImageView cellStatus;
@@ -45,18 +43,19 @@ public class CellController extends JFXListCell<Task> {
     //just test
     @FXML
     void changeStatus(MouseEvent event) {
-        Task task = new Task();
-        if (task.getStatus().equals("ACTIVE")) {
-            Image done = new Image("src/main/resources/images/Done.png", 56, 60, false, true);
-            cellStatus.setImage(done);
-            task.setStatus(Status.DONE);
-        } else {
-            Image notDone = new Image("src/main/resources/images/not_Done.png", 56, 60, false, true);
-            cellStatus.setImage(notDone);
-            task.setStatus(Status.ACTIVE);
-        }
-
     }
+//        Task task = new Task();
+//        if (task.getStatus().equals("ACTIVE")) {
+//            Image done = new Image("src/main/resources/images/Done.png", 56, 60, false, true);
+//            cellStatus.setImage(done);
+//            task.setStatus(Status.DONE);
+//        } else {
+//            Image notDone = new Image("src/main/resources/images/not_Done.png", 56, 60, false, true);
+//            cellStatus.setImage(notDone);
+//            task.setStatus(Status.ACTIVE);
+//        }
+//
+//    }
 
     @Override
     protected void updateItem(Task task, boolean empty) {
@@ -84,8 +83,9 @@ public class CellController extends JFXListCell<Task> {
             }
 
             //Fill the cell with info from the task
-            cellDescription.setText(task.getDescription());
-            cellDate.setText(task.getDeadline().toString());
+
+            cellTitle.setText(task.getTitle());
+            cellDate.setText(task.getStartedDate().toString());
 
             setText(null);
 
