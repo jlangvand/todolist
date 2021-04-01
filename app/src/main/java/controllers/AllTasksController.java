@@ -88,62 +88,43 @@ public class AllTasksController {
         tasks = FXCollections.observableArrayList();//we can pass the items(tasks) here too.
         tasks.addAll(t1, t2, t3);
 
-        //pass the observable list to the listView
-        allTasksList.setItems(tasks);
+      //pass the observable list to the listView
+      allTasksList.setItems(tasks);
 
-        //fetch the customized cell
-        allTasksList.setCellFactory(cellController -> new CellController());
+      //fetch the customized cell
+      allTasksList.setCellFactory(cellController -> new CellController());
 
 
-        //press on BACK button to get back to tasks list
-        //this action will be used if we choose to call the TaskView as inner pane in allTasks.fxml
-        backToTasks.setOnAction(event -> {
-            taskViewPane.setVisible(false);
-            allTasksList.setVisible(true);
-
-        });
-
-//        addTaskButton.setOnMousePressed(event -> {
-//            System.out.println("Button clicked");
-//            //add more...
-//
-//            try {
-//                FXMLLoader fxmlLoader2 = new FXMLLoader(new File("src/main/resources/view/NewTask.fxml").toURI().toURL());
-//                //fxmlLoader2.setController(this);
-//                Parent root12 = fxmlLoader2.load();
-//
-//                Stage stage = new Stage();
-//                stage.setScene(new Scene(root12));
-//                stage.show();
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
+      //press on BACK button to get back to tasks list
+      //this action will be used if we choose to call the TaskView as inner pane in allTasks.fxml
+//        backToTasks.setOnAction(event -> {
+//            taskViewPane.setVisible(false);
+//            allTasksList.setVisible(true);
 //
 //        });
 
     }
 
-    @FXML
-    void addNewTask(ActionEvent event) {
+  /**
+   * Method called when user clicks on add button.
+   *
+   * @param event
+   * @throws IOException, the exception will be handled in the method.
+   */
+  @FXML
+  void displayNewTask(ActionEvent event) {
+    try {
+      FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/NewTask.fxml").toURI().toURL());
+      Parent root = fxmlLoader.load();
 
-        System.out.println("Button clicked");
-        //add more...
-
-        try {
-            //just ViewTask.fxml works!!!! when I try to call/load NewTask.fxml I get nullpointerexception !!!!
-          FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/NewTask.fxml").toURI().toURL());
-          Parent root = fxmlLoader.load();
-
-          Stage stage = new Stage();
-          stage.setScene(new Scene(root));
-          stage.show();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-
+      Stage stage = new Stage();
+      stage.setScene(new Scene(root));
+      stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+
+  }
 
   /**
    * Method called when user clicks on a task.
