@@ -109,3 +109,4 @@ gradle-app.setting
 
 # IDEA
 .idea/
+/local.properties
