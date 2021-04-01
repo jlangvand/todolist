@@ -15,7 +15,7 @@
                 <Font size="18.0"/>
             </font>
         </Label>
-        <ImageView fx:id="cellStatus" fitHeight="60.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true"
+        <ImageView fx:id="cellStatusImage" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true"
                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
                 <Image url="@../images/not_Done.png"/>
