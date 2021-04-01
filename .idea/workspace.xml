@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bed24bca-56db-4eaa-8081-7f1d0bec97fb" name="Default Changelist" comment="Some base classes ready for implementation">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="be444976-2011-48c8-a9d0-9411c58c65b7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/controllers/AllTasksController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controllers/AllTasksController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/controllers/CellController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/controllers/CellController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/resources/view/ViewTask.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/view/ViewTask.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/resources/view/allTasks.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/view/allTasks.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/resources/view/taskCell.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/view/taskCell.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/dao/PersistentRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dao/PersistentRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/models/TaskRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/models/TaskRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/models/TaskRegistryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/models/TaskRegistryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/test.bin" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,20 +20,14 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
-    <projectState path="$PROJECT_DIR$/app">
-      <ProjectState />
-    </projectState>
-    <projectState path="$PROJECT_DIR$/utilities">
-      <ProjectState />
-    </projectState>
   </component>
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <task path="$PROJECT_DIR$/app">
+        <task path="$PROJECT_DIR$">
           <activation />
         </task>
-        <task path="$PROJECT_DIR$">
+        <task path="$PROJECT_DIR$/app">
           <activation />
         </task>
         <projects_view>
@@ -45,6 +37,47 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="todolist" type="f1a62948:ProjectNode" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="todolist" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="todolist" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="todolist" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="documentation" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="todolist" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="todolist" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="todolist" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="todolist" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="documentation" type="c8890929:TasksNode$1" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -52,21 +85,7 @@
       </state>
     </system>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Enum" />
-        <option value="JUnit5 Test Class" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="persistence" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -77,94 +96,16 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="GitToolBoxStore">
-    <option name="projectConfigVersion" value="2" />
-    <option name="recentBranches">
-      <RecentBranches>
-        <option name="branchesForRepo">
-          <list>
-            <RecentBranchesForRepo>
-              <option name="branches">
-                <list>
-                  <RecentBranch>
-                    <option name="branchName" value="develop" />
-                    <option name="lastUsedInstant" value="1617038182" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="persistence" />
-                    <option name="lastUsedInstant" value="1617038181" />
-                  </RecentBranch>
-                </list>
-              </option>
-              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
-            </RecentBranchesForRepo>
-          </list>
-        </option>
-      </RecentBranches>
-    </option>
-  </component>
-  <component name="ProjectId" id="1q7CBUl8wLp3ZLHFsKSaNVW4bbm" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
-    <property name="external.system.task.project.file.to.start" value="$PROJECT_DIR$" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/test/java" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/resources/images" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.21131639" />
-    <property name="project.structure.side.proportion" value="0.32844576" />
-    <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
+    <property name="settings.editor.selected.configurable" value="device.file.explorer" />
   </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\mo3az\Desktop\proj\app\src\main\resources\images" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/src/test/java" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="" />
-    </key>
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="models" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Gradle./home/jlangvand/idatt2001/todolist [run]">
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="todolist.app.App" />
-      <module name="todolist.app.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="todolist.app.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Gradle.todolist [test]">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -176,75 +117,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TaskRegistryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="todolist [javadoc]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;models.TaskRegistryTest&quot;" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":app:test" />
+            <option value="javadoc" />
           </list>
         </option>
         <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="TaskRegistryTest.dummyTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;models.TaskRegistryTest.dummyTest&quot;" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":app:test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="/home/jlangvand/idatt2001/todolist [build]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" value="" />
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="/home/jlangvand/idatt2001/todolist [run]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+    <configuration name="todolist [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -253,7 +152,7 @@
             <option value="run" />
           </list>
         </option>
-        <option name="vmOptions" value="" />
+        <option name="vmOptions" />
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
@@ -265,213 +164,84 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value="clean" />
             <option value="test" />
           </list>
         </option>
-        <option name="vmOptions" value="" />
+        <option name="vmOptions" />
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="Application.App" />
-      <item itemvalue="Gradle./home/jlangvand/idatt2001/todolist [build]" />
-      <item itemvalue="Gradle./home/jlangvand/idatt2001/todolist [run]" />
-      <item itemvalue="Gradle.todolist [test]" />
-      <item itemvalue="Gradle.TaskRegistryTest" />
-      <item itemvalue="Gradle.TaskRegistryTest.dummyTest" />
-    </list>
+    <configuration name="todolist:app [javadoc]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/app" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="javadoc" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.App" />
         <item itemvalue="Gradle.todolist [test]" />
-        <item itemvalue="Gradle.TaskRegistryTest.dummyTest" />
-        <item itemvalue="Gradle.TaskRegistryTest" />
+        <item itemvalue="Gradle.todolist:app [javadoc]" />
+        <item itemvalue="Gradle.todolist [javadoc]" />
+        <item itemvalue="Gradle.todolist [run]" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="bed24bca-56db-4eaa-8081-7f1d0bec97fb" name="Default Changelist" comment="" />
-      <created>1616421105880</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1616421105880</updated>
-      <workItem from="1616421107912" duration="3629000" />
-      <workItem from="1616426813989" duration="2452000" />
-      <workItem from="1617037030256" duration="2247000" />
-      <workItem from="1617109110303" duration="5486000" />
-      <workItem from="1617114623335" duration="4611000" />
-      <workItem from="1617139345808" duration="11821000" />
-      <workItem from="1617151467573" duration="1062000" />
-      <workItem from="1617152542663" duration="5226000" />
-    </task>
-    <task id="LOCAL-00001" summary="Cleanup of skeleton app">
-      <created>1616426978028</created>
+    <task id="LOCAL-00001" summary="Remove unnecessary casts">
+      <created>1617275924274</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1616426978028</updated>
+      <updated>1617275924274</updated>
     </task>
-    <task id="LOCAL-00002" summary="IntelliJ project files, can be removed later">
-      <created>1616427231319</created>
+    <task id="LOCAL-00002" summary="Exclude save files">
+      <created>1617292303898</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1616427231319</updated>
+      <updated>1617292303898</updated>
     </task>
-    <task id="LOCAL-00003" summary="Basic implementation of file handling. Breaks current tests!">
-      <created>1617036706867</created>
+    <task id="LOCAL-00003" summary="Change test method, fix formatting">
+      <created>1617298833344</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1617036706867</updated>
+      <updated>1617298833344</updated>
     </task>
-    <task id="LOCAL-00004" summary="Fix file handling in TaskRegistry.java">
-      <created>1617037818050</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1617037818050</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Remove unused methods">
-      <created>1617037912089</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1617037912089</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Fix file path">
-      <created>1617038423248</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1617038423248</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Changes in file handling">
-      <created>1617038578666</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1617038578666</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Ignore local IDEA data">
-      <created>1617038670554</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1617038670554</updated>
-    </task>
-    <task id="LOCAL-00009" summary="DRYer code with more generalised methods">
-      <created>1617039178816</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1617039178816</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Removed some redundant logic">
-      <created>1617039256050</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1617039256050</updated>
-    </task>
-    <task id="LOCAL-00011" summary="resized cell in taskCell.fxml">
-      <created>1617111254100</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1617111254100</updated>
-    </task>
-    <task id="LOCAL-00012" summary="statusImage on action in CellController">
-      <created>1617116101463</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1617116101463</updated>
-    </task>
-    <task id="LOCAL-00013" summary="statusImage on action in CellController">
-      <created>1617116302989</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1617116302989</updated>
-    </task>
-    <task id="LOCAL-00014" summary="updated changeStatus method, should find the right place for this method">
-      <created>1617117377985</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1617117377985</updated>
-    </task>
-    <task id="LOCAL-00015" summary="prepare action addNewTask button in AllTasksController">
-      <created>1617118098838</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1617118098838</updated>
-    </task>
-    <option name="localTasksCounter" value="16" />
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.History.Properties">
-    <option name="COLUMN_ID_ORDER">
-      <list>
-        <option value="Default.Root" />
-        <option value="Default.Author" />
-        <option value="Default.Date" />
-        <option value="Default.Subject" />
-      </list>
-    </option>
-  </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Cleanup of skeleton app" />
-    <MESSAGE value="IntelliJ project files, can be removed later" />
-    <MESSAGE value="Some base classes ready for implementation" />
-    <MESSAGE value="Basic implementation of file handling. Breaks current tests!" />
-    <MESSAGE value="Fix file handling in TaskRegistry.java" />
-    <MESSAGE value="Remove unused methods" />
-    <MESSAGE value="Fix file path" />
-    <MESSAGE value="Changes in file handling" />
-    <MESSAGE value="Ignore local IDEA data" />
-    <MESSAGE value="DRYer code with more generalised methods" />
-    <MESSAGE value="Removed some redundant logic" />
-    <MESSAGE value="resized cell in taskCell.fxml" />
-    <MESSAGE value="statusImage on action in CellController" />
-    <MESSAGE value="updated changeStatus method, should find the right place for this method" />
-    <MESSAGE value="prepare action addNewTask button in AllTasksController" />
-    <option name="LAST_COMMIT_MESSAGE" value="prepare action addNewTask button in AllTasksController" />
-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
+    <MESSAGE value="Remove unnecessary casts" />
+    <MESSAGE value="Exclude save files" />
+    <MESSAGE value="Change test method, fix formatting" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change test method, fix formatting" />
   </component>
 </project>

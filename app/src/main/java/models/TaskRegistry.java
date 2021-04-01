@@ -12,7 +12,7 @@ import java.util.List;
 public class TaskRegistry {
   private List<Task> tasks;
   PersistentRegistry fileHandle;
-  private ArrayList<Task>taskList;
+  private ArrayList<Task> taskList;
   private String fileName;
 
 
@@ -23,7 +23,6 @@ public class TaskRegistry {
   public TaskRegistry(String fileName) throws IOException {
     fileHandle = new PersistentRegistry(fileName);
     this.tasks = fileHandle.read();
-    taskList=new ArrayList<>();
     this.fileName = fileName;
   }
 
@@ -133,8 +132,8 @@ public class TaskRegistry {
   }
 
   void addTask(Task task) throws IOException {
-    taskList.add(task);
-    fileHandle.save(taskList);
+    tasks.add(task);
+    fileHandle.save(tasks);
   }
 
   void removeTask(Task task) throws IOException {
