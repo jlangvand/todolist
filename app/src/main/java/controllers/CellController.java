@@ -4,8 +4,8 @@ import com.jfoenix.controls.JFXListCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import models.Task;
 
@@ -28,7 +28,7 @@ public class CellController extends JFXListCell<Task> {
     private Label cellTitle;
 
     @FXML
-    private ImageView cellStatus;
+    private ImageView cellStatusImage;
 
     @FXML
     private Label cellDate;
@@ -36,26 +36,11 @@ public class CellController extends JFXListCell<Task> {
 
     private FXMLLoader fxmlLoader;
 
+
     @FXML
     void initialize() {
     }
 
-    //just test
-    @FXML
-    void changeStatus(MouseEvent event) {
-    }
-//        Task task = new Task();
-//        if (task.getStatus().equals("ACTIVE")) {
-//            Image done = new Image("src/main/resources/images/Done.png", 56, 60, false, true);
-//            cellStatus.setImage(done);
-//            task.setStatus(Status.DONE);
-//        } else {
-//            Image notDone = new Image("src/main/resources/images/not_Done.png", 56, 60, false, true);
-//            cellStatus.setImage(notDone);
-//            task.setStatus(Status.ACTIVE);
-//        }
-//
-//    }
 
     @Override
     protected void updateItem(Task task, boolean empty) {
@@ -66,9 +51,7 @@ public class CellController extends JFXListCell<Task> {
             setGraphic(null);
         } else {
             if (fxmlLoader == null) {
-                //fxmlLoader = new FXMLLoader(getClass().getResource("/view/taskCell.fxml"));
-                //fxmlLoader = new FXMLLoader();
-                //fxmlLoader.setLocation(getClass().getResource("app/src/main/resources/view/taskCell.fxml"));
+
                 fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/view/taskCell.fxml"));
 
@@ -86,6 +69,19 @@ public class CellController extends JFXListCell<Task> {
 
             cellTitle.setText(task.getTitle());
             cellDate.setText(task.getStartedDate().toString());
+
+
+            try {
+                //cellStatusImage = new ImageView();
+                if (task.getStatus().toString().equals("DONE")) {
+                    cellStatusImage.setImage(new Image("file:src/main/resources/images/Done2.png", 48, 48, true, true));
+                } else if (task.getStatus().toString().equals("ACTIVE")) {
+                    cellStatusImage.setImage(new Image("file:src/main/resources/images/not_Done.png", 48, 48, true, true));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
             setText(null);
 
