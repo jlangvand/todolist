@@ -152,18 +152,34 @@ public class Task implements Serializable {
   public void setTitle(String title) {
     this.title = title;
   }
-  /**Sets the task's status.
+
+  /**
+   * Sets the task's status.
+   *
    * @param status-Status.
    */
   public void setStatus(Status status) {
     this.status = status;
   }
 
-  /**This is  method which check the equality of tasks.
+  public String getPriorityString() {
+    if (priority == Priority.HIGH) {
+      return "High";
+
+    } else if (priority == Priority.MEDIUM) {
+      return "Medium";
+    } else if (priority == Priority.LOW) {
+      return "Low";
+    }
+    return "No Priority";
+  }
+
+  /**
+   * This is  method which check the equality of tasks.
+   *
    * @param object-an Object.
    * @return A boolean true if the tasks are equal, or false if not.
    */
-
   @Override
   public boolean equals(Object object) {
     boolean result;
