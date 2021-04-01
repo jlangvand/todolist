@@ -1,24 +1,31 @@
 package models;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TaskRegistryTest {
-  private TaskRegistry taskRegistry;
-
+  private static final String FILENAME = "TaskRegistryTest.bin";
 
   @BeforeEach
   void setUp() throws IOException {
 
   }
 
+  @AfterAll
+  static void cleanup() throws IOException {
+    Files.delete(Path.of(FILENAME));
+  }
+
   @Test
   void getTasksTest() throws IOException {
-    taskRegistry = new TaskRegistry("test2.bin");
+    TaskRegistry taskRegistry = new TaskRegistry(FILENAME);
     Task task1 = new Task("Meeting a friend");
     Task task2 = new Task("Reading a book");
     taskRegistry.addTask(task1);
