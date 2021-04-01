@@ -1,8 +1,6 @@
 package models;
 
 import dao.PersistentRegistry;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import utilities.Priority;
 import utilities.Status;
 
@@ -11,83 +9,86 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javafx.collections.FXCollections.observableArrayList;
-
 public class TaskRegistry {
   private List<Task> tasks;
   PersistentRegistry fileHandle;
-  private final String fileName = "TasksData.obj";
+  private ArrayList<Task>taskList;
+  private String fileName;
+
 
   /*
    *
    *
    * */
-  public TaskRegistry() throws IOException {
+  public TaskRegistry(String fileName) throws IOException {
     fileHandle = new PersistentRegistry(fileName);
     this.tasks = fileHandle.read();
+    taskList=new ArrayList<>();
+    this.fileName = fileName;
   }
 
   /*
    *
    * */
-  public ObservableList<Task> getTasks() {
-    return observableArrayList(tasks);
+  public List<Task> getTasks() {
+    return tasks;
+
   }
 
   /*
    *
    *
    * */
-  public ObservableList<Task> getTasksByStatus(Status status) {
+  public List<Task> getTasksByStatus(Status status) {
     ArrayList<Task> foundTasks = new ArrayList<>();
     tasks.forEach(task -> {
       if (task.getStatus().equals(status)) {
         foundTasks.add(task);
       }
     });
-    return FXCollections.observableArrayList(foundTasks);
+    return foundTasks;
   }
 
   /**
    * @param priority
    * @return
    */
-  public ObservableList<Task> getTasksByPriority(Priority priority) {
+  public List<Task> getTasksByPriority(Priority priority) {
     ArrayList<Task> foundTasks = new ArrayList<>();
     tasks.forEach(task -> {
       if (task.getPriority().equals(priority)) {
         foundTasks.add(task);
       }
     });
-    return FXCollections.observableArrayList(foundTasks);
+    return foundTasks;
   }
 
-  public ObservableList<Task> getTasksByDate(LocalDate fromDate, LocalDate toDate) {
+  public List<Task> getTasksByDate(LocalDate fromDate, LocalDate toDate) {
     List<Task> foundTasksByDate = new ArrayList<>();
     tasks.forEach(task -> {
       if (task.getStartedDate().isAfter(fromDate) && task.getFinishedDate().isBefore(toDate))
         foundTasksByDate.add(task);
     });
-    ObservableList<Task> allFoundedTasks = FXCollections.observableArrayList(foundTasksByDate);
-    return allFoundedTasks;
+
+    return foundTasksByDate;
   }
 
   /*
    *
    * */
-  public ObservableList<Task> getTasksByDate(LocalDate date) {
+  public List<Task> getTasksByDate(LocalDate date) {
     List<Task> foundTasks = new ArrayList<>();
     tasks.forEach(task -> {
       if (task.getDeadline().equals(date))
         foundTasks.add(task);
     });
-    return FXCollections.observableArrayList(foundTasks);
+    return foundTasks;
   }
 
   /*
    *
    * */
-  public ObservableList<Task> getHighPriorityTasks() {
+  public List<Task> getHighPriorityTasks() {
     return getTasksByPriority(Priority.HIGH);
   }
 
@@ -96,7 +97,7 @@ public class TaskRegistry {
    *
    *
    * */
-  public ObservableList<Task> getMediumPriorityTasks() {
+  public List<Task> getMediumPriorityTasks() {
     return getTasksByPriority(Priority.MEDIUM);
   }
 
@@ -104,7 +105,7 @@ public class TaskRegistry {
    *
    *
    * */
-  public ObservableList<Task> getLowPriorityTasks() {
+  public List<Task> getLowPriorityTasks() {
     return getTasksByPriority(Priority.LOW);
   }
 
@@ -112,7 +113,7 @@ public class TaskRegistry {
    *
    *
    * */
-  public ObservableList<Task> getDoneTasks() {
+  public List<Task> getDoneTasks() {
     return getTasksByStatus(Status.DONE);
   }
 
@@ -120,7 +121,7 @@ public class TaskRegistry {
    *
    *
    * */
-  public ObservableList<Task> getActiveTasks() {
+  public List<Task> getActiveTasks() {
     return getTasksByStatus(Status.ACTIVE);
   }
 
@@ -132,8 +133,8 @@ public class TaskRegistry {
   }
 
   void addTask(Task task) throws IOException {
-    tasks.add(task);
-    fileHandle.save(tasks);
+    taskList.add(task);
+    fileHandle.save(taskList);
   }
 
   void removeTask(Task task) throws IOException {
