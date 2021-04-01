@@ -11,7 +11,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Task;
 import utilities.Status;
@@ -92,38 +94,6 @@ public class AllTasksController {
         //fetch the customized cell
         allTasksList.setCellFactory(cellController -> new CellController());
 
-        //select a task from the list (the action)
-        allTasksList.setOnMouseClicked(event -> {
-            Task selectedTask = allTasksList.getSelectionModel().getSelectedItem();
-            System.out.print(selectedTask.getDescription());
-
-//            //here we need probably to use threads, because if we changed the
-//            //order of the lines, so not all of lines will implemented.
-//            allTasksList.setVisible(false);
-//            taskViewPane.setVisible(true);
-//
-//            taskTitle.setText(selectedTask.getTitle());
-//            taskStartedDate.setText(selectedTask.getStartedDate().toString());
-//            taskDescription.setText(selectedTask.getDescription());
-//            taskPriority.setText(selectedTask.getPriority().toString());
-
-
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/ViewTask.fxml").toURI().toURL());
-                Parent root1 = fxmlLoader.load();
-                ViewTaskController viewTaskController = fxmlLoader.getController();
-
-                //fill ViewTask.fxml with the data from the task that the user pressed on.
-                viewTaskController.setTaskInView(selectedTask);
-
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root1));
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        });
 
         //press on BACK button to get back to tasks list
         //this action will be used if we choose to call the TaskView as inner pane in allTasks.fxml
@@ -163,17 +133,40 @@ public class AllTasksController {
 
         try {
             //just ViewTask.fxml works!!!! when I try to call/load NewTask.fxml I get nullpointerexception !!!!
-            FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/ViewTask.fxml").toURI().toURL());
-            Parent root = fxmlLoader.load();
+          FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/NewTask.fxml").toURI().toURL());
+          Parent root = fxmlLoader.load();
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+          Stage stage = new Stage();
+          stage.setScene(new Scene(root));
+          stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+          e.printStackTrace();
         }
 
     }
+
+  /**
+   * Method called when user clicks on a task.
+   *
+   * @param event
+   * @throws IOException
+   */
+  @FXML
+  void displayTask(MouseEvent event) throws IOException {
+    Task selectedTask = allTasksList.getSelectionModel().getSelectedItem();
+
+    FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/ViewTask.fxml").toURI().toURL());
+    Parent root = fxmlLoader.load();
+    ViewTaskController viewTaskController = fxmlLoader.getController();
+    viewTaskController.initData(selectedTask);
+
+    Stage stage = new Stage();
+    stage.setScene(new Scene(root));
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage.show();
+
+
+  }
 
 
 }
