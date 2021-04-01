@@ -2,13 +2,20 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import models.Task;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -41,50 +48,53 @@ public class ViewTaskController {
     @FXML
     private JFXButton editButton;
 
-    @FXML
-    private Pane viewPane;
+  @FXML
+  private Pane viewPane;
 
-    @FXML
-    private ImageView statusImage;
+  @FXML
+  private ImageView statusImage;
 
-    //It takes a task object as argument and fill the file ViewTask.fxml with info from the task,
-    //ViewTask.fxml will be called in AllTaskController class.
-    void setTaskInView(Task task) {
-        setTaskTitle(task.getTitle());
-        setTaskDescription(task.getDescription());
-        setTaskStartedDate(task.getStartedDate().toString());
-        String p = task.getStatus().toString();
-        setTaskPriority(p);
-
-        try {
-            if (task.getStatus().toString().equals("DONE")) {
-                this.statusImage.setImage(new Image("file:src/main/resources/images/Done2.png", 27, 27, true, true));
-            } else if (task.getStatus().toString().equals("ACTIVE")) {
-                this.statusImage.setImage(new Image("file:src/main/resources/images/not_Done.png", 30, 30, true, true));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+  private Task task;
 
 
-    void setTaskTitle(String title) {
-        this.taskTitle.setText(title);
-    }
+  /**
+   * Method called when user clicks edit button.
+   *
+   * @param event
+   * @throws IOException
+   */
+  @FXML
+  void displayEdit(ActionEvent event) throws IOException {
+    FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/EditTask.fxml").toURI().toURL());
+    Parent root = fxmlLoader.load();
 
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription.setText(taskDescription);
-    }
+    EditTaskController editTaskController = fxmlLoader.getController();
+    editTaskController.initData(task);
 
-    public void setTaskDeadline(String taskDeadline) {
-        this.taskDeadline.setText(taskDeadline);
-    }
+    Stage stage = new Stage();
+    stage.setScene(new Scene(root));
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage.show();
 
-    public void setTaskPriority(String taskPriority) {
-        this.taskPriority.setText(taskPriority);
-    }
+  }
 
-    public void setTaskStartedDate(String taskStartedDate) {
-        this.taskStartedDate.setText(taskStartedDate);
-    }
+  /**
+   * Method called right after object is initialized
+   *
+   * @param task
+   */
+  public void initData(Task task) {
+    this.task = task;
+    taskTitle.setText(task.getTitle());
+    taskPriority.setText(task.getPriorityString());
+    taskDescription.setText(task.getDescription());
+    taskStartedDate.setText(task.getStartedDate().toString());
+
+    //if (task.getStatus().toString().equals("DONE")) {
+    //  this.statusImage.setImage(new Image("file:src/main/resources/images/Done2.png", 27, 27, true, true));
+    //} else if (task.getStatus().toString().equals("ACTIVE")) {
+    //this.statusImage.setImage(new Image("file:src/main/resources/images/not_Done.png", 30, 30, true, true));
+    //}
+
+  }
 }
