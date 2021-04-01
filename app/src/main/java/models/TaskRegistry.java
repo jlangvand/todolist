@@ -133,11 +133,11 @@ public class TaskRegistry {
 
   void addTask(Task task) throws IOException {
     tasks.add(task);
-    fileHandle.save((ArrayList<Task>) tasks);
+    fileHandle.save(tasks);
   }
 
   void removeTask(Task task) throws IOException {
     tasks.remove(task);
-    fileHandle.save((ArrayList<Task>) tasks);
+    fileHandle.save(tasks);
   }
 }
