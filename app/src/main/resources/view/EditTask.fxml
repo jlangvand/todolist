@@ -5,9 +5,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/Menus.css"
-            xmlns="http://javafx.com/javafx/15.0.1">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@../css/Menus.css" xmlns="http://javafx.com/javafx/15.0.1"
+            fx:controller="controllers.EditTaskController">
    <center>
       <VBox alignment="CENTER" fillWidth="false" BorderPane.alignment="CENTER">
          <children>
@@ -15,9 +16,9 @@
                <children>
                   <Label styleClass="mainLabel" text="Name"/>
                   <Region prefHeight="77.0" prefWidth="55.0"/>
-                  <JFXTextField promptText="Task name"/>
+                  <JFXTextField fx:id="nameField" promptText="Task name"/>
                   <Region prefHeight="77.0" prefWidth="143.0"/>
-                  <JFXButton contentDisplay="CENTER" styleClass="imageButton" text=" ">
+                  <JFXButton contentDisplay="CENTER" onAction="#displayTrashDialog" styleClass="imageButton" text=" ">
                      <graphic>
                         <ImageView>
                            <image>
@@ -32,7 +33,8 @@
                <children>
                   <Label styleClass="mainLabel" text="Description"/>
                   <Region prefHeight="77.0" prefWidth="16.0"/>
-                  <JFXTextArea prefHeight="80.0" prefWidth="348.0" promptText="Task descrpition"/>
+                  <JFXTextArea fx:id="descriptionField" prefHeight="80.0" prefWidth="348.0"
+                               promptText="Task descrpition"/>
                </children>
             </HBox>
             <Region prefHeight="19.0" prefWidth="490.0"/>
@@ -40,27 +42,30 @@
                <children>
                   <Label prefHeight="26.0" prefWidth="87.0" styleClass="mainLabel" text="Deadline"/>
                   <Region prefHeight="77.0" prefWidth="22.0"/>
-                  <JFXDatePicker prefHeight="28.0" prefWidth="151.0" promptText="Date"/>
+                  <JFXDatePicker fx:id="deadlineDateField" prefHeight="28.0" prefWidth="151.0" promptText="Date"/>
                   <Region prefHeight="77.0" prefWidth="67.0"/>
-                  <JFXTimePicker prefHeight="28.0" prefWidth="166.0" promptText="Time"/>
+                  <JFXTimePicker fx:id="deadlineTimeField" prefHeight="28.0" prefWidth="166.0" promptText="Time"/>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="520.0" VBox.vgrow="ALWAYS">
                <children>
                   <Label styleClass="mainLabel" text="Category"/>
                   <Region prefHeight="78.0" prefWidth="26.0"/>
-                  <JFXTextField prefHeight="37.0" prefWidth="118.0"/>
+                  <JFXTextField fx:id="categoryField" prefHeight="37.0" prefWidth="118.0"/>
                   <Region prefHeight="78.0" prefWidth="61.0"/>
                   <Label prefHeight="26.0" prefWidth="68.0" styleClass="mainLabel" text="Priority"/>
                   <Region prefHeight="80.0" prefWidth="22.0"/>
-                  <JFXComboBox prefHeight="37.0" prefWidth="80.0" stylesheets="@../css/Menus.css"/>
+                  <JFXComboBox fx:id="priorityComboBox" prefHeight="37.0" prefWidth="80.0"
+                               stylesheets="@../css/Menus.css"/>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="77.0" prefWidth="475.0" VBox.vgrow="ALWAYS">
                <children>
-                  <JFXButton prefHeight="53.0" prefWidth="123.0" styleClass="regularButton" text="Save"/>
+                  <JFXButton fx:id="saveEdit" prefHeight="53.0" prefWidth="123.0" styleClass="regularButton"
+                             text="Save"/>
                   <Region prefHeight="77.0" prefWidth="42.0"/>
-                  <JFXButton prefHeight="53.0" prefWidth="123.0" styleClass="regularButton" text="Cancel"/>
+                  <JFXButton fx:id="cancelEdit" prefHeight="53.0" prefWidth="123.0" styleClass="regularButton"
+                             text="Cancel"/>
                </children>
             </HBox>
          </children>
