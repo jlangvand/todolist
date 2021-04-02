@@ -27,7 +27,7 @@ public class Task implements Serializable {
 
   /** Create task providing a title. */
   public Task(String title) {
-    super();
+    this();
     this.setTitle(title);
   }
 
