@@ -39,7 +39,9 @@ public class Task implements Serializable {
    */
   public Task() {
     this.dateAdded = LocalDate.now();
+    this.title = "";
     this.description = "";
+    this.category = "default";
     this.priority = Priority.DEFAULT;
     this.status = Status.ACTIVE;
     this.finishedDate = null;
