@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TaskRegistry {
   private final List<Task> tasks;
@@ -53,7 +54,7 @@ public class TaskRegistry {
   public List<Task> getTasksByStatus(Status status) {
     ArrayList<Task> foundTasks = new ArrayList<>();
     tasks.forEach(task -> {
-      if (task.getStatus()==status) {
+      if (task.getStatus() == status) {
         foundTasks.add(task);
       }
     });
@@ -68,21 +69,28 @@ public class TaskRegistry {
    */
   public List<Task> getTasksByPriority(Priority priority) {
     ArrayList<Task> foundTasks = new ArrayList<>();
-    tasks.forEach(task->{
-      if (task.getPriority()==priority)
+    tasks.forEach(task -> {
+      if (task.getPriority() == priority)
         foundTasks.add(task);
-      });
+    });
     return foundTasks;
   }
 
   public List<Task> getTasksByDate(LocalDate fromDate, LocalDate toDate) {
     List<Task> foundTasksByDate = new ArrayList<>();
     tasks.forEach(task -> {
-      if (task.getStartedDate().isAfter(fromDate) && task.getFinishedDate().isBefore(toDate))
+      if (task.getDateAdded().isAfter(fromDate) && task.getFinishedDate().isBefore(toDate))
         foundTasksByDate.add(task);
     });
 
     return foundTasksByDate;
+  }
+
+  public List<Task> getTasksByDateAdded(LocalDate from, LocalDate to) {
+    return tasks.stream().filter(t ->
+        t.getDateAdded().isAfter(from.minusDays(1))
+            && t.getDateAdded().isBefore(to.plusDays(1)))
+        .collect(Collectors.toList());
   }
 
   /*
