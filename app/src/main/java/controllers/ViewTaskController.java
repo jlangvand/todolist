@@ -17,6 +17,9 @@ import models.Task;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 public class ViewTaskController {
@@ -89,12 +92,36 @@ public class ViewTaskController {
     taskPriority.setText(task.getPriorityString());
     taskDescription.setText(task.getDescription());
     taskStartedDate.setText(task.getStartedDate().toString());
+    //taskDeadline.setText(this.getDeadlineString(task));
 
     //if (task.getStatus().toString().equals("DONE")) {
     //  this.statusImage.setImage(new Image("file:src/main/resources/images/Done2.png", 27, 27, true, true));
     //} else if (task.getStatus().toString().equals("ACTIVE")) {
     //this.statusImage.setImage(new Image("file:src/main/resources/images/not_Done.png", 30, 30, true, true));
     //}
+
+  }
+
+  /**
+   *
+   * @return deadline in form: x days, x hours, x minutes.
+   */
+  public String getDeadlineString(Task task){
+    final long SECONDS_PER_HOUR=3600;
+    final long SECONDS_PER_MINUTE=60;
+
+    //get total days from today to finished date.
+    long days = ChronoUnit.DAYS.between(LocalDate.now(), task.getDeadline());
+
+    //get total seconds from now to finished time, and calculate how many hours and minutes.
+    long seconds = ChronoUnit.SECONDS.between(LocalTime.now(),task.getDeadlineTime());
+
+    long hours = seconds / SECONDS_PER_HOUR;
+    long minutes = ((seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
+
+    return days+" days, "+
+           hours+" hours, "+
+           minutes+" minutes";
 
   }
 }

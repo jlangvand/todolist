@@ -16,11 +16,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Task;
+import utilities.Priority;
 import utilities.Status;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class AllTasksController {
 
@@ -64,28 +66,40 @@ public class AllTasksController {
         ///make 3 Task objects for test///
         Task t1 = new Task();
         t1.setTitle("Methods");
-        t1.setStartedDate(LocalDate.of(2021, 4, 2));
+        //t1.setStartedDate(LocalDate.of(2021, 4, 2));
         //t1.setDeadline(t1.getDeadline()); need to write this method to calculate the deadline..
         t1.setDescription("finish all methods");
         t1.setStatus(Status.DONE);
-        //t1.setStatus2("DONE");
+        t1.setPriority(Priority.HIGH);
+        t1.setDeadlineTime(LocalTime.of(18,30));
+        t1.setDeadline(LocalDate.of(2021, 4, 8));
+
+
 
 
         Task t2 = new Task();
         t2.setTitle("Shopping..");
-        t2.setStartedDate(LocalDate.of(2021, 4, 3));
+        //t2.setStartedDate(LocalDate.of(2021, 4, 3));
         t2.setDescription("Cheese, milk, bread");
         t2.setStatus(Status.DONE);
-        //t2.setStatus2("DONE");
+        t2.setPriority(Priority.MEDIUM);
+        t2.setDeadlineTime(LocalTime.of(20,00));
+        t2.setDeadline(LocalDate.of(2021, 4, 16));
 
-        Task t3 = new Task();
+
+
+
+      Task t3 = new Task();
         t3.setTitle("3rd task");
-        t3.setStartedDate(LocalDate.of(2021, 4, 8));
+        //t3.setStartedDate(LocalDate.of(2021, 4, 8));
         t3.setDescription("don't do anything... ");
         t3.setStatus(Status.ACTIVE);
-        //t3.setStatus2("ACTIVE");
+        t3.setDeadlineTime(LocalTime.of(23,00));
+        t3.setDeadline(LocalDate.of(2021, 4, 9));
 
-        tasks = FXCollections.observableArrayList();//we can pass the items(tasks) here too.
+
+
+      tasks = FXCollections.observableArrayList();//we can pass the items(tasks) here too.
         tasks.addAll(t1, t2, t3);
 
       //pass the observable list to the listView
