@@ -42,7 +42,7 @@ public class TaskRegistry {
   public List<Task> getTasksByStatus(Status status) {
     ArrayList<Task> foundTasks = new ArrayList<>();
     tasks.forEach(task -> {
-      if (task.getStatus().equals(status)) {
+      if (task.getStatus()==status) {
         foundTasks.add(task);
       }
     });
@@ -55,11 +55,10 @@ public class TaskRegistry {
    */
   public List<Task> getTasksByPriority(Priority priority) {
     ArrayList<Task> foundTasks = new ArrayList<>();
-    tasks.forEach(task -> {
-      if (task.getPriority().equals(priority)) {
+    tasks.forEach(task->{
+      if (task.getPriority()==priority)
         foundTasks.add(task);
-      }
-    });
+      });
     return foundTasks;
   }
 
@@ -79,7 +78,7 @@ public class TaskRegistry {
   public List<Task> getTasksByDate(LocalDate date) {
     List<Task> foundTasks = new ArrayList<>();
     tasks.forEach(task -> {
-      if (task.getDeadline().equals(date))
+      if (task.getDeadline().isEqual(date))
         foundTasks.add(task);
     });
     return foundTasks;
