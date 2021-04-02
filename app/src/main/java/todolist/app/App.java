@@ -14,10 +14,8 @@ import java.net.URL;
  * Application main class.
  */
 public class App extends Application {
-  //Constants
-  private static final int defaultStageWidth = 1000;
-  private static final int defaultStageHeight = 650;
-
+  private static final int DEFAULT_STAGE_WIDTH = 1000;
+  private static final int DEFAULT_STAGE_HEIGHT = 650;
 
   /**
    * Main method launches JavaFX application.
@@ -35,8 +33,8 @@ public class App extends Application {
    * @throws IOException exception is thrown if file I/O fails
    */
   @Override
-  public void start(Stage stage) throws IOException{
-    Scene scene = new Scene(loadFXML("navigationBar"), defaultStageWidth, defaultStageHeight);
+  public void start(Stage stage) throws IOException {
+    Scene scene = new Scene(loadFXML("navigationBar"), DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT);
     stage.setScene(scene);
     stage.show();
   }
