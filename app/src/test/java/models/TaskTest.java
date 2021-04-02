@@ -2,8 +2,6 @@ package models;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utilities.Priority;
-import utilities.Status;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -26,15 +24,10 @@ class TaskTest {
 
   @BeforeEach
   public void initTask() {
-    task = new Task();
-    task.setTitle("Meeting a friend");
-    task.setDescription("I will meet him at restaurant ");
-    task.setPriority(Priority.LOW);
-    task.setCategory("social");
-    task.setStartedDate(LocalDate.of(2021, 5, 14));
-    task.setFinishedDate(LocalDate.of(2021, 5, 14));
-    task.setDeadline(LocalDate.of(2021, 5, 14));
-    task.setStatus(Status.ACTIVE);
+    task = new Task("Title");
+    task.setDescription("Description may be a little longer than the title.");
+    task.setFinishedDate(LocalDate.now().plusDays(2));
+    task.setDeadline(LocalDate.now().plusDays(3));
   }
 
   @Test
@@ -65,4 +58,63 @@ class TaskTest {
     return b.toByteArray();
   }
 
+  @Test
+  void setPriority() {
+  }
+
+  @Test
+  void getCategory() {
+  }
+
+  @Test
+  void setCategory() {
+  }
+
+  @Test
+  void getStartedDate() {
+  }
+
+  @Test
+  void setStartedDate() {
+  }
+
+  @Test
+  void getFinishedDate() {
+  }
+
+  @Test
+  void getStatus() {
+  }
+
+  @Test
+  void setFinishedDate() {
+  }
+
+  @Test
+  void getDeadline() {
+  }
+
+  @Test
+  void setDeadline() {
+  }
+
+  @Test
+  void getTitle() {
+  }
+
+  @Test
+  void setTitle() {
+  }
+
+  @Test
+  void setStatus() {
+  }
+
+  @Test
+  void getPriorityString() {
+  }
+
+  @Test
+  void testEquals() {
+  }
 }

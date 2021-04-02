@@ -5,7 +5,6 @@ import utilities.Status;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Objects;
 
 /*
@@ -41,7 +40,6 @@ public class Task implements Serializable {
   */
   private LocalDate deadline;
 
-  private LocalTime deadlineTime;
 
 
 
@@ -219,13 +217,5 @@ public class Task implements Serializable {
             ", deadline=" + deadline +
             ", status=" + status +
             '}';
-  }
-
-  public LocalTime getDeadlineTime() {
-    return deadlineTime;
-  }
-
-  public void setDeadlineTime(LocalTime deadlineTime) {
-    this.deadlineTime = deadlineTime;
   }
 }

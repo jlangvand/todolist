@@ -8,40 +8,53 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TaskRegistry {
-  private List<Task> tasks;
+  private final List<Task> tasks;
   PersistentRegistry fileHandle;
-  private ArrayList<Task> taskList;
-  private String fileName;
 
-
-  /*
+  /**
+   * Create a new TaskRegistry with a custom save file.
    *
-   *
-   * */
+   * @param fileName file path to use for saving
+   * @throws IOException throws exception if file IO fails
+   */
   public TaskRegistry(String fileName) throws IOException {
     fileHandle = new PersistentRegistry(fileName);
     this.tasks = fileHandle.read();
-    this.fileName = fileName;
   }
 
-  /*
+  /**
+   * Create a TaskRegistry using a default save file.
    *
-   * */
+   * @throws IOException throws exception if file IO fails
+   */
+  public TaskRegistry() throws IOException {
+    this.fileHandle = new PersistentRegistry();
+    this.tasks = fileHandle.read();
+  }
+
+  /**
+   * Get all tasks.
+   *
+   * @return all tasks as an ArrayList
+   */
   public List<Task> getTasks() {
     return tasks;
 
   }
 
-  /*
+  /**
+   * Get tasks by status.
    *
-   *
-   * */
+   * @param status enum Status
+   * @return matching tasks as an ArrayList
+   */
   public List<Task> getTasksByStatus(Status status) {
     ArrayList<Task> foundTasks = new ArrayList<>();
     tasks.forEach(task -> {
-      if (task.getStatus().equals(status)) {
+      if (task.getStatus() == status) {
         foundTasks.add(task);
       }
     });
@@ -49,39 +62,66 @@ public class TaskRegistry {
   }
 
   /**
-   * @param priority
-   * @return
+   * Get tasks by priority.
+   *
+   * @param priority enum Priority
+   * @return matching tasks as an ArrayList
    */
   public List<Task> getTasksByPriority(Priority priority) {
     ArrayList<Task> foundTasks = new ArrayList<>();
     tasks.forEach(task -> {
-      if (task.getPriority().equals(priority)) {
+      if (task.getPriority() == priority)
         foundTasks.add(task);
-      }
     });
     return foundTasks;
   }
 
-  public List<Task> getTasksByDate(LocalDate fromDate, LocalDate toDate) {
-    List<Task> foundTasksByDate = new ArrayList<>();
-    tasks.forEach(task -> {
-      if (task.getStartedDate().isAfter(fromDate) && task.getFinishedDate().isBefore(toDate))
-        foundTasksByDate.add(task);
-    });
-
-    return foundTasksByDate;
-  }
-
-  /*
+  /**
+   * Get tasks added within an inclusive range of dates.
    *
-   * */
-  public List<Task> getTasksByDate(LocalDate date) {
-    List<Task> foundTasks = new ArrayList<>();
-    tasks.forEach(task -> {
-      if (task.getDeadline().equals(date))
-        foundTasks.add(task);
-    });
-    return foundTasks;
+   * @param fromDate filter tasks added on of after this date
+   * @param toDate filter tasks added on or before this date
+   * @return a list of tasks matching the query
+   */
+  public List<Task> getTasksByDateAdded(LocalDate fromDate, LocalDate toDate) {
+    return tasks.stream().filter(t ->
+        t.getDateAdded().isAfter(fromDate.minusDays(1))
+            && t.getDateAdded().isBefore(toDate.plusDays(1)))
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Get tasks added on a given date.
+   *
+   * @param date filter tasks added on this date
+   * @return a list of tasks matching the query
+   */
+  public List<Task> getTasksByDateAdded(LocalDate date) {
+    return getTasksByDateAdded(date, date);
+  }
+
+  /**
+   * Get tasks with deadline within an inclusive range of dates.
+   *
+   * @param fromDate filter tasks with deadline on of after this date
+   * @param toDate filter tasks with deadline on or before this date
+   * @return a list of tasks matching the query
+   */
+  public List<Task> getTasksByDeadline(LocalDate fromDate, LocalDate toDate) {
+    return tasks.stream().filter(t ->
+        t.getDeadline().isAfter(fromDate.minusDays(1))
+            && t.getDeadline().isBefore(toDate.plusDays(1)))
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Get tasks with deadline on a given date.
+   *
+   * @param date filter tasks with deadline on this date
+   * @return a list of tasks matching the query
+   */
+  public List<Task> getTasksByDeadline(LocalDate date) {
+    return getTasksByDeadline(date, date);
   }
 
   /*

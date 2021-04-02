@@ -68,7 +68,7 @@ public class CellController extends JFXListCell<Task> {
             //Fill the cell with info from the task
 
             cellTitle.setText(task.getTitle());
-            cellDate.setText(task.getStartedDate().toString());
+            cellDate.setText(task.getDateAdded().toString());
 
 
             try {

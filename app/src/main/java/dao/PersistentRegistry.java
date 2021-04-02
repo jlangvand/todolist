@@ -41,6 +41,7 @@ public class PersistentRegistry {
     this.file = new File(fileName);
     if (file.createNewFile()) {
       System.err.printf("Created file %s%n", file.getAbsolutePath());
+      save(new ArrayList<>());
     } else {
       System.err.printf("Opened file %s%n", file.getAbsolutePath());
     }
