@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -37,29 +38,6 @@ class TaskRegistryTest {
     taskRegistry.addTask(task2);
     assertTrue(taskRegistry.getTasks().contains(task1));
     assertTrue(taskRegistry.getTasks().contains(task2));
-  }
-
-  @Test
-  void getTasksByDate() throws IOException {
-    Task task1 = new Task("Get A task by deadline date");
-    task1.setDeadline(LocalDate.now().plusDays(3));
-    Task task2=new Task("Get task B by deadline date ");
-    task2.setDeadline(LocalDate.now().plusDays(5));
-    assertTrue(taskRegistry.getTasksByDate(LocalDate.now().plusDays(3)).contains(task1));
-    assertFalse(taskRegistry.getTasksByDate(LocalDate.now().plusDays(3)).contains(task2));
-  }
-
-  @Test
-  void testGetTasksByDate() throws IOException {
-    Task task1 = new Task("Get a task A by start and finished date");
-    task1.setDateAdded(LocalDate.now().plusDays(3));
-    task1.setFinishedDate(LocalDate.now().plusWeeks(1));
-    Task task2=new Task("Get task by B deadline date ");
-    task2.setDateAdded(LocalDate.now().minusWeeks(3));
-    task2.setFinishedDate(LocalDate.now().minusWeeks(1));
-    assertTrue(taskRegistry.getTasksByDate(LocalDate.now().plusDays(4),LocalDate.now().plusDays(7)).contains(task1));
-    assertFalse(taskRegistry.getTasksByDate(LocalDate.now().plusDays(4),LocalDate.now().plusDays(7)).contains(task2));
-
   }
 
   @Test
@@ -157,6 +135,7 @@ class TaskRegistryTest {
     taskRegistry.addTask(taskA);
     taskRegistry.addTask(taskB);
     assertTrue(taskRegistry.getTasksByDateAdded(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)).contains(taskB));
+    assertTrue(taskRegistry.getTasksByDateAdded(LocalDate.now()).contains(taskB));
     assertFalse(taskRegistry.getTasksByDateAdded(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)).contains(taskA));
   }
 }

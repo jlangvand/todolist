@@ -76,33 +76,52 @@ public class TaskRegistry {
     return foundTasks;
   }
 
-  public List<Task> getTasksByDate(LocalDate fromDate, LocalDate toDate) {
-    List<Task> foundTasksByDate = new ArrayList<>();
-    tasks.forEach(task -> {
-      if (task.getDateAdded().isAfter(fromDate) && task.getFinishedDate().isBefore(toDate))
-        foundTasksByDate.add(task);
-    });
-
-    return foundTasksByDate;
-  }
-
-  public List<Task> getTasksByDateAdded(LocalDate from, LocalDate to) {
+  /**
+   * Get tasks added within an inclusive range of dates.
+   *
+   * @param fromDate filter tasks added on of after this date
+   * @param toDate filter tasks added on or before this date
+   * @return a list of tasks matching the query
+   */
+  public List<Task> getTasksByDateAdded(LocalDate fromDate, LocalDate toDate) {
     return tasks.stream().filter(t ->
-        t.getDateAdded().isAfter(from.minusDays(1))
-            && t.getDateAdded().isBefore(to.plusDays(1)))
+        t.getDateAdded().isAfter(fromDate.minusDays(1))
+            && t.getDateAdded().isBefore(toDate.plusDays(1)))
         .collect(Collectors.toList());
   }
 
-  /*
+  /**
+   * Get tasks added on a given date.
    *
-   * */
-  public List<Task> getTasksByDate(LocalDate date) {
-    List<Task> foundTasks = new ArrayList<>();
-    tasks.forEach(task -> {
-      if (task.getDeadline().isEqual(date))
-        foundTasks.add(task);
-    });
-    return foundTasks;
+   * @param date filter tasks added on this date
+   * @return a list of tasks matching the query
+   */
+  public List<Task> getTasksByDateAdded(LocalDate date) {
+    return getTasksByDateAdded(date, date);
+  }
+
+  /**
+   * Get tasks with deadline within an inclusive range of dates.
+   *
+   * @param fromDate filter tasks with deadline on of after this date
+   * @param toDate filter tasks with deadline on or before this date
+   * @return a list of tasks matching the query
+   */
+  public List<Task> getTasksByDeadline(LocalDate fromDate, LocalDate toDate) {
+    return tasks.stream().filter(t ->
+        t.getDeadline().isAfter(fromDate.minusDays(1))
+            && t.getDeadline().isBefore(toDate.plusDays(1)))
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Get tasks with deadline on a given date.
+   *
+   * @param date filter tasks with deadline on this date
+   * @return a list of tasks matching the query
+   */
+  public List<Task> getTasksByDeadline(LocalDate date) {
+    return getTasksByDeadline(date, date);
   }
 
   /*
