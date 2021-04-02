@@ -78,7 +78,7 @@ class TaskRegistryTest {
     taskRegistry.addTask(task3);
     assertTrue(taskRegistry.getHighPriorityTasks().contains(task1));
     assertFalse(taskRegistry.getHighPriorityTasks().contains(task2));
-    assertFalse(taskRegistry.getMediumPriorityTasks().contains(task3));
+    assertFalse(taskRegistry.getHighPriorityTasks().contains(task3));
   }
 
   @Test
@@ -105,12 +105,13 @@ class TaskRegistryTest {
     Task task2=new Task("Task has a medium priority");
     task2.setPriority(Priority.MEDIUM);
     Task task3=new Task("Task has a low priority");
+    task3.setPriority(Priority.LOW);
     taskRegistry.addTask(task1);
     taskRegistry.addTask(task2);
     taskRegistry.addTask(task3);
     assertFalse(taskRegistry.getLowPriorityTasks().contains(task1));
-    assertTrue(taskRegistry.getLowPriorityTasks().contains(task2));
-    assertFalse(taskRegistry.getLowPriorityTasks().contains(task3));
+    assertFalse(taskRegistry.getLowPriorityTasks().contains(task2));
+    assertTrue(taskRegistry.getLowPriorityTasks().contains(task3));
   }
 
   @Test
