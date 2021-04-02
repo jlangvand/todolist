@@ -17,6 +17,11 @@ import models.Task;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 public class ViewTaskController {
@@ -88,7 +93,8 @@ public class ViewTaskController {
     taskTitle.setText(task.getTitle());
     taskPriority.setText(task.getPriorityString());
     taskDescription.setText(task.getDescription());
-    taskStartedDate.setText(task.getStartedDate().toString());
+    taskStartedDate.setText(task.getDateAdded().toString());
+    taskDeadline.setText(this.getDeadlineString(task));
 
     //if (task.getStatus().toString().equals("DONE")) {
     //  this.statusImage.setImage(new Image("file:src/main/resources/images/Done2.png", 27, 27, true, true));
@@ -96,5 +102,33 @@ public class ViewTaskController {
     //this.statusImage.setImage(new Image("file:src/main/resources/images/not_Done.png", 30, 30, true, true));
     //}
 
+  }
+
+  /**
+   *
+   * @return deadline in form: x days, x hours, x minutes.
+   */
+  public String getDeadlineString(Task task){
+    final long SECONDS_PER_HOUR=3600;
+    final long SECONDS_PER_MINUTE=60;
+
+    Period period = Period.between(LocalDate.now(), task.getDeadline());
+    Duration duration = Duration.between(LocalTime.now(), task.getDeadLineTime());
+
+    //fix the bug that returns negative number of days.
+    if (duration.isNegative()) {
+      period = period.minusDays(1);
+      duration = duration.plusDays(1);
+    }
+
+    //get total seconds from now to finished time, and calculate how many hours and minutes.
+    long seconds = duration.getSeconds();
+
+    long hours = seconds / SECONDS_PER_HOUR;
+    long minutes = ((seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
+
+    return period.getDays()+" days, "+
+        hours+" hours, "+
+        minutes+" minutes";
   }
 }

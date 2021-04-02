@@ -71,7 +71,7 @@ public class AllTasksController {
         t1.setDescription("finish all methods");
         t1.setStatus(Status.DONE);
         t1.setPriority(Priority.HIGH);
-        t1.setDeadlineTime(LocalTime.of(18,30));
+        t1.setDeadLineTime(LocalTime.of(18,30));
         t1.setDeadline(LocalDate.of(2021, 4, 8));
 
 
@@ -83,7 +83,7 @@ public class AllTasksController {
         t2.setDescription("Cheese, milk, bread");
         t2.setStatus(Status.DONE);
         t2.setPriority(Priority.MEDIUM);
-        t2.setDeadlineTime(LocalTime.of(20,00));
+        t2.setDeadLineTime(LocalTime.of(20,00));
         t2.setDeadline(LocalDate.of(2021, 4, 16));
 
 
@@ -94,7 +94,7 @@ public class AllTasksController {
         //t3.setStartedDate(LocalDate.of(2021, 4, 8));
         t3.setDescription("don't do anything... ");
         t3.setStatus(Status.ACTIVE);
-        t3.setDeadlineTime(LocalTime.of(23,00));
+        t3.setDeadLineTime(LocalTime.of(23,00));
         t3.setDeadline(LocalDate.of(2021, 4, 9));
 
 
@@ -133,6 +133,7 @@ public class AllTasksController {
 
       Stage stage = new Stage();
       stage.setScene(new Scene(root));
+      stage.initModality(Modality.APPLICATION_MODAL);
       stage.show();
     } catch (IOException e) {
       e.printStackTrace();

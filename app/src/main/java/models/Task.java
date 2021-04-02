@@ -5,167 +5,144 @@ import utilities.Status;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 
 /*
-* This is  is base class which handle the information about the task.
-* This task allows the application to assign values for all the task.
-*
-* @version 1.0
-* @since  1.0
-* */
+ * Base class handling information about a task.
+ *
+ * @version 1.0
+ * @since  1.0
+ * */
 public class Task implements Serializable {
+  private static final long serialVersionUID = 1L;
 
-  private static final long serialVersionUID=2L;
-
-  /** Represents the task's title.
-   */
   private String title;
-  /** Represents the description of the task.
-  */
   private String description;
-  /** Represtns the task's priority
-  */
   private Priority priority;
-  /** Represents the task's category.
-  */
   private String category;
-  /*Represents the task's startedDate.
-  */
-  private LocalDate startedDate;
-  /**Represents the task's finishedDate.
-  */
+  private LocalDate dateAdded;
   private LocalDate finishedDate;
-  /** Represents the task's deadline.
-  */
   private LocalDate deadline;
-
-
-
-
-  /*Represents the task's status
-  * */
+  private LocalTime deadLineTime;
   private Status status;
-/** task's constructor
- * Creates a task with the specific title
- * @param title representing The task's title
-*/
+
+  /** Create task providing a title. */
   public Task(String title) {
-    super();
+    this();
     this.setTitle(title);
   }
-/*
-* Constructor without parameters
-* */
-    public Task() { }
 
-    /**Gets the task's description.
- * @return a string representing task's description.
-*/
+  /**
+   * Default constructor.
+   *
+   * <p>TODO(joakilan): Unnecessary? A task shouldn't be constructed without
+   * required data..
+   */
+  public Task() {
+    this.dateAdded = LocalDate.now();
+    this.title = "";
+    this.description = "";
+    this.category = "default";
+    this.priority = Priority.DEFAULT;
+    this.status = Status.ACTIVE;
+    this.finishedDate = null;
+    this.deadline = null;
+  }
+
+  /** Get description. */
   public String getDescription() {
     return description;
   }
-/**Sets the task's description.
- * @param description- String.
-*/
+
+  /** Set description. */
   public void setDescription(String description) {
     this.description = description;
   }
-/**Gets the task's priority.
- * @return a Priority representing priority.
-*/
+
+  /** Get priority. */
   public Priority getPriority() {
     return priority;
   }
-/**Sets the task's priority.
- * @param priority-Priority.
-*/
+
+  /** Set priority. */
   public void setPriority(Priority priority) {
     this.priority = priority;
   }
-/** Gets the task's category.
- * @return A Category representing task's category.
-*/
+
+  /** Get category. */
   public String getCategory() {
     return category;
   }
-/**Sets the task's category.
- * @param category-String.
-*/
+
+  /** Set category. */
   public void setCategory(String category) {
     this.category = category;
   }
-/** Gets The task's startDate
- * @return localDate representing the task's startedDate.
-*/
-  public LocalDate getStartedDate() {
-    return startedDate;
+
+  /** Get start date */
+  public LocalDate getDateAdded() {
+    return dateAdded;
   }
-/**Sets the task's startedDate
- * @param startedDate-localDate.
-*/
-  public void setStartedDate(LocalDate startedDate) {
-    this.startedDate = startedDate;
+
+  /** Set started date. */
+  public void setDateAdded(LocalDate dateAdded) {
+    this.dateAdded = dateAdded;
   }
-/**Gets task's finishedDate.
- * @return localDate representing the task's finishedDate.
-*/
+
+  /** Get finished date. */
   public LocalDate getFinishedDate() {
     return finishedDate;
   }
-  /**Gets task's status
-   * @return status representing the task's status
-   * */
+
+  /** Get status. */
   public Status getStatus() {
     return status;
   }
-/**Sets' The task's finishedDate.
- * @param finishedDate -localDate.
-*/
+
+  /** Set finished date. */
   public void setFinishedDate(LocalDate finishedDate) {
     this.finishedDate = finishedDate;
   }
-/** Gets task's deadline.
- * @return A localDate representing the task's deadline.
-*/
+
+  /** Get deadline. */
   public LocalDate getDeadline() {
     return deadline;
   }
 
-  /**Sets the task's deadline.
-   * @param deadline .
-   */
+  /** Set deadline. */
   public void setDeadline(LocalDate deadline) {
     this.deadline = deadline;
   }
 
-  /**Gets the task's title.
-   * @return A String representing the task's title.
-   */
+  /** Get title. */
   public String getTitle() {
     return title;
   }
 
-  /**Sets the task's title.
-   * @param title-String.
-   */
+  /** Set title. */
   public void setTitle(String title) {
     this.title = title;
   }
 
-  /**
-   * Sets the task's status.
-   *
-   * @param status-Status.
-   */
+  public LocalTime getDeadLineTime() {
+    return deadLineTime;
+  }
+
+  public void setDeadLineTime(LocalTime deadLineTime) {
+    this.deadLineTime = deadLineTime;
+  }
+
+  /** Sets the task's status. */
   public void setStatus(Status status) {
     this.status = status;
   }
 
+
+  /** Get priority as String */
   public String getPriorityString() {
     if (priority == Priority.HIGH) {
       return "High";
-
     } else if (priority == Priority.MEDIUM) {
       return "Medium";
     } else if (priority == Priority.LOW) {
@@ -175,13 +152,14 @@ public class Task implements Serializable {
   }
 
   /**
-   * This is  method which check the equality of tasks.
+   * Check equality.
    *
-   * @param object-an Object.
-   * @return A boolean true if the tasks are equal, or false if not.
+   * @param object Task instance to compare to
+   * @return true if equal, else false
    */
   @Override
   public boolean equals(Object object) {
+    // TODO(joakilan): Any reason not to simply return equality of hashCode()?
     boolean result;
     if (this == object) {
       result = true;
@@ -189,33 +167,29 @@ public class Task implements Serializable {
       result = false;
     } else {
       Task task = (Task) object;
-      result = getPriority() == task.getPriority() && Objects.equals(getCategory(), task.getCategory()) && Objects.equals(getStartedDate(), task.getStartedDate()) && Objects.equals(getFinishedDate(), task.getFinishedDate()) && Objects.equals(getDeadline(), task.getDeadline()) && Objects.equals(getTitle(), task.getTitle());
+      result = getPriority() == task.getPriority() && Objects.equals(getCategory(), task.getCategory()) && Objects.equals(getDateAdded(), task.getDateAdded()) && Objects.equals(getFinishedDate(), task.getFinishedDate()) && Objects.equals(getDeadline(), task.getDeadline()) && Objects.equals(getTitle(), task.getTitle());
     }
     return result;
   }
 
-  /**Returns the hash code of a non-null argument and 0 for a null argument.
-   * hashCode in class Object.
-   * @return hash code value for this object.
-   */
+  /** Get hash of this instance. */
   @Override
   public int hashCode() {
-    return Objects.hash( getPriority(), getCategory(), getStartedDate(), getFinishedDate(), getDeadline(), getTitle());
+    return Objects.hash(getPriority(), getCategory(), getDateAdded(), getFinishedDate(), getDeadline(), getTitle());
   }
-/**Returns the all task's objects information
- * @return A String representing the object's data.
-*/
+
+  /** Get String representation of this instance. */
   @Override
   public String toString() {
     return "Task{" +
-            "title='" + title + '\'' +
-            ", description='" + description + '\'' +
-            ", priority=" + priority +
-            ", category='" + category + '\'' +
-            ", startedDate=" + startedDate +
-            ", finishedDate=" + finishedDate +
-            ", deadline=" + deadline +
-            ", status=" + status +
-            '}';
+        "title='" + title + '\'' +
+        ", description='" + description + '\'' +
+        ", priority=" + priority +
+        ", category='" + category + '\'' +
+        ", startedDate=" + dateAdded +
+        ", finishedDate=" + finishedDate +
+        ", deadline=" + deadline +
+        ", status=" + status +
+        '}';
   }
 }
