@@ -141,14 +141,7 @@ public class Task implements Serializable {
 
   /** Get priority as String */
   public String getPriorityString() {
-    if (priority == Priority.HIGH) {
-      return "High";
-    } else if (priority == Priority.MEDIUM) {
-      return "Medium";
-    } else if (priority == Priority.LOW) {
-      return "Low";
-    }
-    return "No Priority";
+    return priority.toString();
   }
 
   /**
