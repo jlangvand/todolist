@@ -3,14 +3,19 @@ package models;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utilities.Priority;
+import utilities.Status;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TaskRegistryTest {
+
   private static final String FILENAME = "TaskRegistryTest.bin";
 
   @BeforeEach
@@ -18,16 +23,16 @@ class TaskRegistryTest {
 
   }
 
-  @AfterAll
-  static void cleanup() throws IOException {
+    @AfterAll
+    static void cleanup() throws IOException {
     Files.delete(Path.of(FILENAME));
   }
 
   @Test
   void getTasksTest() throws IOException {
     TaskRegistry taskRegistry = new TaskRegistry(FILENAME);
-    Task task1 = new Task("Meeting a friend");
-    Task task2 = new Task("Reading a book");
+    Task task1 = new Task("Get the first task");
+    Task task2 = new Task("Get the second task");
     taskRegistry.addTask(task1);
     taskRegistry.addTask(task2);
     assertTrue(taskRegistry.getTasks().contains(task1));
@@ -35,48 +40,120 @@ class TaskRegistryTest {
   }
 
   @Test
-  void getTasksByStatus() {
+  void getTasksByDate() throws IOException {
+    TaskRegistry taskRegistry=new TaskRegistry(FILENAME);
+    Task task1 = new Task("Get A task by deadline date");
+    task1.setDeadline(LocalDate.now().plusDays(3));
+    Task task2=new Task("Get task B by deadline date ");
+    task2.setDeadline(LocalDate.now().plusDays(5));
+    assertTrue(taskRegistry.getTasksByDate(LocalDate.now().plusDays(3)).contains(task1));
+    assertFalse(taskRegistry.getTasksByDate(LocalDate.now().plusDays(3)).contains(task2));
   }
 
   @Test
-  void getTasksByPriority() {
+  void testGetTasksByDate() throws IOException {
+    TaskRegistry taskRegistry=new TaskRegistry(FILENAME);
+    Task task1 = new Task("Get a task A by start and finished date");
+    task1.setStartedDate(LocalDate.now().plusDays(3));
+    task1.setFinishedDate(LocalDate.now().plusWeeks(1));
+    Task task2=new Task("Get task by B deadline date ");
+    task2.setStartedDate(LocalDate.now().minusWeeks(3));
+    task2.setFinishedDate(LocalDate.now().minusWeeks(1));
+    assertTrue(taskRegistry.getTasksByDate(LocalDate.now().plusDays(4),LocalDate.now().plusDays(7)).contains(task1));
+    assertFalse(taskRegistry.getTasksByDate(LocalDate.now().plusDays(4),LocalDate.now().plusDays(7)).contains(task2));
+
   }
 
   @Test
-  void getTasksByDate() {
+  void getHighPriorityTasks() throws IOException {
+    TaskRegistry taskRegistry=new TaskRegistry(FILENAME);
+    Task task1 = new Task("Task has a high priority");
+    task1.setPriority(Priority.HIGH);
+    Task task2=new Task("Task has a medium priority");
+    task2.setPriority(Priority.MEDIUM);
+    Task task3=new Task("Task has a low priority");
+    task3.setPriority(Priority.LOW);
+    taskRegistry.addTask(task1);
+    taskRegistry.addTask(task2);
+    taskRegistry.addTask(task3);
+    assertTrue(taskRegistry.getHighPriorityTasks().contains(task1));
+    assertFalse(taskRegistry.getHighPriorityTasks().contains(task2));
+    assertFalse(taskRegistry.getMediumPriorityTasks().contains(task3));
   }
 
   @Test
-  void testGetTasksByDate() {
+  void getMediumPriorityTasks() throws IOException {
+    TaskRegistry taskRegistry=new TaskRegistry(FILENAME);
+    Task task1 = new Task("Task has a high priority");
+    task1.setPriority(Priority.HIGH);
+    Task task2=new Task("Task has a medium priority");
+    task2.setPriority(Priority.MEDIUM);
+    Task task3=new Task("Task has a low priority");
+    taskRegistry.addTask(task1);
+    taskRegistry.addTask(task2);
+    taskRegistry.addTask(task3);
+    assertFalse(taskRegistry.getMediumPriorityTasks().contains(task1));
+    assertTrue(taskRegistry.getMediumPriorityTasks().contains(task2));
+    assertFalse(taskRegistry.getMediumPriorityTasks().contains(task3));
   }
 
   @Test
-  void getHighPriorityTasks() {
+  void getLowPriorityTasks() throws IOException {
+    TaskRegistry taskRegistry=new TaskRegistry(FILENAME);
+    Task task1 = new Task("Task has a high priority");
+    task1.setPriority(Priority.HIGH);
+    Task task2=new Task("Task has a medium priority");
+    task2.setPriority(Priority.MEDIUM);
+    Task task3=new Task("Task has a low priority");
+    taskRegistry.addTask(task1);
+    taskRegistry.addTask(task2);
+    taskRegistry.addTask(task3);
+    assertFalse(taskRegistry.getLowPriorityTasks().contains(task1));
+    assertTrue(taskRegistry.getLowPriorityTasks().contains(task2));
+    assertFalse(taskRegistry.getLowPriorityTasks().contains(task3));
   }
 
   @Test
-  void getMediumPriorityTasks() {
+  void getDoneTasksTest() throws IOException {
+    TaskRegistry taskRegistry=new TaskRegistry(FILENAME);
+    Task task1 = new Task("Task is ACTIVE");
+    task1.setStatus(Status.ACTIVE);
+    Task task2=new Task("Task is DONE");
+    task2.setStatus(Status.DONE);
+    taskRegistry.addTask(task1);
+    taskRegistry.addTask(task2);
+    assertFalse(taskRegistry.getDoneTasks().contains(task1));
+    assertTrue(taskRegistry.getDoneTasks().contains(task2));
   }
 
   @Test
-  void getLowPriorityTasks() {
-  }
-
-  @Test
-  void getDoneTasks() {
-  }
-
-  @Test
-  void getActiveTasks() {
+  void getActiveTasks() throws IOException {
+    TaskRegistry taskRegistry=new TaskRegistry(FILENAME);
+    Task task1 = new Task("Task is ACTIVE");
+    task1.setStatus(Status.ACTIVE);
+    Task task2=new Task("Task is DONE");
+    task2.setStatus(Status.DONE);
+    taskRegistry.addTask(task1);
+    taskRegistry.addTask(task2);
+    assertTrue(taskRegistry.getActiveTasks().contains(task1));
+    assertFalse(taskRegistry.getActiveTasks().contains(task2));
   }
 
   @Test
   void addTask() throws IOException {
-
-
+    TaskRegistry taskRegistry=new TaskRegistry(FILENAME);
+    Task task=new Task("Add a new task");
+    taskRegistry.addTask(task);
+    assertTrue(taskRegistry.getTasks().contains(task));
   }
 
   @Test
-  void removeTask() {
+  void removeTask() throws IOException {
+    TaskRegistry taskRegistry = new TaskRegistry(FILENAME);
+    Task task=new Task("Task to remove");
+    taskRegistry.addTask(task);
+    taskRegistry.removeTask(task);
+    assertTrue(!taskRegistry.getTasks().contains(task));
+
   }
 }
