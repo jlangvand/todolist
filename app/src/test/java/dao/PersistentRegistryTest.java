@@ -1,7 +1,6 @@
 package dao;
 
 import models.Task;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,12 +8,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PersistentRegistryTest {
   static final String FILENAME = "test.bin";
-
   Task taskA = new Task("Task A");
+
   @BeforeEach
   void setUp() {
     try {
@@ -45,7 +44,7 @@ class PersistentRegistryTest {
       Task taskB = new Task("Task B");
       List<Task> tasks = pr.read();
       tasks.add(taskB);
-      pr.save((ArrayList<Task>) tasks);
+      pr.save(tasks);
       tasks = pr.read();
       assertTrue(tasks.contains(taskB));
       assertTrue(tasks.contains(taskA));

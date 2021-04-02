@@ -10,11 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskRegistry {
-  private List<Task> tasks;
+  private final List<Task> tasks;
   PersistentRegistry fileHandle;
-  private ArrayList<Task> taskList;
-  private String fileName;
-
 
   /*
    *
@@ -23,7 +20,11 @@ public class TaskRegistry {
   public TaskRegistry(String fileName) throws IOException {
     fileHandle = new PersistentRegistry(fileName);
     this.tasks = fileHandle.read();
-    this.fileName = fileName;
+  }
+
+  public TaskRegistry() throws IOException {
+    this.fileHandle = new PersistentRegistry();
+    this.tasks = fileHandle.read();
   }
 
   /*
