@@ -14,11 +14,13 @@ import java.util.Objects;
  * @since  1.0
  * */
 public class Task implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   private String title;
   private String description;
   private Priority priority;
   private String category;
-  private LocalDate startedDate;
+  private LocalDate dateAdded;
   private LocalDate finishedDate;
   private LocalDate deadline;
   private Status status;
@@ -36,6 +38,12 @@ public class Task implements Serializable {
    * required data..
    */
   public Task() {
+    this.dateAdded = LocalDate.now();
+    this.description = "";
+    this.priority = Priority.DEFAULT;
+    this.status = Status.ACTIVE;
+    this.finishedDate = null;
+    this.deadline = null;
   }
 
   /** Get description. */
@@ -69,13 +77,13 @@ public class Task implements Serializable {
   }
 
   /** Get start date */
-  public LocalDate getStartedDate() {
-    return startedDate;
+  public LocalDate getDateAdded() {
+    return dateAdded;
   }
 
   /** Set started date. */
-  public void setStartedDate(LocalDate startedDate) {
-    this.startedDate = startedDate;
+  public void setDateAdded(LocalDate dateAdded) {
+    this.dateAdded = dateAdded;
   }
 
   /** Get finished date. */
@@ -146,7 +154,7 @@ public class Task implements Serializable {
       result = false;
     } else {
       Task task = (Task) object;
-      result = getPriority() == task.getPriority() && Objects.equals(getCategory(), task.getCategory()) && Objects.equals(getStartedDate(), task.getStartedDate()) && Objects.equals(getFinishedDate(), task.getFinishedDate()) && Objects.equals(getDeadline(), task.getDeadline()) && Objects.equals(getTitle(), task.getTitle());
+      result = getPriority() == task.getPriority() && Objects.equals(getCategory(), task.getCategory()) && Objects.equals(getDateAdded(), task.getDateAdded()) && Objects.equals(getFinishedDate(), task.getFinishedDate()) && Objects.equals(getDeadline(), task.getDeadline()) && Objects.equals(getTitle(), task.getTitle());
     }
     return result;
   }
@@ -154,7 +162,7 @@ public class Task implements Serializable {
   /** Get hash of this instance. */
   @Override
   public int hashCode() {
-    return Objects.hash(getPriority(), getCategory(), getStartedDate(), getFinishedDate(), getDeadline(), getTitle());
+    return Objects.hash(getPriority(), getCategory(), getDateAdded(), getFinishedDate(), getDeadline(), getTitle());
   }
 
   /** Get String representation of this instance. */
@@ -165,7 +173,7 @@ public class Task implements Serializable {
         ", description='" + description + '\'' +
         ", priority=" + priority +
         ", category='" + category + '\'' +
-        ", startedDate=" + startedDate +
+        ", startedDate=" + dateAdded +
         ", finishedDate=" + finishedDate +
         ", deadline=" + deadline +
         ", status=" + status +

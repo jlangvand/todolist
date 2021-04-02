@@ -88,7 +88,7 @@ public class ViewTaskController {
     taskTitle.setText(task.getTitle());
     taskPriority.setText(task.getPriorityString());
     taskDescription.setText(task.getDescription());
-    taskStartedDate.setText(task.getStartedDate().toString());
+    taskStartedDate.setText(task.getDateAdded().toString());
 
     //if (task.getStatus().toString().equals("DONE")) {
     //  this.statusImage.setImage(new Image("file:src/main/resources/images/Done2.png", 27, 27, true, true));
