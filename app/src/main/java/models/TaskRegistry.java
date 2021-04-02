@@ -13,32 +13,43 @@ public class TaskRegistry {
   private final List<Task> tasks;
   PersistentRegistry fileHandle;
 
-  /*
+  /**
+   * Create a new TaskRegistry with a custom save file.
    *
-   *
-   * */
+   * @param fileName file path to use for saving
+   * @throws IOException throws exception if file IO fails
+   */
   public TaskRegistry(String fileName) throws IOException {
     fileHandle = new PersistentRegistry(fileName);
     this.tasks = fileHandle.read();
   }
 
+  /**
+   * Create a TaskRegistry using a default save file.
+   *
+   * @throws IOException throws exception if file IO fails
+   */
   public TaskRegistry() throws IOException {
     this.fileHandle = new PersistentRegistry();
     this.tasks = fileHandle.read();
   }
 
-  /*
+  /**
+   * Get all tasks.
    *
-   * */
+   * @return all tasks as an ArrayList
+   */
   public List<Task> getTasks() {
     return tasks;
 
   }
 
-  /*
+  /**
+   * Get tasks by status.
    *
-   *
-   * */
+   * @param status enum Status
+   * @return matching tasks as an ArrayList
+   */
   public List<Task> getTasksByStatus(Status status) {
     ArrayList<Task> foundTasks = new ArrayList<>();
     tasks.forEach(task -> {
@@ -50,8 +61,10 @@ public class TaskRegistry {
   }
 
   /**
-   * @param priority
-   * @return
+   * Get tasks by priority.
+   *
+   * @param priority enum Priority
+   * @return matching tasks as an ArrayList
    */
   public List<Task> getTasksByPriority(Priority priority) {
     ArrayList<Task> foundTasks = new ArrayList<>();
