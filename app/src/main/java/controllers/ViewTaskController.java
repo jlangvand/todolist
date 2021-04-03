@@ -10,6 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Task;
@@ -37,9 +41,6 @@ public class ViewTaskController {
 
     @FXML
     private JFXTextArea taskDescription;
-
-//    @FXML
-//    private Label taskDescription;
 
     @FXML
     private Label taskDeadline;
@@ -94,8 +95,16 @@ public class ViewTaskController {
     taskPriority.setText(task.getPriorityString());
     taskDescription.setText(task.getDescription());
     taskStartedDate.setText(task.getDateAdded().toString());
+
     taskDeadline.setText(this.getDeadlineString(task));
 
+//    if(task.getDeadline().isBefore(LocalDate.now()) && task.getDeadLineTime().isBefore(LocalTime.now())){
+//      taskDeadline.setText("The deadline has passed"+"   ("+task.getDeadline()+")");
+//    }else{
+//      taskDeadline.setText(this.getDeadlineString(task)+"   ("+task.getDeadline()+")");
+//    }
+
+    //will be used if we wanna change an image in the view, status or priority...
     //if (task.getStatus().toString().equals("DONE")) {
     //  this.statusImage.setImage(new Image("file:src/main/resources/images/Done2.png", 27, 27, true, true));
     //} else if (task.getStatus().toString().equals("ACTIVE")) {
@@ -111,24 +120,35 @@ public class ViewTaskController {
   public String getDeadlineString(Task task){
     final long SECONDS_PER_HOUR=3600;
     final long SECONDS_PER_MINUTE=60;
+    String deadlineString;
 
-    Period period = Period.between(LocalDate.now(), task.getDeadline());
-    Duration duration = Duration.between(LocalTime.now(), task.getDeadLineTime());
+    //if deadline date is today and the time passed  OR  the deadline date passed(before today)
+    if((task.getDeadline().isEqual(LocalDate.now()) && task.getDeadLineTime().isBefore(LocalTime.now()))
+        ||(task.getDeadline().isBefore(LocalDate.now()))){
+      deadlineString = "The deadline has passed"+"   ("+task.getDeadline()+" "+task.getDeadLineTime()+")";
+    }else{
+      Period period = Period.between(LocalDate.now(), task.getDeadline());
+      Duration duration = Duration.between(LocalTime.now(), task.getDeadLineTime());
 
-    //fix the bug that returns negative number of days.
-    if (duration.isNegative()) {
-      period = period.minusDays(1);
-      duration = duration.plusDays(1);
+      //fix the bug that returns negative number of days.
+      if (duration.isNegative()) {
+        period = period.minusDays(1);
+        duration = duration.plusDays(1);
+      }
+
+      //get total seconds from now to finished time, and calculate how many hours and minutes.
+      long seconds = duration.getSeconds();
+
+      long hours = seconds / SECONDS_PER_HOUR;
+      long minutes = ((seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
+
+      //return days,h,m, with deadline date and time
+      deadlineString = period.getDays()+" days, "+
+          hours+" hours, "+
+          minutes+" min"+
+          " "+task.getDeadline()+" "+task.getDeadLineTime();
     }
-
-    //get total seconds from now to finished time, and calculate how many hours and minutes.
-    long seconds = duration.getSeconds();
-
-    long hours = seconds / SECONDS_PER_HOUR;
-    long minutes = ((seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
-
-    return period.getDays()+" days, "+
-        hours+" hours, "+
-        minutes+" minutes";
+    return deadlineString;
   }
+
 }
