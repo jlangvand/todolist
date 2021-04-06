@@ -1,6 +1,8 @@
 package models;
 
 import dao.PersistentRegistry;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import utilities.Priority;
 import utilities.Status;
 
@@ -10,9 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class represents a register of tasks.
+ */
 public class TaskRegistry {
   private final List<Task> tasks;
   PersistentRegistry fileHandle;
+  ObservableList<Task> observableTasks; //Used to display all tasks.
 
   /**
    * Create a new TaskRegistry with a custom save file.
@@ -23,6 +29,7 @@ public class TaskRegistry {
   public TaskRegistry(String fileName) throws IOException {
     fileHandle = new PersistentRegistry(fileName);
     this.tasks = fileHandle.read();
+    observableTasks = FXCollections.observableArrayList();
   }
 
   /**
@@ -33,12 +40,11 @@ public class TaskRegistry {
   public TaskRegistry() throws IOException {
     this.fileHandle = new PersistentRegistry();
     this.tasks = fileHandle.read();
+    observableTasks = FXCollections.observableArrayList();
   }
 
   /**
-   * Get all tasks.
-   *
-   * @return all tasks as an ArrayList
+   * @return All tasks as an ArrayList
    */
   public List<Task> getTasks() {
     return tasks;
@@ -46,8 +52,13 @@ public class TaskRegistry {
   }
 
   /**
-   * Get tasks by status.
-   *
+   * @return The observableList corresponding to the tasks of this TaskRegister.
+   */
+  public ObservableList<Task> getObservableTasks() {
+    return observableTasks;
+  }
+
+  /**
    * @param status enum Status
    * @return matching tasks as an ArrayList
    */
@@ -62,8 +73,6 @@ public class TaskRegistry {
   }
 
   /**
-   * Get tasks by priority.
-   *
    * @param priority enum Priority
    * @return matching tasks as an ArrayList
    */
@@ -124,46 +133,44 @@ public class TaskRegistry {
     return getTasksByDeadline(date, date);
   }
 
-  /*
-   *
-   * */
+  /**
+   * @return List of high priority tasks
+   */
   public List<Task> getHighPriorityTasks() {
     return getTasksByPriority(Priority.HIGH);
   }
 
-  /*
-   *
-   *
-   *
-   * */
+  /**
+   * @return List of medium priority tasks
+   */
   public List<Task> getMediumPriorityTasks() {
     return getTasksByPriority(Priority.MEDIUM);
   }
 
-  /*
-   *
-   *
-   * */
+  /**
+   * @return List of low priority tasks
+   */
   public List<Task> getLowPriorityTasks() {
     return getTasksByPriority(Priority.LOW);
   }
 
-  /*
-   *
-   *
-   * */
+  /**
+   * @return List of done tasks
+   */
   public List<Task> getDoneTasks() {
     return getTasksByStatus(Status.DONE);
   }
 
-  /*
-   *
-   *
-   * */
+  /**
+   * @return List of active tasks
+   */
   public List<Task> getActiveTasks() {
     return getTasksByStatus(Status.ACTIVE);
   }
 
+  /**
+   * @return String representation of TaskRegistry object.
+   */
   @Override
   public String toString() {
     return "TaskRegistry{" +
@@ -171,13 +178,25 @@ public class TaskRegistry {
         '}';
   }
 
-  void addTask(Task task) throws IOException {
+  /**
+   * Adds a task to the registry, and saves the changes using fileHandler.
+   * @param task the task to be added
+   * @throws IOException throws exception if file IO fails
+   */
+  public void addTask(Task task) throws IOException {
     tasks.add(task);
+    observableTasks.add(task);
     fileHandle.save(tasks);
   }
 
-  void removeTask(Task task) throws IOException {
+  /**
+   * Removes a task from the registry, and saves the changes using fileHandler.
+   * @param task the task to be removed
+   * @throws IOException throws exception if file IO fails
+   */
+  public void removeTask(Task task) throws IOException {
     tasks.remove(task);
+    observableTasks.remove(task);
     fileHandle.save(tasks);
   }
 }
