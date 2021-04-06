@@ -61,7 +61,12 @@ public class NewTaskController {
     task.setStatus(Status.ACTIVE);
     task.setDeadLineTime(LocalTime.of(0,0)); //Change !!
     task.setDeadline(LocalDate.of(0, 1, 1)); //Change!!
+
     tasks.addTask(task);
+
+    Stage stage = (Stage) saveButton.getScene().getWindow();
+    stage.close();
+
 
   }
 
