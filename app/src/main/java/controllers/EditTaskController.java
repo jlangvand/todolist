@@ -8,10 +8,14 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
 import models.Task;
 
-public class EditTaskController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class EditTaskController{
 
     @FXML
     private BorderPane pane;
@@ -55,7 +59,10 @@ public class EditTaskController {
 
     public void initData(Task task) {
         this.task = task;
+        nameField.setText(task.getTitle());
+        descriptionField.setText(task.getDescription());
+        deadlineDateField.setValue(task.getDeadline()); //must add variable for time too in task class.
+        categoryField.setText(task.getCategory());
 
     }
-
 }
