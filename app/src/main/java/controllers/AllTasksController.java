@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Task;
+import models.TaskRegistry;
 import utilities.Priority;
 import utilities.Status;
 
@@ -25,8 +27,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class AllTasksController {
-
-    ObservableList<Task> tasks;
 
     @FXML
     private JFXListView<Task> allTasksList;
@@ -46,7 +46,6 @@ public class AllTasksController {
     @FXML
     private Label taskTitle;
 
-
     @FXML
     private Label taskDeadline;
 
@@ -59,63 +58,12 @@ public class AllTasksController {
     @FXML
     private JFXButton editButton;
 
+    private TaskRegistry allTasks;
+    private ObservableList<Task> tasks;
+
 
     @FXML
     void initialize() {
-
-        ///make 3 Task objects for test///
-        Task t1 = new Task();
-        t1.setTitle("Methods");
-        //t1.setStartedDate(LocalDate.of(2021, 4, 2));
-        //t1.setDeadline(t1.getDeadline()); need to write this method to calculate the deadline..
-        t1.setDescription("finish all methods");
-        t1.setStatus(Status.DONE);
-        t1.setPriority(Priority.HIGH);
-        t1.setDeadLineTime(LocalTime.of(17,30));
-        t1.setDeadline(LocalDate.of(2021, 4, 2));
-
-
-
-        Task t2 = new Task();
-        t2.setTitle("Shopping..");
-        //t2.setStartedDate(LocalDate.of(2021, 4, 3));
-        t2.setDescription("Cheese, milk, bread");
-        t2.setStatus(Status.DONE);
-        t2.setPriority(Priority.MEDIUM);
-        t2.setDeadLineTime(LocalTime.of(17,42));
-        t2.setDeadline(LocalDate.of(2021, 4, 3));
-
-
-
-
-      Task t3 = new Task();
-        t3.setTitle("3rd task");
-        //t3.setStartedDate(LocalDate.of(2021, 4, 8));
-        t3.setDescription("don't do anything... ");
-        t3.setStatus(Status.ACTIVE);
-        t3.setDeadLineTime(LocalTime.of(23,00));
-        t3.setDeadline(LocalDate.of(2021, 4, 9));
-
-
-
-      tasks = FXCollections.observableArrayList();//we can pass the items(tasks) here too.
-        tasks.addAll(t1, t2, t3);
-
-      //pass the observable list to the listView
-      allTasksList.setItems(tasks);
-
-      //fetch the customized cell
-      allTasksList.setCellFactory(cellController -> new CellController());
-
-
-      //press on BACK button to get back to tasks list
-      //this action will be used if we choose to call the TaskView as inner pane in allTasks.fxml
-//        backToTasks.setOnAction(event -> {
-//            taskViewPane.setVisible(false);
-//            allTasksList.setVisible(true);
-//
-//        });
-
     }
 
   /**
@@ -129,6 +77,8 @@ public class AllTasksController {
     try {
       FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/NewTask.fxml").toURI().toURL());
       Parent root = fxmlLoader.load();
+      NewTaskController newTaskController = fxmlLoader.getController();
+      newTaskController.initData(allTasks);
 
       Stage stage = new Stage();
       stage.setScene(new Scene(root));
@@ -159,6 +109,14 @@ public class AllTasksController {
     stage.setScene(new Scene(root));
     stage.initModality(Modality.APPLICATION_MODAL);
     stage.show();
+  }
+
+  void initData(TaskRegistry taskRegistry) {
+    allTasks = taskRegistry;
+    tasks = allTasks.getObservableTasks();
+    allTasksList.setItems(tasks);
+    allTasksList.setCellFactory(cellController -> new CellController());
+
   }
 
 
