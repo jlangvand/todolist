@@ -101,19 +101,22 @@ public class AllTasksController {
    */
   @FXML
   void displayTask(MouseEvent event) throws IOException {
-    Task selectedTask = allTasksList.getSelectionModel().getSelectedItem();
+      if (!allTasksList.getSelectionModel().isEmpty()) {
+          Task selectedTask = allTasksList.getSelectionModel().getSelectedItem();
+          allTasksList.getSelectionModel().clearSelection();
 
-    FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/ViewTask.fxml").toURI().toURL());
-    Parent root = fxmlLoader.load();
-    ViewTaskController viewTaskController = fxmlLoader.getController();
-    viewTaskController.initData(selectedTask);
+          FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/ViewTask.fxml").toURI().toURL());
+          Parent root = fxmlLoader.load();
+          ViewTaskController viewTaskController = fxmlLoader.getController();
+          viewTaskController.initData(selectedTask);
 
-    Stage stage = new Stage();
-    JFXDecorator decorator = new JFXDecorator(stage, root);
-    decorator.setCustomMaximize(true);
-    stage.setScene(new Scene(decorator));
-    stage.initModality(Modality.APPLICATION_MODAL);
-    stage.show();
+          Stage stage = new Stage();
+          JFXDecorator decorator = new JFXDecorator(stage, root);
+          decorator.setCustomMaximize(true);
+          stage.setScene(new Scene(decorator));
+          stage.initModality(Modality.APPLICATION_MODAL);
+          stage.show();
+      }
   }
 
   void initData(TaskRegistry taskRegistry) {
