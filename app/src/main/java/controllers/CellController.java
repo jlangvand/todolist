@@ -1,5 +1,6 @@
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import models.Task;
+import utilities.Status;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +34,9 @@ public class CellController extends JFXListCell<Task> {
 
     @FXML
     private Label cellDate;
+
+    @FXML
+    private JFXButton statusButton;
 
 
     private FXMLLoader fxmlLoader;
@@ -73,11 +78,16 @@ public class CellController extends JFXListCell<Task> {
 
             try {
                 //cellStatusImage = new ImageView();
-                if (task.getStatus().toString().equals("DONE")) {
+                cellStatusImage.setOnMouseClicked(event -> {
+                  if (task.getStatus().toString().equals("ACTIVE")) {
                     cellStatusImage.setImage(new Image("file:src/main/resources/images/Done2.png", 48, 48, true, true));
-                } else if (task.getStatus().toString().equals("ACTIVE")) {
+                    task.setStatus(Status.DONE);
+                  } else if (task.getStatus().toString().equals("DONE")) {
                     cellStatusImage.setImage(new Image("file:src/main/resources/images/not_Done.png", 48, 48, true, true));
-                }
+                    task.setStatus(Status.ACTIVE);
+                  }
+                });
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
