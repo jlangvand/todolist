@@ -5,6 +5,9 @@
 .taskBackground {
     -fx-background-color: #1e272e;
 }
+.taskBackground:hover {
+    -fx-background-color: #3B4856;
+}
 
 .button {
     -fx-background-color: transparent;
