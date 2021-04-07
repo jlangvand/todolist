@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import models.Task;
 
 import java.net.URL;
@@ -64,5 +65,20 @@ public class EditTaskController{
         deadlineDateField.setValue(task.getDeadline()); //must add variable for time too in task class.
         categoryField.setText(task.getCategory());
 
+    }
+
+    // TODO(joakilan): Validate input
+    @FXML
+    public void saveAction() {
+      task.setTitle(nameField.getText());
+      task.setDescription(descriptionField.getText());
+      task.setDeadline(deadlineDateField.getValue());
+      task.setCategory(categoryField.getText());
+      ((Stage) saveEdit.getScene().getWindow()).close();
+    }
+
+    @FXML
+    public void cancelAction() {
+      ((Stage) cancelEdit.getScene().getWindow()).close();
     }
 }
