@@ -8,12 +8,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-/*
+/**
  * Base class handling information about a task.
  *
  * @version 1.0
  * @since  1.0
- * */
+ */
 public class Task implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -141,14 +141,7 @@ public class Task implements Serializable {
 
   /** Get priority as String */
   public String getPriorityString() {
-    if (priority == Priority.HIGH) {
-      return "High";
-    } else if (priority == Priority.MEDIUM) {
-      return "Medium";
-    } else if (priority == Priority.LOW) {
-      return "Low";
-    }
-    return "No Priority";
+    return priority.toString();
   }
 
   /**

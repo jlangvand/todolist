@@ -1,6 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -73,7 +74,9 @@ public class ViewTaskController {
     editTaskController.initData(task);
 
     Stage stage = new Stage();
-    stage.setScene(new Scene(root));
+    JFXDecorator decorator = new JFXDecorator(stage, root);
+    decorator.setCustomMaximize(true);
+    stage.setScene(new Scene(decorator));
     stage.initModality(Modality.APPLICATION_MODAL);
     stage.show();
 
@@ -93,6 +96,11 @@ public class ViewTaskController {
 
     taskDeadline.setText(this.getDeadlineString(task));
 
+  }
+
+  @FXML
+  public void refreshData() {
+    initData(task);
   }
 
   /**

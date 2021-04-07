@@ -9,5 +9,6 @@ module todolist.app.main {
     opens controllers to javafx.fxml;
     exports controllers;
 
-
+    opens models to javafx.fxml;
+    exports models;
 }
