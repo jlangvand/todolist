@@ -98,11 +98,6 @@ public class ViewTaskController {
 
     taskDeadline.setText(this.getDeadlineString(task));
 
-//    if(task.getDeadline().isBefore(LocalDate.now()) && task.getDeadLineTime().isBefore(LocalTime.now())){
-//      taskDeadline.setText("The deadline has passed"+"   ("+task.getDeadline()+")");
-//    }else{
-//      taskDeadline.setText(this.getDeadlineString(task)+"   ("+task.getDeadline()+")");
-//    }
 
     //will be used if we wanna change an image in the view, status or priority...
     //if (task.getStatus().toString().equals("DONE")) {
