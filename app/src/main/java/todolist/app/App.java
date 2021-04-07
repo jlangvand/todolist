@@ -1,5 +1,6 @@
 package todolist.app;
 
+import com.jfoenix.controls.JFXDecorator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,7 +35,10 @@ public class App extends Application {
    */
   @Override
   public void start(Stage stage) throws IOException {
-    Scene scene = new Scene(loadFXML("navigationBar"), DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT);
+    JFXDecorator decorator = new JFXDecorator(stage, loadFXML("navigationBar"));
+    decorator.setCustomMaximize(true);
+    decorator.setStyle("-fx-background-color: #34495e");
+    Scene scene = new Scene(decorator, DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT);
     stage.setScene(scene);
     stage.show();
   }

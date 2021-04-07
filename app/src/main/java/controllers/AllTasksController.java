@@ -1,6 +1,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import javafx.collections.FXCollections;
@@ -81,7 +82,9 @@ public class AllTasksController {
       newTaskController.initData(allTasks);
 
       Stage stage = new Stage();
-      stage.setScene(new Scene(root));
+      JFXDecorator decorator = new JFXDecorator(stage, root);
+      decorator.setCustomMaximize(true);
+      stage.setScene(new Scene(decorator));
       stage.initModality(Modality.APPLICATION_MODAL);
       stage.show();
     } catch (IOException e) {
@@ -106,7 +109,9 @@ public class AllTasksController {
     viewTaskController.initData(selectedTask);
 
     Stage stage = new Stage();
-    stage.setScene(new Scene(root));
+    JFXDecorator decorator = new JFXDecorator(stage, root);
+    decorator.setCustomMaximize(true);
+    stage.setScene(new Scene(decorator));
     stage.initModality(Modality.APPLICATION_MODAL);
     stage.show();
   }
