@@ -108,6 +108,11 @@ public class ViewTaskController {
 
   }
 
+  @FXML
+  public void refreshData() {
+    initData(task);
+  }
+
   /**
    *
    * @return deadline in form: x days, x hours, x minutes.
