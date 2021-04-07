@@ -10,10 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Task;
@@ -25,7 +21,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
-import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 public class ViewTaskController {
@@ -97,14 +92,6 @@ public class ViewTaskController {
     taskStartedDate.setText(task.getDateAdded().toString());
 
     taskDeadline.setText(this.getDeadlineString(task));
-
-
-    //will be used if we wanna change an image in the view, status or priority...
-    //if (task.getStatus().toString().equals("DONE")) {
-    //  this.statusImage.setImage(new Image("file:src/main/resources/images/Done2.png", 27, 27, true, true));
-    //} else if (task.getStatus().toString().equals("ACTIVE")) {
-    //this.statusImage.setImage(new Image("file:src/main/resources/images/not_Done.png", 30, 30, true, true));
-    //}
 
   }
 

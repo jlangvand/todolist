@@ -78,14 +78,15 @@ public class CellController extends JFXListCell<Task> {
 
             try {
                 //cellStatusImage = new ImageView();
-                cellStatusImage.setOnMouseClicked(event -> {
-                  if (task.getStatus().toString().equals("ACTIVE")) {
+                statusButton.setOnMousePressed(event -> {
+                  if (task.getStatus().equals(Status.ACTIVE)) {
                     cellStatusImage.setImage(new Image("file:src/main/resources/images/Done2.png", 48, 48, true, true));
                     task.setStatus(Status.DONE);
-                  } else if (task.getStatus().toString().equals("DONE")) {
+                  } else if (task.getStatus().equals(Status.DONE)) {
                     cellStatusImage.setImage(new Image("file:src/main/resources/images/not_Done.png", 48, 48, true, true));
                     task.setStatus(Status.ACTIVE);
                   }
+                  System.out.println(task.getStatus().toString());//to test the actual status!
                 });
 
             } catch (Exception e) {
