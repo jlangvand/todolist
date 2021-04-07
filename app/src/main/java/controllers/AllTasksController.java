@@ -124,5 +124,10 @@ public class AllTasksController {
 
   }
 
+  @FXML
+  void refreshData() {
+    allTasksList.refresh();
+  }
+
 
 }
