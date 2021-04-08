@@ -14,7 +14,7 @@ ij_formatter_on_tag = @formatter:on
 ij_formatter_tags_enabled = false
 ij_smart_tabs = false
 ij_visual_guides = 80
-ij_wrap_on_typing = false
+ij_wrap_on_typing = true
 
 [*.css]
 ij_css_align_closing_brace_with_properties = false
@@ -40,7 +40,6 @@ indent_size = 2
 max_line_length = 80
 tab_width = 2
 ij_continuation_indent_size = 4
-ij_visual_guides = 80
 ij_java_align_consecutive_assignments = false
 ij_java_align_consecutive_variable_declarations = false
 ij_java_align_group_field_declarations = false
