@@ -93,7 +93,7 @@ public class AllTasksController {
   void displayTask(MouseEvent event) throws IOException {
       if (!allTasksList.getSelectionModel().isEmpty()) {
           Task selectedTask = allTasksList.getSelectionModel().getSelectedItem();
-          allTasksList.getSelectionModel().clearSelection();
+/*          allTasksList.getSelectionModel().clearSelection();
 
           FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/ViewTask.fxml").toURI().toURL());
           Parent root = fxmlLoader.load();
@@ -105,7 +105,8 @@ public class AllTasksController {
           decorator.setCustomMaximize(true);
           stage.setScene(new Scene(decorator));
           stage.initModality(Modality.APPLICATION_MODAL);
-          stage.show();
+          stage.show();*/
+          navBarController.loadDisplayTaskView(selectedTask);
       }
   }
 

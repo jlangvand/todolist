@@ -57,6 +57,7 @@ public class ViewTaskController {
   private ImageView statusImage;
 
   private Task task;
+  private NavBarController navBarController;
 
 
   /**
@@ -67,7 +68,7 @@ public class ViewTaskController {
    */
   @FXML
   void displayEdit(ActionEvent event) throws IOException {
-    FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/EditTask.fxml").toURI().toURL());
+    /*FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/EditTask.fxml").toURI().toURL());
     Parent root = fxmlLoader.load();
 
     EditTaskController editTaskController = fxmlLoader.getController();
@@ -78,8 +79,8 @@ public class ViewTaskController {
     decorator.setCustomMaximize(true);
     stage.setScene(new Scene(decorator));
     stage.initModality(Modality.APPLICATION_MODAL);
-    stage.show();
-
+    stage.show();*/
+    navBarController.loadEditTaskView(task);
   }
 
   /**
@@ -87,7 +88,7 @@ public class ViewTaskController {
    *
    * @param task
    */
-  public void initData(Task task) {
+  public void initData(Task task, NavBarController navBarController) {
     this.task = task;
     taskTitle.setText(task.getTitle());
     taskPriority.setText(task.getPriorityString());
@@ -95,12 +96,12 @@ public class ViewTaskController {
     taskStartedDate.setText(task.getDateAdded().toString());
 
     taskDeadline.setText(this.getDeadlineString(task));
-
+    this.navBarController = navBarController;
   }
 
   @FXML
   public void refreshData() {
-    initData(task);
+    initData(task, navBarController);
   }
 
   /**

@@ -42,6 +42,8 @@ public class NavBarController implements Initializable {
 
     private FXMLLoader allTasksLoader;
     private FXMLLoader newTaskLoader;
+    private FXMLLoader displayTaskLoader;
+    private FXMLLoader editTaskLoader;
 
     /**
      * Called when the navBarController is initialized.
@@ -57,6 +59,8 @@ public class NavBarController implements Initializable {
         loadAllTasksView("allTasks");
         newTaskLoader = getLoader("NewTask");
         allTasksLoader = getLoader("allTasks");
+        displayTaskLoader = getLoader("ViewTask");
+        editTaskLoader = getLoader("EditTask");
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -140,8 +144,18 @@ public class NavBarController implements Initializable {
       pane.setCenter(root);
     }
 
-    public void loadDisplayTaskView(Task task) {
+    public void loadDisplayTaskView(Task task) throws IOException {
+      Parent root = displayTaskLoader.load();
+      ViewTaskController controller = displayTaskLoader.getController();
+      controller.initData(task, this);
+      pane.setCenter(root);
+    }
 
+    public void loadEditTaskView(Task task) throws IOException {
+      Parent root = editTaskLoader.load();
+      EditTaskController controller = editTaskLoader.getController();
+      controller.initData(task);
+      pane.setCenter(root);
     }
 
     private FXMLLoader getLoader(String fxml) throws IOException {
