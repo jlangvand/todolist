@@ -11,6 +11,7 @@ import models.Task;
 import models.TaskRegistry;
 import utilities.Priority;
 import utilities.Status;
+import utilities.Utilities;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +19,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
+
+import static utilities.Utilities.getFXMLLoader;
 
 public class NavBarController implements Initializable {
     @FXML
@@ -58,11 +61,11 @@ public class NavBarController implements Initializable {
       try {
         allTasks = getTestRegistry(); //Sets allTasks registry as test registry.
         loadAllTasksView("allTasks");
-        newTaskLoader = getLoader("NewTask");
-        allTasksLoader = getLoader("allTasks");
-        displayTaskLoader = getLoader("ViewTask");
+        newTaskLoader = getFXMLLoader("NewTask");
+        allTasksLoader = getFXMLLoader("allTasks");
+        displayTaskLoader = getFXMLLoader("ViewTask");
 //      displayTaskLoader.load();
-        editTaskLoader = getLoader("EditTask");
+        editTaskLoader = getFXMLLoader("EditTask");
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -131,7 +134,7 @@ public class NavBarController implements Initializable {
    * @throws IOException
    */
     private void loadAllTasksView(String fxml) throws IOException {
-      FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/" + fxml + ".fxml").toURI().toURL());
+      FXMLLoader fxmlLoader = getFXMLLoader("allTasks");
       Parent root = fxmlLoader.load();
       AllTasksController allTasksController = fxmlLoader.getController();
       allTasksController.initData(allTasks, this);
@@ -140,7 +143,7 @@ public class NavBarController implements Initializable {
     }
 
     public void loadNewTaskView(TaskRegistry tasks) throws IOException {
-      newTaskLoader = getLoader("NewTask");
+      newTaskLoader = getFXMLLoader("NewTask");
       Parent root = newTaskLoader.load();
       NewTaskController newTaskController = newTaskLoader.getController();
       newTaskController.initData(tasks);
@@ -148,7 +151,7 @@ public class NavBarController implements Initializable {
     }
 
     public void loadDisplayTaskView(Task task) throws IOException {
-      displayTaskLoader = getLoader("ViewTask");
+      displayTaskLoader = getFXMLLoader("ViewTask");
       Parent root = displayTaskLoader.load();
       ViewTaskController controller = displayTaskLoader.getController();
       controller.initData(task, this);
@@ -156,15 +159,11 @@ public class NavBarController implements Initializable {
     }
 
     public void loadEditTaskView(Task task) throws IOException {
-      editTaskLoader = getLoader("EditTask");
+      editTaskLoader = getFXMLLoader("EditTask");
       Parent root = editTaskLoader.load();
       EditTaskController controller = editTaskLoader.getController();
       controller.initData(task, this);
       pane.setCenter(root);
-    }
-
-    private FXMLLoader getLoader(String fxml) throws IOException {
-      return new FXMLLoader(new File("src/main/resources/view/" + fxml + ".fxml").toURI().toURL());
     }
 
   /**
