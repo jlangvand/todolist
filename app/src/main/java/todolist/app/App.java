@@ -5,7 +5,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 
 import static utilities.Utilities.getFXMLLoader;
 
@@ -39,8 +41,10 @@ public class App extends Application {
     decorator.setCustomMaximize(true);
     stage.setTitle(TITLE);
     decorator.setTitle(TITLE);
+    URI uri = new File("src/main/resources/css/main.css").toURI();
     Scene scene =
         new Scene(decorator, DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT);
+    scene.getStylesheets().add(uri.toString());
     stage.setScene(scene);
     stage.show();
   }
