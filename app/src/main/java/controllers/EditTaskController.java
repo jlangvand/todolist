@@ -12,6 +12,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import models.Task;
 
+import java.io.IOException;
+
 public class EditTaskController {
 
   @FXML
@@ -43,6 +45,7 @@ public class EditTaskController {
   private JFXButton cancelEdit;
 
   private Task task;
+  private NavBarController navBarController;
 
   @FXML
   void displayTrashDialog(ActionEvent event) {
@@ -54,27 +57,27 @@ public class EditTaskController {
 
   }
 
-  public void initData(Task task) {
+  public void initData(Task task, NavBarController navBarController) {
     this.task = task;
     nameField.setText(task.getTitle());
     descriptionField.setText(task.getDescription());
     deadlineDateField.setValue(task.getDeadline()); //must add variable for time too in task class.
     categoryField.setText(task.getCategory());
-
+    this.navBarController = navBarController;
   }
 
   // TODO(joakilan): Validate input
   @FXML
-  public void saveAction() {
+  public void saveAction() throws IOException {
     task.setTitle(nameField.getText());
     task.setDescription(descriptionField.getText());
     task.setDeadline(deadlineDateField.getValue());
     task.setCategory(categoryField.getText());
-    ((Stage) saveEdit.getScene().getWindow()).close();
+    navBarController.loadDisplayTaskView(task);
   }
 
   @FXML
-  public void cancelAction() {
-    ((Stage) cancelEdit.getScene().getWindow()).close();
+  public void cancelAction() throws IOException {
+    navBarController.loadDisplayTaskView(task);
   }
 }

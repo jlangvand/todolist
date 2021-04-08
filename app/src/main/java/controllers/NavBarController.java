@@ -43,6 +43,7 @@ public class NavBarController implements Initializable {
     private FXMLLoader allTasksLoader;
     private FXMLLoader newTaskLoader;
     private FXMLLoader displayTaskLoader;
+    private Parent displayTasksRoot;
     private FXMLLoader editTaskLoader;
 
     /**
@@ -60,6 +61,7 @@ public class NavBarController implements Initializable {
         newTaskLoader = getLoader("NewTask");
         allTasksLoader = getLoader("allTasks");
         displayTaskLoader = getLoader("ViewTask");
+//      displayTaskLoader.load();
         editTaskLoader = getLoader("EditTask");
       } catch (IOException e) {
         e.printStackTrace();
@@ -138,6 +140,7 @@ public class NavBarController implements Initializable {
     }
 
     public void loadNewTaskView(TaskRegistry tasks) throws IOException {
+      newTaskLoader = getLoader("NewTask");
       Parent root = newTaskLoader.load();
       NewTaskController newTaskController = newTaskLoader.getController();
       newTaskController.initData(tasks);
@@ -145,6 +148,7 @@ public class NavBarController implements Initializable {
     }
 
     public void loadDisplayTaskView(Task task) throws IOException {
+      displayTaskLoader = getLoader("ViewTask");
       Parent root = displayTaskLoader.load();
       ViewTaskController controller = displayTaskLoader.getController();
       controller.initData(task, this);
@@ -152,9 +156,10 @@ public class NavBarController implements Initializable {
     }
 
     public void loadEditTaskView(Task task) throws IOException {
+      editTaskLoader = getLoader("EditTask");
       Parent root = editTaskLoader.load();
       EditTaskController controller = editTaskLoader.getController();
-      controller.initData(task);
+      controller.initData(task, this);
       pane.setCenter(root);
     }
 
