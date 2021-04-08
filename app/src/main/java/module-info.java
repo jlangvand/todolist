@@ -11,4 +11,7 @@ module todolist.app.main {
 
     opens models to javafx.fxml;
     exports models;
+
+    opens utilities to javafx.fxml;
+    exports utilities;
 }
