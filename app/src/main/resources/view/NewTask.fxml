@@ -26,21 +26,28 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <JFXTextField fx:id="nameField" promptText="Task name">
                      <font>
                         <Font size="23.0" />
                      </font>
                   </JFXTextField>
+                  <Pane prefHeight="20.0" />
                   <JFXTextArea fx:id="descriptionField" maxHeight="100.0" prefRowCount="4" promptText="Task descrpition" VBox.vgrow="ALWAYS" />
-                  <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="15.0" VBox.vgrow="ALWAYS">
+                  <Pane prefHeight="30.0" />
+                  <HBox>
                      <children>
-                        <Label prefWidth="130.0" styleClass="mainLabel" text="Deadline" HBox.hgrow="ALWAYS" />
+                        <Label styleClass="mainLabel" text="Deadline" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="15.0" VBox.vgrow="ALWAYS">
+                     <children>
                         <JFXDatePicker fx:id="deadlineDateField" promptText="Date" />
                         <JFXTimePicker fx:id="deadlineTimeField" promptText="Time" />
                      </children>
                   </HBox>
+                  <Pane prefHeight="20.0" />
                   <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="15.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Label styleClass="mainLabel" text="Category" />
