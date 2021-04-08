@@ -43,6 +43,10 @@ public class TaskRegistry {
     observableTasks = FXCollections.observableArrayList();
   }
 
+  public PersistentRegistry getFileHandle() {
+    return fileHandle;
+  }
+
   /**
    * @return All tasks as an ArrayList
    */

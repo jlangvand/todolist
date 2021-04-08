@@ -9,8 +9,8 @@ import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import models.Task;
+import models.TaskRegistry;
 
 import java.io.IOException;
 
@@ -44,6 +44,7 @@ public class EditTaskController {
   @FXML
   private JFXButton cancelEdit;
 
+  private TaskRegistry allTasks;
   private Task task;
   private NavBarController navBarController;
 
@@ -57,8 +58,9 @@ public class EditTaskController {
 
   }
 
-  public void initData(Task task, NavBarController navBarController) {
+  public void initData(Task task, TaskRegistry allTasks, NavBarController navBarController) {
     this.task = task;
+    this.allTasks = allTasks;
     nameField.setText(task.getTitle());
     descriptionField.setText(task.getDescription());
     deadlineDateField.setValue(task.getDeadline()); //must add variable for time too in task class.
@@ -73,6 +75,7 @@ public class EditTaskController {
     task.setDescription(descriptionField.getText());
     task.setDeadline(deadlineDateField.getValue());
     task.setCategory(categoryField.getText());
+    allTasks.getFileHandle().save(allTasks.getTasks()); //Needed in order to save task changes locally.
     navBarController.loadDisplayTaskView(task);
   }
 

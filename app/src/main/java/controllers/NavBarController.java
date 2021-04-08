@@ -160,7 +160,7 @@ public class NavBarController implements Initializable {
       editTaskLoader = getFXMLLoader(EDIT_TASK_FXML_NAME);
       Parent root = editTaskLoader.load();
       EditTaskController controller = editTaskLoader.getController();
-      controller.initData(task, this);
+      controller.initData(task, allTasks, this);
       pane.setCenter(root);
     }
 
@@ -169,6 +169,7 @@ public class NavBarController implements Initializable {
    * @throws IOException
    */
   private TaskRegistry getTestRegistry() throws IOException {
+      //NOTE: Method probably wont be used again, only place it could be used is in a test class. (Remove it?)
       Task t1 = new Task();
       t1.setTitle("Methods");
       t1.setDescription("finish all methods");
