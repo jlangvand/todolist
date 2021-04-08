@@ -146,7 +146,7 @@ public class NavBarController implements Initializable {
       newTaskLoader = getFXMLLoader("NewTask");
       Parent root = newTaskLoader.load();
       NewTaskController newTaskController = newTaskLoader.getController();
-      newTaskController.initData(tasks);
+      newTaskController.initData(tasks, this);
       pane.setCenter(root);
     }
 
