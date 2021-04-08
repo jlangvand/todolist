@@ -1,14 +1,10 @@
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextArea;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import models.Task;
 import models.TaskRegistry;
 
@@ -19,39 +15,9 @@ public class AllTasksController {
     @FXML
     private JFXListView<Task> allTasksList;
 
-    @FXML
-    private JFXButton addTaskButton;
-
-    @FXML
-    private BorderPane taskViewPane;
-
-    @FXML
-    private JFXTextArea taskDescription;
-
-    @FXML
-    private JFXButton backToTasks;
-
-    @FXML
-    private Label taskTitle;
-
-    @FXML
-    private Label taskDeadline;
-
-    @FXML
-    private Label taskPriority;
-
-    @FXML
-    private Label taskStartedDate;
-
-    @FXML
-    private JFXButton editButton;
-
     private TaskRegistry tasks;
     private NavBarController navBarController;
 
-    @FXML
-    void initialize() {
-    }
 
   /**
    * Method called when user clicks on add button.
