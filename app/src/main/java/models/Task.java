@@ -36,8 +36,7 @@ public class Task implements Serializable {
   /**
    * Default constructor.
    *
-   * <p>TODO(joakilan): Unnecessary? A task shouldn't be constructed without
-   * required data..
+   * Creates a Task object with valid data.
    */
   public Task() {
     this.dateAdded = LocalDate.now();
@@ -47,7 +46,8 @@ public class Task implements Serializable {
     this.priority = Priority.DEFAULT;
     this.status = Status.ACTIVE;
     this.finishedDate = null;
-    this.deadline = null;
+    this.deadline = LocalDate.now().plusDays(7);
+    this.deadLineTime = LocalTime.now();
   }
 
   /** Get description. */
