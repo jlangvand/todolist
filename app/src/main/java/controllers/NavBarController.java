@@ -11,9 +11,7 @@ import models.Task;
 import models.TaskRegistry;
 import utilities.Priority;
 import utilities.Status;
-import utilities.Utilities;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -48,10 +46,8 @@ public class NavBarController implements Initializable {
 
     private TaskRegistry allTasks;
 
-    private FXMLLoader allTasksLoader;
     private FXMLLoader newTaskLoader;
     private FXMLLoader displayTaskLoader;
-    private Parent displayTasksRoot;
     private FXMLLoader editTaskLoader;
 
     /**
@@ -142,7 +138,6 @@ public class NavBarController implements Initializable {
       AllTasksController allTasksController = fxmlLoader.getController();
       allTasksController.initData(allTasks, this);
       pane.setCenter(root);
-
     }
 
     public void loadNewTaskView(TaskRegistry tasks) throws IOException {
@@ -176,8 +171,6 @@ public class NavBarController implements Initializable {
   private TaskRegistry getTestRegistry() throws IOException {
       Task t1 = new Task();
       t1.setTitle("Methods");
-      //t1.setStartedDate(LocalDate.of(2021, 4, 2));
-      //t1.setDeadline(t1.getDeadline()); need to write this method to calculate the deadline..
       t1.setDescription("finish all methods");
       t1.setStatus(Status.DONE);
       t1.setPriority(Priority.HIGH);
@@ -188,7 +181,6 @@ public class NavBarController implements Initializable {
 
       Task t2 = new Task();
       t2.setTitle("Shopping..");
-      //t2.setStartedDate(LocalDate.of(2021, 4, 3));
       t2.setDescription("Cheese, milk, bread");
       t2.setStatus(Status.DONE);
       t2.setPriority(Priority.MEDIUM);
@@ -200,7 +192,6 @@ public class NavBarController implements Initializable {
 
       Task t3 = new Task();
       t3.setTitle("3rd task");
-      //t3.setStartedDate(LocalDate.of(2021, 4, 8));
       t3.setDescription("don't do anything... ");
       t3.setStatus(Status.ACTIVE);
       t3.setDeadLineTime(LocalTime.of(23,00));

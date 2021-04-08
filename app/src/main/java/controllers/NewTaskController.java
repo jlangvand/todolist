@@ -71,7 +71,7 @@ public class NewTaskController {
   private boolean validateInput() {
     LocalDate deadlineDate = deadlineDateField.getValue();
     LocalTime deadlineTime = deadlineTimeField.getValue();
-    boolean ok = true;
+    boolean ok;
     ok = !nameField.getText().isEmpty();
     ok = ok && deadlineDate.isAfter(LocalDate.now().minusDays(1));
     if (deadlineDate.isEqual(LocalDate.now())) {
