@@ -37,7 +37,6 @@ public class App extends Application {
   public void start(Stage stage) throws IOException {
     JFXDecorator decorator = new JFXDecorator(stage, loadFXML("navigationBar"));
     decorator.setCustomMaximize(true);
-    decorator.setStyle("-fx-background-color: #34495e");
     Scene scene = new Scene(decorator, DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT);
     stage.setScene(scene);
     stage.show();

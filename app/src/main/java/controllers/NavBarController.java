@@ -40,6 +40,9 @@ public class NavBarController implements Initializable {
 
     private TaskRegistry allTasks;
 
+    private FXMLLoader allTasksLoader;
+    private FXMLLoader newTaskLoader;
+
     /**
      * Called when the navBarController is initialized.
      *
@@ -52,6 +55,8 @@ public class NavBarController implements Initializable {
       try {
         allTasks = getTestRegistry(); //Sets allTasks registry as test registry.
         loadAllTasksView("allTasks");
+        newTaskLoader = getLoader("NewTask");
+        allTasksLoader = getLoader("allTasks");
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -123,9 +128,24 @@ public class NavBarController implements Initializable {
       FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/" + fxml + ".fxml").toURI().toURL());
       Parent root = fxmlLoader.load();
       AllTasksController allTasksController = fxmlLoader.getController();
-      allTasksController.initData(allTasks);
+      allTasksController.initData(allTasks, this);
       pane.setCenter(root);
 
+    }
+
+    public void loadNewTaskView(TaskRegistry tasks) throws IOException {
+      Parent root = newTaskLoader.load();
+      NewTaskController newTaskController = newTaskLoader.getController();
+      newTaskController.initData(tasks);
+      pane.setCenter(root);
+    }
+
+    public void loadDisplayTaskView(Task task) {
+
+    }
+
+    private FXMLLoader getLoader(String fxml) throws IOException {
+      return new FXMLLoader(new File("src/main/resources/view/" + fxml + ".fxml").toURI().toURL());
     }
 
   /**

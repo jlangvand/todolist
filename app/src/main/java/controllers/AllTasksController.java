@@ -61,6 +61,7 @@ public class AllTasksController {
 
     private TaskRegistry allTasks;
     private ObservableList<Task> tasks;
+    private NavBarController navBarController;
 
 
     @FXML
@@ -76,21 +77,10 @@ public class AllTasksController {
   @FXML
   void displayNewTask(ActionEvent event) {
     try {
-      FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/NewTask.fxml").toURI().toURL());
-      Parent root = fxmlLoader.load();
-      NewTaskController newTaskController = fxmlLoader.getController();
-      newTaskController.initData(allTasks);
-
-      Stage stage = new Stage();
-      JFXDecorator decorator = new JFXDecorator(stage, root);
-      decorator.setCustomMaximize(true);
-      stage.setScene(new Scene(decorator));
-      stage.initModality(Modality.APPLICATION_MODAL);
-      stage.show();
+      navBarController.loadNewTaskView(allTasks);
     } catch (IOException e) {
       e.printStackTrace();
     }
-
   }
 
   /**
@@ -119,12 +109,12 @@ public class AllTasksController {
       }
   }
 
-  void initData(TaskRegistry taskRegistry) {
+  void initData(TaskRegistry taskRegistry, NavBarController navBarController) {
     allTasks = taskRegistry;
     tasks = allTasks.getObservableTasks();
     allTasksList.setItems(tasks);
     allTasksList.setCellFactory(cellController -> new CellController());
-
+    this.navBarController = navBarController;
   }
 
   @FXML
