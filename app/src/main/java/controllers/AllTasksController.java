@@ -3,7 +3,7 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
-import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -46,8 +46,7 @@ public class AllTasksController {
     @FXML
     private JFXButton editButton;
 
-    private TaskRegistry allTasks;
-    private ObservableList<Task> tasks;
+    private TaskRegistry tasks;
     private NavBarController navBarController;
 
     @FXML
@@ -63,7 +62,7 @@ public class AllTasksController {
   @FXML
   void displayNewTask(ActionEvent event) {
     try {
-      navBarController.loadNewTaskView(allTasks);
+      navBarController.loadNewTaskView(tasks);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -84,17 +83,16 @@ public class AllTasksController {
       }
   }
 
-  void initData(TaskRegistry taskRegistry, NavBarController navBarController) {
-    allTasks = taskRegistry;
-    tasks = allTasks.getObservableTasks();
-    allTasksList.setItems(tasks);
+  void initData(TaskRegistry tasks, NavBarController navBarController) {
+    this.tasks = tasks;
+    refreshData();
     allTasksList.setCellFactory(cellController -> new CellController());
     this.navBarController = navBarController;
   }
 
   @FXML
   void refreshData() {
-    allTasksList.refresh();
+    allTasksList.setItems(FXCollections.observableArrayList(tasks.getTasks()));
   }
 
 

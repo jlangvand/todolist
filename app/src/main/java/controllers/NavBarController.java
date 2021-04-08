@@ -60,7 +60,7 @@ public class NavBarController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
       try {
-        allTasks = getTestRegistry(); //Sets allTasks registry as test registry.
+        allTasks = new TaskRegistry();
         loadAllTasksView(ALL_TASKS_FXML_NAME);
         newTaskLoader = getFXMLLoader(NEW_TASK_FXML_NAME);
         displayTaskLoader = getFXMLLoader(VIEW_TASK_FXML_NAME);
