@@ -37,7 +37,6 @@ public class EditTaskController {
   @FXML
   private JFXTextField categoryField;
 
-
   @FXML
   private JFXButton saveEdit;
 
@@ -46,26 +45,26 @@ public class EditTaskController {
 
   private TaskRegistry allTasks;
   private Task task;
-  private NavBarController navBarController;
+  private MainController mainController;
 
   @FXML
   void displayTrashDialog(ActionEvent event) {
-
+    // To be implemented
   }
 
   @FXML
   void displayEdit(ActionEvent event) {
-
+    // To be implemented
   }
 
-  public void initData(Task task, TaskRegistry allTasks, NavBarController navBarController) {
+  public void initData(Task task, TaskRegistry allTasks, MainController mainController) {
     this.task = task;
     this.allTasks = allTasks;
     nameField.setText(task.getTitle());
     descriptionField.setText(task.getDescription());
     deadlineDateField.setValue(task.getDeadline()); //must add variable for time too in task class.
     categoryField.setText(task.getCategory());
-    this.navBarController = navBarController;
+    this.mainController = mainController;
   }
 
   // TODO(joakilan): Validate input
@@ -76,11 +75,11 @@ public class EditTaskController {
     task.setDeadline(deadlineDateField.getValue());
     task.setCategory(categoryField.getText());
     allTasks.getFileHandle().save(allTasks.getTasks()); //Needed in order to save task changes locally.
-    navBarController.loadDisplayTaskView(task);
+    mainController.loadDisplayTaskView(task);
   }
 
   @FXML
   public void cancelAction() throws IOException {
-    navBarController.loadDisplayTaskView(task);
+    mainController.loadDisplayTaskView(task);
   }
 }

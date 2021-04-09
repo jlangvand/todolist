@@ -1,21 +1,15 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
 import models.Task;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
@@ -26,29 +20,29 @@ import java.util.ResourceBundle;
 
 public class ViewTaskController {
 
-    @FXML
-    private ResourceBundle resources;
+  @FXML
+  private ResourceBundle resources;
 
-    @FXML
-    private URL location;
+  @FXML
+  private URL location;
 
-    @FXML
-    private Label taskTitle;
+  @FXML
+  private Label taskTitle;
 
-    @FXML
-    private JFXTextArea taskDescription;
+  @FXML
+  private Text taskDescription;
 
-    @FXML
-    private Label taskDeadline;
+  @FXML
+  private Label taskDeadline;
 
-    @FXML
-    private Label taskPriority;
+  @FXML
+  private Label taskPriority;
 
-    @FXML
-    private Label taskStartedDate;
+  @FXML
+  private Label taskStartedDate;
 
-    @FXML
-    private JFXButton editButton;
+  @FXML
+  private JFXButton editButton;
 
   @FXML
   private Pane viewPane;
@@ -57,8 +51,7 @@ public class ViewTaskController {
   private ImageView statusImage;
 
   private Task task;
-  private NavBarController navBarController;
-
+  private MainController mainController;
 
   /**
    * Method called when user clicks edit button.
@@ -68,19 +61,7 @@ public class ViewTaskController {
    */
   @FXML
   void displayEdit(ActionEvent event) throws IOException {
-    /*FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/view/EditTask.fxml").toURI().toURL());
-    Parent root = fxmlLoader.load();
-
-    EditTaskController editTaskController = fxmlLoader.getController();
-    editTaskController.initData(task);
-
-    Stage stage = new Stage();
-    JFXDecorator decorator = new JFXDecorator(stage, root);
-    decorator.setCustomMaximize(true);
-    stage.setScene(new Scene(decorator));
-    stage.initModality(Modality.APPLICATION_MODAL);
-    stage.show();*/
-    navBarController.loadEditTaskView(task);
+    mainController.loadEditTaskView(task);
   }
 
   /**
@@ -88,36 +69,34 @@ public class ViewTaskController {
    *
    * @param task
    */
-  public void initData(Task task, NavBarController navBarController) {
+  public void initData(Task task, MainController mainController) {
     this.task = task;
     taskTitle.setText(task.getTitle());
     taskPriority.setText(task.getPriorityString());
     taskDescription.setText(task.getDescription());
     taskStartedDate.setText(task.getDateAdded().toString());
-
     taskDeadline.setText(this.getDeadlineString(task));
-    this.navBarController = navBarController;
+    this.mainController = mainController;
   }
 
   @FXML
   public void refreshData() {
-    initData(task, navBarController);
+    initData(task, mainController);
   }
 
   /**
-   *
    * @return deadline in form: x days, x hours, x minutes.
    */
-  public String getDeadlineString(Task task){
-    final long SECONDS_PER_HOUR=3600;
-    final long SECONDS_PER_MINUTE=60;
+  public String getDeadlineString(Task task) {
+    final long SECONDS_PER_HOUR = 3600;
+    final long SECONDS_PER_MINUTE = 60;
     String deadlineString;
 
     //if deadline date is today and the time passed  OR  the deadline date passed(before today)
-    if((task.getDeadline().isEqual(LocalDate.now()) && task.getDeadLineTime().isBefore(LocalTime.now()))
-        ||(task.getDeadline().isBefore(LocalDate.now()))){
-      deadlineString = "The deadline has passed"+"   ("+task.getDeadline()+" "+task.getDeadLineTime()+")";
-    }else{
+    if ((task.getDeadline().isEqual(LocalDate.now()) && task.getDeadLineTime().isBefore(LocalTime.now()))
+        || (task.getDeadline().isBefore(LocalDate.now()))) {
+      deadlineString = "The deadline has passed" + "   (" + task.getDeadline() + " " + task.getDeadLineTime() + ")";
+    } else {
       Period period = Period.between(LocalDate.now(), task.getDeadline());
       Duration duration = Duration.between(LocalTime.now(), task.getDeadLineTime());
 
@@ -134,12 +113,11 @@ public class ViewTaskController {
       long minutes = ((seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
 
       //return days,h,m, with deadline date and time
-      deadlineString = period.getDays()+" days, "+
-          hours+" hours, "+
-          minutes+" min"+
-          " "+task.getDeadline()+" "+task.getDeadLineTime();
+      deadlineString = period.getDays() + " days, " +
+          hours + " hours, " +
+          minutes + " min" +
+          " " + task.getDeadline() + " " + task.getDeadLineTime();
     }
     return deadlineString;
   }
-
 }

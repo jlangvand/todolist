@@ -23,6 +23,7 @@
 
 .jfx-decorator {
     -fx-decorator-color: #2c3e50;
+    -fx-effect: dropshadow(three-pass-box, #212121, 10, 0, 0, 0);
 }
 
 .jfx-decorator .jfx-decorator-buttons-container {

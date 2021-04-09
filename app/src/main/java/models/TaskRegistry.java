@@ -93,7 +93,7 @@ public class TaskRegistry {
    * Get tasks added within an inclusive range of dates.
    *
    * @param fromDate filter tasks added on of after this date
-   * @param toDate filter tasks added on or before this date
+   * @param toDate   filter tasks added on or before this date
    * @return a list of tasks matching the query
    */
   public List<Task> getTasksByDateAdded(LocalDate fromDate, LocalDate toDate) {
@@ -117,7 +117,7 @@ public class TaskRegistry {
    * Get tasks with deadline within an inclusive range of dates.
    *
    * @param fromDate filter tasks with deadline on of after this date
-   * @param toDate filter tasks with deadline on or before this date
+   * @param toDate   filter tasks with deadline on or before this date
    * @return a list of tasks matching the query
    */
   public List<Task> getTasksByDeadline(LocalDate fromDate, LocalDate toDate) {
@@ -184,6 +184,7 @@ public class TaskRegistry {
 
   /**
    * Adds a task to the registry, and saves the changes using fileHandler.
+   *
    * @param task the task to be added
    * @throws IOException throws exception if file IO fails
    */
@@ -195,6 +196,7 @@ public class TaskRegistry {
 
   /**
    * Removes a task from the registry, and saves the changes using fileHandler.
+   *
    * @param task the task to be removed
    * @throws IOException throws exception if file IO fails
    */

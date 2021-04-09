@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/Menus.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditTaskController">
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/menus.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditTaskController">
    <center>
       <VBox alignment="CENTER" fillWidth="false" BorderPane.alignment="CENTER">
          <children>
@@ -61,7 +61,7 @@
                   <Region prefHeight="78.0" prefWidth="61.0" />
                   <Label prefHeight="26.0" prefWidth="68.0" styleClass="mainLabel" text="Priority" />
                   <Region prefHeight="80.0" prefWidth="22.0" />
-                  <JFXComboBox fx:id="priorityComboBox" prefHeight="37.0" prefWidth="80.0" stylesheets="@../css/Menus.css" />
+                  <JFXComboBox fx:id="priorityComboBox" prefHeight="37.0" prefWidth="80.0" stylesheets="@../css/menus.css" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="77.0" prefWidth="475.0" VBox.vgrow="ALWAYS">

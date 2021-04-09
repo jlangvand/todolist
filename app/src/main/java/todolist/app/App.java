@@ -37,7 +37,7 @@ public class App extends Application {
   @Override
   public void start(Stage stage) throws IOException {
     JFXDecorator decorator =
-        new JFXDecorator(stage, getFXMLLoader("navigationBar").load());
+        new JFXDecorator(stage, getFXMLLoader("Main").load());
     decorator.setCustomMaximize(true);
     stage.setTitle(TITLE);
     decorator.setTitle(TITLE);

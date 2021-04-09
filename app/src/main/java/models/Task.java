@@ -12,7 +12,7 @@ import java.util.Objects;
  * Base class handling information about a task.
  *
  * @version 1.0
- * @since  1.0
+ * @since 1.0
  */
 public class Task implements Serializable {
   private static final long serialVersionUID = 1L;
@@ -35,7 +35,7 @@ public class Task implements Serializable {
 
   /**
    * Default constructor.
-   *
+   * <p>
    * Creates a Task object with valid data.
    */
   public Task() {
@@ -160,7 +160,13 @@ public class Task implements Serializable {
       result = false;
     } else {
       Task task = (Task) object;
-      result = getPriority() == task.getPriority() && Objects.equals(getCategory(), task.getCategory()) && Objects.equals(getDateAdded(), task.getDateAdded()) && Objects.equals(getFinishedDate(), task.getFinishedDate()) && Objects.equals(getDeadline(), task.getDeadline()) && Objects.equals(getTitle(), task.getTitle());
+      result =
+          getPriority() == task.getPriority() && Objects.equals(getCategory()
+              , task.getCategory()) && Objects.equals(getDateAdded(),
+              task.getDateAdded()) && Objects.equals(getFinishedDate(),
+              task.getFinishedDate()) && Objects.equals(getDeadline(),
+              task.getDeadline()) && Objects.equals(getTitle(),
+              task.getTitle());
     }
     return result;
   }
@@ -168,7 +174,8 @@ public class Task implements Serializable {
   /** Get hash of this instance. */
   @Override
   public int hashCode() {
-    return Objects.hash(getPriority(), getCategory(), getDateAdded(), getFinishedDate(), getDeadline(), getTitle());
+    return Objects.hash(getPriority(), getCategory(), getDateAdded(),
+        getFinishedDate(), getDeadline(), getTitle());
   }
 
   /** Get String representation of this instance. */

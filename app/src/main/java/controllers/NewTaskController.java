@@ -45,11 +45,11 @@ public class NewTaskController {
 
   private TaskRegistry tasks;
   private Task task;
-  private NavBarController navBarController;
+  private MainController mainController;
 
   @FXML
   void cancelTask(ActionEvent event) throws IOException {
-    navBarController.displayAllTasks(null);
+    mainController.displayAllTasks(null);
   }
 
   @FXML
@@ -64,7 +64,7 @@ public class NewTaskController {
       task.setDeadline(deadlineDateField.getValue());
       task.setPriority(priorityField.getValue());
       tasks.addTask(task);
-      navBarController.displayAllTasks(null);
+      mainController.displayAllTasks(null);
     }
   }
 
@@ -80,10 +80,10 @@ public class NewTaskController {
     return ok;
   }
 
-  public void initData(TaskRegistry tasks, NavBarController navBarController) {
+  public void initData(TaskRegistry tasks, MainController mainController) {
     this.tasks = tasks;
     this.task = new Task();
-    this.navBarController = navBarController;
+    this.mainController = mainController;
     deadlineDateField.setValue(task.getDeadline());
     deadlineTimeField.setValue(task.getDeadLineTime());
     priorityField.setItems(FXCollections.observableArrayList(Priority.values()));

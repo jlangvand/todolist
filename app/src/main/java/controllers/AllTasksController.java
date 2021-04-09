@@ -12,11 +12,11 @@ import java.io.IOException;
 
 public class AllTasksController {
 
-    @FXML
-    private JFXListView<Task> allTasksList;
+  @FXML
+  private JFXListView<Task> allTasksList;
 
-    private TaskRegistry tasks;
-    private NavBarController navBarController;
+  private TaskRegistry tasks;
+  private MainController mainController;
 
 
   /**
@@ -28,7 +28,7 @@ public class AllTasksController {
   @FXML
   void displayNewTask(ActionEvent event) {
     try {
-      navBarController.loadNewTaskView(tasks);
+      mainController.loadNewTaskView(tasks);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -42,18 +42,18 @@ public class AllTasksController {
    */
   @FXML
   void displayTask(MouseEvent event) throws IOException {
-      if (!allTasksList.getSelectionModel().isEmpty()) {
-          Task selectedTask = allTasksList.getSelectionModel()
-              .getSelectedItem();
-          navBarController.loadDisplayTaskView(selectedTask);
-      }
+    if (!allTasksList.getSelectionModel().isEmpty()) {
+      Task selectedTask = allTasksList.getSelectionModel()
+          .getSelectedItem();
+      mainController.loadDisplayTaskView(selectedTask);
+    }
   }
 
-  void initData(TaskRegistry tasks, NavBarController navBarController) {
+  void initData(TaskRegistry tasks, MainController mainController) {
     this.tasks = tasks;
     refreshData();
     allTasksList.setCellFactory(cellController -> new CellController());
-    this.navBarController = navBarController;
+    this.mainController = mainController;
   }
 
   @FXML
