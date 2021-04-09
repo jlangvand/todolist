@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -23,9 +24,11 @@
         </HBox>
         <HBox prefHeight="35.0" prefWidth="540.0" VBox.vgrow="ALWAYS">
           <children>
-            <Region prefHeight="77.0" prefWidth="16.0" />
-                  <Text fx:id="taskDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text fx:id="taskDescription" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Text" />
           </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
             </HBox>
         <Region prefHeight="19.0" prefWidth="490.0" />
             <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="520.0">
