@@ -28,7 +28,7 @@ import static java.util.logging.Level.SEVERE;
 public class PersistentRegistry {
   private static final Logger LOGGER =
       Logger.getLogger(PersistentRegistry.class.getName());
-  private File file;
+  private final File file;
 
   /**
    * Create an instance using a default file name.
