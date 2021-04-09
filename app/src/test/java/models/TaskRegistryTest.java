@@ -36,8 +36,8 @@ class TaskRegistryTest {
     Task task2 = new Task("Get the second task");
     taskRegistry.addTask(task1);
     taskRegistry.addTask(task2);
-    assertTrue(taskRegistry.getTasks().contains(task1));
-    assertTrue(taskRegistry.getTasks().contains(task2));
+    assertTrue(taskRegistry.contains(task1));
+    assertTrue(taskRegistry.contains(task2));
   }
 
   @Test
@@ -115,7 +115,7 @@ class TaskRegistryTest {
   void addTask() throws IOException {
     Task task=new Task("Add a new task");
     taskRegistry.addTask(task);
-    assertTrue(taskRegistry.getTasks().contains(task));
+    assertTrue(taskRegistry.contains(task));
   }
 
   @Test
@@ -123,7 +123,7 @@ class TaskRegistryTest {
     Task task=new Task("Task to remove");
     taskRegistry.addTask(task);
     taskRegistry.removeTask(task);
-    assertFalse(taskRegistry.getTasks().contains(task));
+    assertFalse(taskRegistry.contains(task));
 
   }
 

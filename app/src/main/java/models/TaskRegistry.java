@@ -1,24 +1,23 @@
 package models;
 
 import dao.PersistentRegistry;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import utilities.Priority;
 import utilities.Status;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
  * This class represents a register of tasks.
  */
-public class TaskRegistry {
-  private final List<Task> tasks;
-  PersistentRegistry fileHandle;
-  ObservableList<Task> observableTasks; //Used to display all tasks.
+public class TaskRegistry extends ArrayList<Task> implements Serializable {
+  private static final long serialVersionUID = 1L;
+  private final transient PersistentRegistry fileHandle;
 
   /**
    * Create a new TaskRegistry with a custom save file.
@@ -28,8 +27,7 @@ public class TaskRegistry {
    */
   public TaskRegistry(String fileName) throws IOException {
     fileHandle = new PersistentRegistry(fileName);
-    this.tasks = fileHandle.read();
-    observableTasks = FXCollections.observableArrayList();
+    addAll(fileHandle.read());
   }
 
   /**
@@ -39,27 +37,11 @@ public class TaskRegistry {
    */
   public TaskRegistry() throws IOException {
     this.fileHandle = new PersistentRegistry();
-    this.tasks = fileHandle.read();
-    observableTasks = FXCollections.observableArrayList();
+    addAll(fileHandle.read());
   }
 
-  public PersistentRegistry getFileHandle() {
-    return fileHandle;
-  }
-
-  /**
-   * @return All tasks as an ArrayList
-   */
-  public List<Task> getTasks() {
-    return tasks;
-
-  }
-
-  /**
-   * @return The observableList corresponding to the tasks of this TaskRegister.
-   */
-  public ObservableList<Task> getObservableTasks() {
-    return observableTasks;
+  public void save() throws IOException {
+    fileHandle.save(this);
   }
 
   /**
@@ -68,7 +50,7 @@ public class TaskRegistry {
    */
   public List<Task> getTasksByStatus(Status status) {
     ArrayList<Task> foundTasks = new ArrayList<>();
-    tasks.forEach(task -> {
+    forEach(task -> {
       if (task.getStatus() == status) {
         foundTasks.add(task);
       }
@@ -82,7 +64,7 @@ public class TaskRegistry {
    */
   public List<Task> getTasksByPriority(Priority priority) {
     ArrayList<Task> foundTasks = new ArrayList<>();
-    tasks.forEach(task -> {
+    forEach(task -> {
       if (task.getPriority() == priority)
         foundTasks.add(task);
     });
@@ -97,7 +79,7 @@ public class TaskRegistry {
    * @return a list of tasks matching the query
    */
   public List<Task> getTasksByDateAdded(LocalDate fromDate, LocalDate toDate) {
-    return tasks.stream().filter(t ->
+    return stream().filter(t ->
         t.getDateAdded().isAfter(fromDate.minusDays(1))
             && t.getDateAdded().isBefore(toDate.plusDays(1)))
         .collect(Collectors.toList());
@@ -121,7 +103,7 @@ public class TaskRegistry {
    * @return a list of tasks matching the query
    */
   public List<Task> getTasksByDeadline(LocalDate fromDate, LocalDate toDate) {
-    return tasks.stream().filter(t ->
+    return stream().filter(t ->
         t.getDeadline().isAfter(fromDate.minusDays(1))
             && t.getDeadline().isBefore(toDate.plusDays(1)))
         .collect(Collectors.toList());
@@ -178,7 +160,7 @@ public class TaskRegistry {
   @Override
   public String toString() {
     return "TaskRegistry{" +
-        "tasks=" + tasks +
+        "tasks=" + this +
         '}';
   }
 
@@ -189,9 +171,8 @@ public class TaskRegistry {
    * @throws IOException throws exception if file IO fails
    */
   public void addTask(Task task) throws IOException {
-    tasks.add(task);
-    observableTasks.add(task);
-    fileHandle.save(tasks);
+    add(task);
+    save();
   }
 
   /**
@@ -201,8 +182,21 @@ public class TaskRegistry {
    * @throws IOException throws exception if file IO fails
    */
   public void removeTask(Task task) throws IOException {
-    tasks.remove(task);
-    observableTasks.remove(task);
-    fileHandle.save(tasks);
+    remove(task);
+    save();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    TaskRegistry registry = (TaskRegistry) o;
+    return fileHandle.equals(registry.fileHandle);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), fileHandle);
   }
 }

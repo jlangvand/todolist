@@ -74,7 +74,7 @@ public class EditTaskController {
     task.setDescription(descriptionField.getText());
     task.setDeadline(deadlineDateField.getValue());
     task.setCategory(categoryField.getText());
-    allTasks.getFileHandle().save(allTasks.getTasks()); //Needed in order to save task changes locally.
+    allTasks.save(); //Needed in order to save task changes locally.
     mainController.loadDisplayTaskView(task);
   }
 

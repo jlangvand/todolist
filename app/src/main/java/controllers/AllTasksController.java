@@ -57,6 +57,6 @@ public class AllTasksController {
 
   @FXML
   void refreshData() {
-    allTasksList.setItems(FXCollections.observableArrayList(tasks.getTasks()));
+    allTasksList.setItems(FXCollections.observableArrayList(tasks));
   }
 }
