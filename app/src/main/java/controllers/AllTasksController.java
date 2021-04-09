@@ -18,7 +18,6 @@ public class AllTasksController {
   private TaskRegistry tasks;
   private MainController mainController;
 
-
   /**
    * Method called when user clicks on add button.
    *
@@ -60,6 +59,4 @@ public class AllTasksController {
   void refreshData() {
     allTasksList.setItems(FXCollections.observableArrayList(tasks.getTasks()));
   }
-
-
 }
