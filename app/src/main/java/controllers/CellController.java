@@ -13,9 +13,13 @@ import utilities.Status;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.ResourceBundle;
 
 public class CellController extends JFXListCell<Task> {
+  private static final Logger LOGGER =
+      Logger.getLogger(CellController.class.getName());
 
   @FXML
   private ResourceBundle resources;
@@ -77,7 +81,7 @@ public class CellController extends JFXListCell<Task> {
             task.setStatus(Status.ACTIVE);
           }
           //to test the actual status!
-          System.out.println(task.getStatus().toString());
+          LOGGER.log(Level.INFO, task.getStatus().toString());
         });
 
       } catch (Exception e) {
