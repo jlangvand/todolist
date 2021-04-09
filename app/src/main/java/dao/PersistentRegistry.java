@@ -2,14 +2,22 @@ package dao;
 
 import models.Task;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
+import static java.util.logging.Level.INFO;
+import static java.util.logging.Level.SEVERE;
 
 /**
  * Abstraction for file handling.
@@ -18,7 +26,9 @@ import java.util.List;
  * file in the file system.
  */
 public class PersistentRegistry {
-  private final File file;
+  private static final Logger LOGGER =
+      Logger.getLogger(PersistentRegistry.class.getName());
+  private File file;
 
   /**
    * Create an instance using a default file name.
@@ -39,11 +49,15 @@ public class PersistentRegistry {
    */
   public PersistentRegistry(String fileName) throws IOException {
     this.file = new File(fileName);
+    createOrOpenFile();
+  }
+
+  private void createOrOpenFile() throws IOException {
     if (file.createNewFile()) {
-      System.err.printf("Created file %s%n", file.getAbsolutePath());
+      LOGGER.log(INFO, () -> "Created new file " + file.getAbsolutePath());
       save(new ArrayList<>());
     } else {
-      System.err.printf("Opened file %s%n", file.getAbsolutePath());
+      LOGGER.log(INFO, () -> "Opened file " + file.getAbsolutePath());
     }
   }
 
@@ -56,11 +70,17 @@ public class PersistentRegistry {
   @SuppressWarnings("unchecked")
   public List<Task> read() throws IOException {
     try (FileInputStream fis = new FileInputStream(file.getAbsolutePath());
-         ObjectInputStream ois = new ObjectInputStream(fis);) {
+         ObjectInputStream ois = new ObjectInputStream(fis)) {
       return (ArrayList<Task>) ois.readObject();
-    } catch (ClassNotFoundException e) {
-      throw new IOException("File may be corrupt. Error: " + e.getMessage());
+    } catch (ClassNotFoundException | InvalidClassException
+        | ClassCastException e) {
+      LOGGER.log(SEVERE, () -> "File is corrupt! Deleting file.");
+      Files.delete(Path.of(file.getAbsolutePath()));
+      createOrOpenFile();
+    } catch (EOFException e) {
+      LOGGER.log(INFO, "File is empty, returning new ArrayList.");
     }
+    return new ArrayList<>();
   }
 
   /**
@@ -71,7 +91,7 @@ public class PersistentRegistry {
    */
   public void save(List<Task> tasks) throws IOException {
     try (FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-         ObjectOutputStream oos = new ObjectOutputStream(fos);) {
+         ObjectOutputStream oos = new ObjectOutputStream(fos)) {
       oos.writeObject(tasks);
     }
   }
