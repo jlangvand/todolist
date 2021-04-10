@@ -51,12 +51,16 @@ public class AllTasksController {
   void initData(TaskRegistry tasks, MainController mainController) {
     this.tasks = tasks;
     refreshData();
-    allTasksList.setCellFactory(cellController -> new CellController());
+    allTasksList.setCellFactory(cellController -> new CellController(tasks));
     this.mainController = mainController;
   }
 
   @FXML
   void refreshData() {
     allTasksList.setItems(FXCollections.observableArrayList(tasks));
+  }
+
+  public TaskRegistry getTasks() {
+    return tasks;
   }
 }
