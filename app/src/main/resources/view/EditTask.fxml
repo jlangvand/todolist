@@ -61,7 +61,7 @@
                   <Region prefHeight="78.0" prefWidth="61.0" />
                   <Label prefHeight="26.0" prefWidth="68.0" styleClass="mainLabel" text="Priority" />
                   <Region prefHeight="80.0" prefWidth="22.0" />
-                  <JFXComboBox fx:id="priorityComboBox" prefHeight="37.0" prefWidth="80.0" stylesheets="@../css/menus.css" />
+                  <JFXComboBox fx:id="priorityField" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="77.0" prefWidth="475.0" VBox.vgrow="ALWAYS">

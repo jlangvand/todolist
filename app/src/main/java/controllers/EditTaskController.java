@@ -6,11 +6,13 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import models.Task;
 import models.TaskRegistry;
+import utilities.Priority;
 
 import java.io.IOException;
 
@@ -32,7 +34,7 @@ public class EditTaskController {
   private JFXTimePicker deadlineTimeField;
 
   @FXML
-  private JFXComboBox<?> priorityComboBox;
+  private JFXComboBox<Priority> priorityField;
 
   @FXML
   private JFXTextField categoryField;
@@ -64,6 +66,8 @@ public class EditTaskController {
     descriptionField.setText(task.getDescription());
     deadlineDateField.setValue(task.getDeadline()); //must add variable for time too in task class.
     categoryField.setText(task.getCategory());
+    priorityField.setItems(FXCollections.observableArrayList(Priority.values()));
+    priorityField.setValue(task.getPriority());
     this.mainController = mainController;
   }
 
@@ -74,6 +78,7 @@ public class EditTaskController {
     task.setDescription(descriptionField.getText());
     task.setDeadline(deadlineDateField.getValue());
     task.setCategory(categoryField.getText());
+    task.setPriority(priorityField.getValue());
     allTasks.save(); //Needed in order to save task changes locally.
     mainController.loadDisplayTaskView(task);
   }
