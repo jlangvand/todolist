@@ -121,7 +121,7 @@ public class MainController implements Initializable {
    *
    * @throws IOException
    */
-  private void loadAllTasksView() throws IOException {
+  public void loadAllTasksView() throws IOException {
     FXMLLoader fxmlLoader = getFXMLLoader(ALL_TASKS_FXML_NAME);
     Parent root = fxmlLoader.load();
     AllTasksController allTasksController = fxmlLoader.getController();

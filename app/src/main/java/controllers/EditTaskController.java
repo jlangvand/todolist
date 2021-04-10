@@ -9,12 +9,16 @@ import com.jfoenix.controls.JFXTimePicker;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import models.Task;
 import models.TaskRegistry;
 import utilities.Priority;
 
 import java.io.IOException;
+
+import java.util.Optional;
 
 public class EditTaskController {
 
@@ -50,8 +54,19 @@ public class EditTaskController {
   private MainController mainController;
 
   @FXML
-  void displayTrashDialog(ActionEvent event) {
-    // To be implemented
+  void displayTrashDialog(ActionEvent event) throws IOException {
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Confirmation Dialog");
+    alert.setHeaderText("Delete this task?");
+
+    alert.getDialogPane().setStyle("-fx-background-color: #2c3e50");
+
+    Optional<ButtonType> answer = alert.showAndWait();
+    if(answer.get()==ButtonType.OK){
+      allTasks.removeTask(task);
+      mainController.loadAllTasksView();
+    }
+
   }
 
   @FXML
