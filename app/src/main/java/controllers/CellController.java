@@ -62,6 +62,7 @@ public class CellController extends JFXListCell<Task> {
       ClipboardContent content = new ClipboardContent();
       content.putString(String.valueOf(items.indexOf(getItem())));
       dragboard.setContent(content);
+      dragboard.setDragView(new Image("file:src/main/resources/images/Task_icon.png"));
       event.consume();
 
     });
