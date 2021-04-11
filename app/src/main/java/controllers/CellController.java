@@ -93,7 +93,16 @@ public class CellController extends JFXListCell<Task> {
         int draggedIdx = Integer.parseInt(db.getString());
         int thisIdx = items.indexOf(getItem());
         try {
-          allTasks.swapTasksByIndex(draggedIdx,thisIdx);
+          if (thisIdx > draggedIdx) {
+            for (int i = draggedIdx; i<thisIdx; i++) {
+              allTasks.swapTasksByIndex(i, i+1);
+            }
+
+          } else if (draggedIdx > thisIdx){
+            for (int i = draggedIdx; i > thisIdx; i--) {
+              allTasks.swapTasksByIndex(i, i-1);
+            }
+          }
         } catch (IOException e) {
           e.printStackTrace();
         }
