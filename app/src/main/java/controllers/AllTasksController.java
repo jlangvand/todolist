@@ -60,7 +60,4 @@ public class AllTasksController {
     allTasksList.setItems(FXCollections.observableArrayList(tasks));
   }
 
-  public TaskRegistry getTasks() {
-    return tasks;
-  }
 }
