@@ -10,7 +10,7 @@ import models.TaskRegistry;
 
 import java.io.IOException;
 
-public class AllTasksController {
+public class AllTasksController implements ListController{
 
   @FXML
   private JFXListView<Task> allTasksList;
@@ -48,16 +48,18 @@ public class AllTasksController {
     }
   }
 
-  void initData(TaskRegistry tasks, MainController mainController) {
+  void initData(TaskRegistry tasks, MainController mainController) throws IOException {
     this.tasks = tasks;
     refreshData();
-    allTasksList.setCellFactory(cellController -> new CellController(tasks));
+    allTasksList.setCellFactory(cellController -> new CellController(this));
     this.mainController = mainController;
   }
 
   @FXML
-  void refreshData() {
+  @Override
+  public void refreshData() throws IOException {
     allTasksList.setItems(FXCollections.observableArrayList(tasks));
+    tasks.save();
   }
 
 }
