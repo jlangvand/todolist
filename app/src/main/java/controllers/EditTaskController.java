@@ -81,6 +81,7 @@ public class EditTaskController {
   @FXML
   void displayTrashDialog(ActionEvent event) throws IOException {
 
+    BoxBlur blur = new BoxBlur(3,3,3);
     JFXDialogLayout dialogLayout = new JFXDialogLayout();
     JFXButton delete = new JFXButton("Delete");
     JFXButton cancel = new JFXButton("Cancel");
@@ -101,14 +102,17 @@ public class EditTaskController {
       }
     });
 
-    cancel.setOnAction(event1 -> {
-      dialog.close();
-    });
+    cancel.setOnAction(event1 -> dialog.close());
 
-    dialogLayout.setBody(new Label("Delete this task?"));
+    dialog.setOnDialogClosed(event1 -> pane.setEffect(null));
+
+    Label label = new Label("Delete this task?");
+    label.setStyle("-fx-text-fill: #2c3e50; -fx-font-size: 17pt");
+    dialogLayout.setBody(label);
     dialogLayout.setActions(delete,cancel);
 
     dialog.show();
+    pane.setEffect(blur);
   }
 
   @FXML
