@@ -32,21 +32,6 @@ public class MainController implements Initializable {
   @FXML
   BorderPane pane;
 
-  @FXML
-  private JFXButton allTasksButton;
-
-  @FXML
-  private JFXButton highPriorityButton;
-
-  @FXML
-  private JFXButton mediumPriorityButton;
-
-  @FXML
-  private JFXButton lowPriorityButton;
-
-  @FXML
-  private JFXButton trashButton;
-
   private TaskRegistry allTasks;
   private FXMLLoader newTaskLoader;
   private FXMLLoader displayTaskLoader;
