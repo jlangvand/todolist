@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import static utilities.Utilities.getDialog;
+
 public class NewTaskController {
 
   @FXML
@@ -78,7 +80,7 @@ public class NewTaskController {
       task.setDeadline(deadlineDateField.getValue());
       task.setPriority(priorityField.getValue());
       tasks.addTask(task);
-      JFXDialog dialog = mainController.getDialog(stackPane,mainPane,"New " +
+      JFXDialog dialog = getDialog(stackPane,mainPane,"New " +
           "task has been " +
           "added successfully");
       dialog.setOnDialogClosed(event1 -> {

@@ -26,6 +26,8 @@ import java.io.IOException;
 
 import java.util.Optional;
 
+import static utilities.Utilities.getDialog;
+
 public class EditTaskController {
 
   @FXML
@@ -88,15 +90,25 @@ public class EditTaskController {
 
     delete.getStylesheets().add(new File("src/main/resources/css/dialogJFX.css").toURI().toString());
     cancel.getStylesheets().add(new File("src/main/resources/css/dialogJFX.css").toURI().toString());
-    delete.getStyleClass().add("dialog-button");
-    cancel.getStyleClass().add("dialog-button");
 
     JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
 
     delete.setOnAction(event1 -> {
       try{
         allTasks.removeTask(task);
-        mainController.loadAllTasksView();
+
+        JFXDialog deletedDialog = getDialog(stackPane,mainPane,"The task " +
+            "has been deleted" +
+            " successfully");
+        deletedDialog.setOnDialogClosed(event2 -> {
+          try {
+            mainController.displayAllTasks(null);
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
+
+
       }catch (IOException e) {
         e.printStackTrace();
       }
@@ -104,7 +116,9 @@ public class EditTaskController {
 
     cancel.setOnAction(event1 -> dialog.close());
 
-    dialog.setOnDialogClosed(event1 -> mainPane.setEffect(null));
+    dialog.setOnDialogClosed(event1 -> {
+      mainPane.setEffect(null);
+    });
 
     Label label = new Label("Delete this task?");
     label.setStyle("-fx-text-fill: #2c3e50; -fx-font-size: 17pt");
@@ -141,7 +155,7 @@ public class EditTaskController {
     task.setCategory(categoryField.getText());
     task.setPriority(priorityField.getValue());
     allTasks.save(); //Needed in order to save task changes locally.
-    JFXDialog dialog = mainController.getDialog(stackPane,mainPane,"The task " +
+    JFXDialog dialog = getDialog(stackPane,mainPane,"The task " +
         "has been edited" +
         " successfully");
     dialog.setOnDialogClosed(event1 -> {

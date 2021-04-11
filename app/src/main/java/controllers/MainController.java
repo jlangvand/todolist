@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static utilities.Utilities.getDialog;
 import static utilities.Utilities.getFXMLLoader;
 
 public class MainController implements Initializable {
@@ -177,7 +178,6 @@ public class MainController implements Initializable {
     }
 
     event.setDropCompleted(success);
-
     event.consume();
 
   }
@@ -189,30 +189,6 @@ public class MainController implements Initializable {
 
     event.consume();
 
-  }
-
-  public JFXDialog getDialog(StackPane stackPane, Pane mainPane,
-                                    String dialogText){
-    BoxBlur blur = new BoxBlur(3,3,3);
-    JFXDialogLayout dialogLayout = new JFXDialogLayout();
-    JFXButton okButton = new JFXButton("Ok!");
-
-    okButton.getStylesheets().add(new File("src/main/resources/css/dialogJFX.css").toURI().toString());
-    okButton.getStyleClass().add("dialog-button");
-
-    JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
-
-    okButton.setOnAction(event -> dialog.close());
-    dialog.setOnDialogClosed(event1 -> mainPane.setEffect(null));
-
-    Label label = new Label(dialogText);
-    label.setStyle("-fx-text-fill: #2c3e50; -fx-font-size: 17pt");
-    dialogLayout.setBody(label);
-    dialogLayout.setActions(okButton);
-
-    mainPane.setEffect(blur);
-    dialog.show();
-    return dialog;
   }
 
 }
