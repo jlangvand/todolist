@@ -1,11 +1,15 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import models.Task;
 import models.TaskRegistry;
@@ -152,4 +156,32 @@ public class MainController implements Initializable {
     controller.initData(task, allTasks, this);
     pane.setCenter(root);
   }
+
+  @FXML
+  void trashDropped(DragEvent event) throws IOException {
+    System.out.println("hi");
+    Dragboard db = event.getDragboard();
+    boolean success = false;
+
+    if (db.hasString()) {
+      int draggedIdx = Integer.parseInt(db.getString());
+      allTasks.removeTask(draggedIdx);
+      success = true;
+    }
+
+    event.setDropCompleted(success);
+
+    event.consume();
+
+  }
+  @FXML
+  void trashDragOver(DragEvent event) throws IOException {
+    if (event.getDragboard().hasString()) {
+      event.acceptTransferModes(TransferMode.MOVE);
+    }
+
+    event.consume();
+
+  }
+
 }

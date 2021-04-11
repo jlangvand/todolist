@@ -186,6 +186,24 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
     save();
   }
 
+  public void removeTask(int index) throws IOException {
+    removeTask(get(index));
+  }
+
+  /**
+   * Swaps the index of the task of index a with the task of index b.
+   * @param a Index of task A
+   * @param b Index of task B
+   * @throws IOException throws exception if file IO fails
+   */
+  public void swapTasksByIndex(int a, int b) throws IOException {
+    Task taskA = get(a);
+    Task taskB = get(b);
+    set(a,taskB);
+    set(b, taskA);
+    save();
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
