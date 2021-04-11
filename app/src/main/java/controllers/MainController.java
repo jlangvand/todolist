@@ -1,19 +1,26 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import models.Task;
 import models.TaskRegistry;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -181,6 +188,30 @@ public class MainController implements Initializable {
       event.consume();
     }
 
+  }
+
+  public JFXDialog getDialog(StackPane stackPane, Pane mainPane,
+                                    String dialogText){
+    BoxBlur blur = new BoxBlur(3,3,3);
+    JFXDialogLayout dialogLayout = new JFXDialogLayout();
+    JFXButton okButton = new JFXButton("Ok!");
+
+    okButton.getStylesheets().add(new File("src/main/resources/css/dialogJFX.css").toURI().toString());
+    okButton.getStyleClass().add("dialog-button");
+
+    JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
+
+    okButton.setOnAction(event -> dialog.close());
+    dialog.setOnDialogClosed(event1 -> mainPane.setEffect(null));
+
+    Label label = new Label(dialogText);
+    label.setStyle("-fx-text-fill: #2c3e50; -fx-font-size: 17pt");
+    dialogLayout.setBody(label);
+    dialogLayout.setActions(okButton);
+
+    mainPane.setEffect(blur);
+    dialog.show();
+    return dialog;
   }
 
 }
