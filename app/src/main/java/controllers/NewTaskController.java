@@ -3,21 +3,35 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import models.Task;
 import models.TaskRegistry;
 import utilities.Priority;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class NewTaskController {
+
+  @FXML
+  private StackPane stackPane;
+
+  @FXML
+  private BorderPane mainPane;
 
   @FXML
   private JFXTextField nameField;
@@ -64,7 +78,16 @@ public class NewTaskController {
       task.setDeadline(deadlineDateField.getValue());
       task.setPriority(priorityField.getValue());
       tasks.addTask(task);
-      mainController.displayAllTasks(null);
+      JFXDialog dialog = mainController.getDialog(stackPane,mainPane,"New " +
+          "task has been " +
+          "added successfully");
+      dialog.setOnDialogClosed(event1 -> {
+        try {
+          mainController.displayAllTasks(null);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      });
     }
   }
 
@@ -89,4 +112,5 @@ public class NewTaskController {
     priorityField.setItems(FXCollections.observableArrayList(Priority.values()));
     priorityField.setValue(Priority.DEFAULT);
   }
+
 }

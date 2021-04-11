@@ -29,7 +29,7 @@ import java.util.Optional;
 public class EditTaskController {
 
   @FXML
-  private BorderPane pane;
+  private BorderPane mainPane;
 
   @FXML
   private StackPane stackPane;
@@ -79,7 +79,7 @@ public class EditTaskController {
 //  }
 
   @FXML
-  void displayTrashDialog(ActionEvent event) throws IOException {
+  void displayTrashDialog(ActionEvent event) {
 
     BoxBlur blur = new BoxBlur(3,3,3);
     JFXDialogLayout dialogLayout = new JFXDialogLayout();
@@ -104,7 +104,7 @@ public class EditTaskController {
 
     cancel.setOnAction(event1 -> dialog.close());
 
-    dialog.setOnDialogClosed(event1 -> pane.setEffect(null));
+    dialog.setOnDialogClosed(event1 -> mainPane.setEffect(null));
 
     Label label = new Label("Delete this task?");
     label.setStyle("-fx-text-fill: #2c3e50; -fx-font-size: 17pt");
@@ -112,7 +112,7 @@ public class EditTaskController {
     dialogLayout.setActions(delete,cancel);
 
     dialog.show();
-    pane.setEffect(blur);
+    mainPane.setEffect(blur);
   }
 
   @FXML
@@ -141,7 +141,16 @@ public class EditTaskController {
     task.setCategory(categoryField.getText());
     task.setPriority(priorityField.getValue());
     allTasks.save(); //Needed in order to save task changes locally.
-    mainController.loadDisplayTaskView(task);
+    JFXDialog dialog = mainController.getDialog(stackPane,mainPane,"The task " +
+        "has been edited" +
+        " successfully");
+    dialog.setOnDialogClosed(event1 -> {
+      try {
+        mainController.displayAllTasks(null);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    });
   }
 
   @FXML
