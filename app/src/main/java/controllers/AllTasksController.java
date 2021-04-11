@@ -51,7 +51,7 @@ public class AllTasksController implements ListController{
   void initData(TaskRegistry tasks, MainController mainController) throws IOException {
     this.tasks = tasks;
     refreshData();
-    allTasksList.setCellFactory(cellController -> new CellController(this));
+    allTasksList.setCellFactory(cellController -> new CellController(this, tasks));
     this.mainController = mainController;
   }
 
