@@ -18,6 +18,7 @@ import utilities.Status;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ResourceBundle;
@@ -93,15 +94,25 @@ public class CellController extends JFXListCell<Task> {
         ObservableList<Task> items = getListView().getItems();
         int draggedIdx = Integer.parseInt(db.getString());
         int thisIdx = items.indexOf(getItem());
+
+        int[] indexInAllTasks = new int[allTasks.getActiveTasks().size()];
+        int c = 0;
+        for (int i = 0; i<allTasks.size(); i++) {
+          if (allTasks.get(i).getStatus() == Status.ACTIVE) {
+            indexInAllTasks[c] = i;
+            c++;
+          }
+        }
+
         try {
           if (thisIdx > draggedIdx) {
             for (int i = draggedIdx; i<thisIdx; i++) {
-              allTasks.swapTasksByIndex(i, i+1);
+              allTasks.swapTasksByIndex(indexInAllTasks[i], indexInAllTasks[i+1]);
             }
 
           } else if (draggedIdx > thisIdx){
             for (int i = draggedIdx; i > thisIdx; i--) {
-              allTasks.swapTasksByIndex(i, i-1);
+              allTasks.swapTasksByIndex(indexInAllTasks[i], indexInAllTasks[i-1]);
             }
           }
         } catch (IOException e) {
