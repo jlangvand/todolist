@@ -27,6 +27,8 @@ public class MainController implements Initializable {
   private static final String EDIT_TASK_FXML_NAME = "EditTask";
   private static final String VIEW_TASK_FXML_NAME = "ViewTask";
 
+  private static final boolean DRAG_TO_TRASH_ENABLED = false;
+
   @FXML
   BorderPane pane;
 
@@ -168,28 +170,31 @@ public class MainController implements Initializable {
 
   @FXML
   void trashDropped(DragEvent event) throws IOException {
-    System.out.println("hi");
-    Dragboard db = event.getDragboard();
-    boolean success = false;
+    if (DRAG_TO_TRASH_ENABLED) {
+      System.out.println("hi");
+      Dragboard db = event.getDragboard();
+      boolean success = false;
 
-    if (db.hasString()) {
-      int draggedIdx = Integer.parseInt(db.getString());
-      allTasks.removeTask(draggedIdx);
-      success = true;
+      if (db.hasString()) {
+        int draggedIdx = Integer.parseInt(db.getString());
+        allTasks.removeTask(draggedIdx);
+        success = true;
+      }
+
+      event.setDropCompleted(success);
+
+      event.consume();
     }
-
-    event.setDropCompleted(success);
-
-    event.consume();
 
   }
   @FXML
   void trashDragOver(DragEvent event) throws IOException {
-    if (event.getDragboard().hasString()) {
-      event.acceptTransferModes(TransferMode.MOVE);
+    if (DRAG_TO_TRASH_ENABLED) {
+      if (event.getDragboard().hasString()) {
+        event.acceptTransferModes(TransferMode.MOVE);
+      }
+      event.consume();
     }
-
-    event.consume();
 
   }
 
