@@ -1,7 +1,6 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -96,13 +95,16 @@ public class ViewTaskController {
     final long SECONDS_PER_MINUTE = 60;
     String deadlineString;
 
-    //if deadline date is today and the time passed  OR  the deadline date passed(before today)
+    //if deadline date is today and the time passed  OR  the deadline date
+    // passed(before today)
     if ((task.getDeadline().isEqual(LocalDate.now()) && task.getDeadLineTime().isBefore(LocalTime.now()))
         || (task.getDeadline().isBefore(LocalDate.now()))) {
-      deadlineString = "The deadline has passed" + "   (" + task.getDeadline() + " " + task.getDeadLineTime() + ")";
+      deadlineString =
+          "The deadline has passed" + "   (" + task.getDeadline() + " " + task.getDeadLineTime() + ")";
     } else {
       Period period = Period.between(LocalDate.now(), task.getDeadline());
-      Duration duration = Duration.between(LocalTime.now(), task.getDeadLineTime());
+      Duration duration = Duration.between(LocalTime.now(),
+          task.getDeadLineTime());
 
       //fix the bug that returns negative number of days.
       if (duration.isNegative()) {
@@ -110,7 +112,8 @@ public class ViewTaskController {
         duration = duration.plusDays(1);
       }
 
-      //get total seconds from now to finished time, and calculate how many hours and minutes.
+      //get total seconds from now to finished time, and calculate how many
+      // hours and minutes.
       long seconds = duration.getSeconds();
 
       long hours = seconds / SECONDS_PER_HOUR;

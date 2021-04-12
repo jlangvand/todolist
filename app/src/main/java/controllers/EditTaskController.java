@@ -11,8 +11,6 @@ import com.jfoenix.controls.JFXTimePicker;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.BorderPane;
@@ -23,8 +21,6 @@ import utilities.Priority;
 
 import java.io.File;
 import java.io.IOException;
-
-import java.util.Optional;
 
 import static utilities.Utilities.getDialog;
 
@@ -83,21 +79,24 @@ public class EditTaskController {
   @FXML
   void displayTrashDialog(ActionEvent event) {
 
-    BoxBlur blur = new BoxBlur(3,3,3);
+    BoxBlur blur = new BoxBlur(3, 3, 3);
     JFXDialogLayout dialogLayout = new JFXDialogLayout();
     JFXButton delete = new JFXButton("Delete");
     JFXButton cancel = new JFXButton("Cancel");
 
-    delete.getStylesheets().add(new File("src/main/resources/css/dialogJFX.css").toURI().toString());
-    cancel.getStylesheets().add(new File("src/main/resources/css/dialogJFX.css").toURI().toString());
+    delete.getStylesheets().add(new File("src/main/resources/css/dialogJFX" +
+        ".css").toURI().toString());
+    cancel.getStylesheets().add(new File("src/main/resources/css/dialogJFX" +
+        ".css").toURI().toString());
 
-    JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
+    JFXDialog dialog = new JFXDialog(stackPane, dialogLayout,
+        JFXDialog.DialogTransition.TOP);
 
     delete.setOnAction(event1 -> {
-      try{
+      try {
         allTasks.removeTask(task);
 
-        JFXDialog deletedDialog = getDialog(stackPane,mainPane,"The task " +
+        JFXDialog deletedDialog = getDialog(stackPane, mainPane, "The task " +
             "has been deleted" +
             " successfully");
         deletedDialog.setOnDialogClosed(event2 -> {
@@ -107,9 +106,7 @@ public class EditTaskController {
             e.printStackTrace();
           }
         });
-
-
-      }catch (IOException e) {
+      } catch (IOException e) {
         e.printStackTrace();
       }
     });
@@ -123,7 +120,7 @@ public class EditTaskController {
     Label label = new Label("Delete this task?");
     label.setStyle("-fx-text-fill: #2c3e50; -fx-font-size: 17pt");
     dialogLayout.setBody(label);
-    dialogLayout.setActions(delete,cancel);
+    dialogLayout.setActions(delete, cancel);
 
     dialog.show();
     mainPane.setEffect(blur);
@@ -134,12 +131,14 @@ public class EditTaskController {
     // To be implemented
   }
 
-  public void initData(Task task, TaskRegistry allTasks, MainController mainController) {
+  public void initData(Task task, TaskRegistry allTasks,
+                       MainController mainController) {
     this.task = task;
     this.allTasks = allTasks;
     nameField.setText(task.getTitle());
     descriptionField.setText(task.getDescription());
-    deadlineDateField.setValue(task.getDeadline()); //must add variable for time too in task class.
+    deadlineDateField.setValue(task.getDeadline()); //must add variable for
+    // time too in task class.
     categoryField.setText(task.getCategory());
     priorityField.setItems(FXCollections.observableArrayList(Priority.values()));
     priorityField.setValue(task.getPriority());
@@ -155,7 +154,7 @@ public class EditTaskController {
     task.setCategory(categoryField.getText());
     task.setPriority(priorityField.getValue());
     allTasks.save(); //Needed in order to save task changes locally.
-    JFXDialog dialog = getDialog(stackPane,mainPane,"The task " +
+    JFXDialog dialog = getDialog(stackPane, mainPane, "The task " +
         "has been edited" +
         " successfully");
     dialog.setOnDialogClosed(event1 -> {

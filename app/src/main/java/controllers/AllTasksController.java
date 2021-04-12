@@ -10,7 +10,7 @@ import models.TaskRegistry;
 
 import java.io.IOException;
 
-public class AllTasksController implements ListController{
+public class AllTasksController implements ListController {
 
   @FXML
   private JFXListView<Task> allTasksList;
@@ -51,7 +51,8 @@ public class AllTasksController implements ListController{
   void initData(TaskRegistry tasks, MainController mainController) throws IOException {
     this.tasks = tasks;
     refreshData();
-    allTasksList.setCellFactory(cellController -> new CellController(this, tasks));
+    allTasksList.setCellFactory(cellController -> new CellController(this,
+        tasks));
     this.mainController = mainController;
   }
 
@@ -61,5 +62,4 @@ public class AllTasksController implements ListController{
     allTasksList.setItems(FXCollections.observableArrayList(tasks.getActiveTasks()));
     tasks.save();
   }
-
 }

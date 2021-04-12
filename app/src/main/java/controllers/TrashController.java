@@ -2,7 +2,6 @@ package controllers;
 
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import models.Task;
@@ -10,7 +9,7 @@ import models.TaskRegistry;
 
 import java.io.IOException;
 
-public class TrashController implements ListController{
+public class TrashController implements ListController {
 
   @FXML
   private JFXListView<Task> allTasksList;
@@ -37,7 +36,8 @@ public class TrashController implements ListController{
   void initData(TaskRegistry tasks, MainController mainController) throws IOException {
     this.tasks = tasks;
     refreshData();
-    allTasksList.setCellFactory(cellController -> new CellController(this, tasks));
+    allTasksList.setCellFactory(cellController -> new CellController(this,
+        tasks));
     this.mainController = mainController;
   }
 

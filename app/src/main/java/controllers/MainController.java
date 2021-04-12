@@ -1,26 +1,17 @@
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import models.Task;
 import models.TaskRegistry;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -173,14 +164,15 @@ public class MainController implements Initializable {
         success = true;
       }
 
-    event.setDropCompleted(success);
-    event.consume();
+      event.setDropCompleted(success);
+      event.consume();
       event.setDropCompleted(success);
 
       event.consume();
     }
 
   }
+
   @FXML
   void trashDragOver(DragEvent event) throws IOException {
     if (DRAG_TO_TRASH_ENABLED) {
