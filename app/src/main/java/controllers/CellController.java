@@ -60,13 +60,14 @@ public class CellController extends JFXListCell<Task> {
       if (getItem() == null) return;
 
       ObservableList<Task> items = getListView().getItems();
-      Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
-      ClipboardContent content = new ClipboardContent();
-      content.putString(String.valueOf(items.indexOf(getItem())));
-      dragboard.setContent(content);
-      dragboard.setDragView(new Image("file:src/main/resources/images/Task_icon.png"));
-      event.consume();
+      if (getItem().getStatus() == Status.ACTIVE) { //Not allowing reorder in trash page
+        Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
+        ClipboardContent content = new ClipboardContent();
+        content.putString(String.valueOf(items.indexOf(getItem())));
+        dragboard.setContent(content);
+        dragboard.setDragView(new Image("file:src/main/resources/images/Task_icon.png"));
 
+      }
     });
 
     setOnDragOver(event -> {
