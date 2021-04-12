@@ -25,32 +25,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static utilities.Utilities.getDialog;
 import static utilities.Utilities.getFXMLLoader;
 
 public class MainController implements Initializable {
   private static final String ALL_TASKS_FXML_NAME = "AllTasks";
+  private static final String TRASH_TASKS_FXML_NAME = "Trash";
   private static final String NEW_TASK_FXML_NAME = "NewTask";
   private static final String EDIT_TASK_FXML_NAME = "EditTask";
   private static final String VIEW_TASK_FXML_NAME = "ViewTask";
 
+  private static final boolean DRAG_TO_TRASH_ENABLED = false;
+
   @FXML
   BorderPane pane;
-
-  @FXML
-  private JFXButton allTasksButton;
-
-  @FXML
-  private JFXButton highPriorityButton;
-
-  @FXML
-  private JFXButton mediumPriorityButton;
-
-  @FXML
-  private JFXButton lowPriorityButton;
-
-  @FXML
-  private JFXButton trashButton;
 
   private TaskRegistry allTasks;
   private FXMLLoader newTaskLoader;
@@ -123,8 +110,8 @@ public class MainController implements Initializable {
    * @param event
    */
   @FXML
-  void displayTrash(MouseEvent event) {
-    // To be implemented
+  void displayTrash(MouseEvent event) throws IOException {
+    loadTrashView();
   }
 
   /**
@@ -165,29 +152,43 @@ public class MainController implements Initializable {
     pane.setCenter(root);
   }
 
+  public void loadTrashView() throws IOException {
+    FXMLLoader fxmlLoader = getFXMLLoader(TRASH_TASKS_FXML_NAME);
+    Parent root = fxmlLoader.load();
+    TrashController trashController = fxmlLoader.getController();
+    trashController.initData(allTasks, this);
+    pane.setCenter(root);
+  }
+
   @FXML
   void trashDropped(DragEvent event) throws IOException {
-    System.out.println("hi");
-    Dragboard db = event.getDragboard();
-    boolean success = false;
+    if (DRAG_TO_TRASH_ENABLED) {
+      System.out.println("hi");
+      Dragboard db = event.getDragboard();
+      boolean success = false;
 
-    if (db.hasString()) {
-      int draggedIdx = Integer.parseInt(db.getString());
-      allTasks.removeTask(draggedIdx);
-      success = true;
-    }
+      if (db.hasString()) {
+        int draggedIdx = Integer.parseInt(db.getString());
+        allTasks.removeTask(draggedIdx);
+        success = true;
+      }
 
     event.setDropCompleted(success);
     event.consume();
+      event.setDropCompleted(success);
+
+      event.consume();
+    }
 
   }
   @FXML
   void trashDragOver(DragEvent event) throws IOException {
-    if (event.getDragboard().hasString()) {
-      event.acceptTransferModes(TransferMode.MOVE);
+    if (DRAG_TO_TRASH_ENABLED) {
+      if (event.getDragboard().hasString()) {
+        event.acceptTransferModes(TransferMode.MOVE);
+      }
+      event.consume();
     }
-
-    event.consume();
 
   }
 

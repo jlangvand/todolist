@@ -10,7 +10,7 @@ import models.TaskRegistry;
 
 import java.io.IOException;
 
-public class AllTasksController implements ListController{
+public class TrashController implements ListController{
 
   @FXML
   private JFXListView<Task> allTasksList;
@@ -18,20 +18,6 @@ public class AllTasksController implements ListController{
   private TaskRegistry tasks;
   private MainController mainController;
 
-  /**
-   * Method called when user clicks on add button.
-   *
-   * @param event
-   * @throws IOException, the exception will be handled in the method.
-   */
-  @FXML
-  void displayNewTask(ActionEvent event) {
-    try {
-      mainController.loadNewTaskView(tasks);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
 
   /**
    * Method called when user clicks on a task.
@@ -58,8 +44,7 @@ public class AllTasksController implements ListController{
   @FXML
   @Override
   public void refreshData() throws IOException {
-    allTasksList.setItems(FXCollections.observableArrayList(tasks.getActiveTasks()));
+    allTasksList.setItems(FXCollections.observableArrayList(tasks.getDoneTasks()));
     tasks.save();
   }
-
 }
