@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import models.Task;
 
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class ViewTaskController {
   private Label taskTitle;
 
   @FXML
-  private Text taskDescription;
+  private Label taskDescription;
 
   @FXML
   private Label taskDeadline;
@@ -85,6 +84,11 @@ public class ViewTaskController {
   @FXML
   public void refreshData() {
     initData(task, mainController);
+  }
+
+  @FXML
+  public void backEvent() throws IOException {
+    mainController.displayAllTasks(null);
   }
 
   /**
