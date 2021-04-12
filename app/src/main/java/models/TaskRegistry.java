@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static utilities.Utilities.dateIsInRange;
+
 /**
  * This class represents a register of tasks.
  */
@@ -50,13 +52,8 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
    * @return matching tasks as an ArrayList
    */
   public List<Task> getTasksByStatus(Status status) {
-    ArrayList<Task> foundTasks = new ArrayList<>();
-    forEach(task -> {
-      if (task.getStatus() == status) {
-        foundTasks.add(task);
-      }
-    });
-    return foundTasks;
+    return stream().filter(t -> t.getStatus().equals(status))
+        .collect(Collectors.toList());
   }
 
   /**
@@ -64,25 +61,19 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
    * @return matching tasks as an ArrayList
    */
   public List<Task> getTasksByPriority(Priority priority) {
-    ArrayList<Task> foundTasks = new ArrayList<>();
-    forEach(task -> {
-      if (task.getPriority() == priority)
-        foundTasks.add(task);
-    });
-    return foundTasks;
+    return stream().filter(t -> t.getPriority().equals(priority))
+        .collect(Collectors.toList());
   }
 
   /**
    * Get tasks added within an inclusive range of dates.
    *
-   * @param fromDate filter tasks added on of after this date
-   * @param toDate   filter tasks added on or before this date
+   * @param from filter tasks added on of after this date
+   * @param to   filter tasks added on or before this date
    * @return a list of tasks matching the query
    */
-  public List<Task> getTasksByDateAdded(LocalDate fromDate, LocalDate toDate) {
-    return stream().filter(t ->
-        t.getDateAdded().isAfter(fromDate.minusDays(1))
-            && t.getDateAdded().isBefore(toDate.plusDays(1)))
+  public List<Task> getTasksByDateAdded(LocalDate from, LocalDate to) {
+    return stream().filter(t -> dateIsInRange(t.getDateAdded(), from, to))
         .collect(Collectors.toList());
   }
 
@@ -99,14 +90,12 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
   /**
    * Get tasks with deadline within an inclusive range of dates.
    *
-   * @param fromDate filter tasks with deadline on of after this date
-   * @param toDate   filter tasks with deadline on or before this date
+   * @param from filter tasks with deadline on of after this date
+   * @param to   filter tasks with deadline on or before this date
    * @return a list of tasks matching the query
    */
-  public List<Task> getTasksByDeadline(LocalDate fromDate, LocalDate toDate) {
-    return stream().filter(t ->
-        t.getDeadline().isAfter(fromDate.minusDays(1))
-            && t.getDeadline().isBefore(toDate.plusDays(1)))
+  public List<Task> getTasksByDeadline(LocalDate from, LocalDate to) {
+    return stream().filter(t -> dateIsInRange(t.getDeadline(), from, to))
         .collect(Collectors.toList());
   }
 
@@ -193,6 +182,7 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
 
   /**
    * Swaps the index of the task of index a with the task of index b.
+   *
    * @param a Index of task A
    * @param b Index of task B
    * @throws IOException throws exception if file IO fails
@@ -200,7 +190,7 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
   public void swapTasksByIndex(int a, int b) throws IOException {
     Task taskA = get(a);
     Task taskB = get(b);
-    set(a,taskB);
+    set(a, taskB);
     set(b, taskA);
     save();
   }

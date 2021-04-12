@@ -11,6 +11,7 @@ import javafx.scene.layout.StackPane;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class Utilities {
   private Utilities() {
@@ -53,4 +54,8 @@ public class Utilities {
     return dialog;
   }
 
+  public static boolean dateIsInRange(LocalDate date, LocalDate from,
+                                      LocalDate to) {
+    return date.isBefore(to.plusDays(1)) && date.isAfter(from.minusDays(1));
+  }
 }
