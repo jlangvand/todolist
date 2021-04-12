@@ -54,7 +54,9 @@
                        <Image url="@../images/Minus_sign_icon.png" />
                      </image>
                   </ImageView>
-                 <Label fx:id="taskPriority" prefHeight="26.0" prefWidth="402.0" styleClass="mainLabel" text=" x Priority" />
+                 <Label fx:id="taskPriority" prefHeight="30.0" prefWidth="206.0" styleClass="mainLabel" text=" x Priority" />
+                  <Label layoutX="46.0" layoutY="25.0" prefHeight="30.0" prefWidth="91.0" styleClass="mainLabel" text="Category" />
+                  <Label fx:id="taskCategory" layoutX="172.0" layoutY="25.0" prefHeight="30.0" prefWidth="126.0" styleClass="mainLabel" text="category" />
                </children>
             </HBox>
         <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="520.0" />

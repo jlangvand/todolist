@@ -39,6 +39,9 @@ public class ViewTaskController {
   private Label taskPriority;
 
   @FXML
+  private Label taskCategory;
+
+  @FXML
   private Label taskStartedDate;
 
   @FXML
@@ -73,6 +76,7 @@ public class ViewTaskController {
     this.task = task;
     taskTitle.setText(task.getTitle());
     taskPriority.setText(task.getPriorityString());
+    taskCategory.setText(task.getCategory());
     taskDescription.setText(task.getDescription());
     taskStartedDate.setText(task.getDateAdded().toString());
     taskDeadline.setText(this.getDeadlineString(task));
