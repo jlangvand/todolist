@@ -69,6 +69,10 @@ public class TaskFormController {
 
   @FXML
   void cancelTask(ActionEvent event) throws IOException {
+    back();
+  }
+
+  private void back() throws IOException {
     if (editing) mainController.loadDisplayTaskView(task);
     else mainController.displayAllTasks(null);
   }
@@ -88,7 +92,7 @@ public class TaskFormController {
       JFXDialog dialog = getDialog(stackPane, mainPane, "Task saved");
       dialog.setOnDialogClosed(event1 -> {
         try {
-          mainController.displayAllTasks(null);
+          back();
         } catch (IOException e) {
           LOGGER.log(SEVERE, () -> "Failed to load view: " + e.toString());
         }
@@ -122,5 +126,4 @@ public class TaskFormController {
     priorityField.setItems(FXCollections.observableArrayList(Priority.values()));
     priorityField.setValue(task.getPriority());
   }
-
 }
