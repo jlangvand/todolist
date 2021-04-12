@@ -22,7 +22,6 @@ public class MainController implements Initializable {
   private static final String ALL_TASKS_FXML_NAME = "AllTasks";
   private static final String TRASH_TASKS_FXML_NAME = "Trash";
   private static final String TASK_FORM_FXML_NAME = "TaskForm";
-  private static final String EDIT_TASK_FXML_NAME = "EditTask";
   private static final String VIEW_TASK_FXML_NAME = "ViewTask";
 
   private static final boolean DRAG_TO_TRASH_ENABLED = false;
@@ -33,7 +32,6 @@ public class MainController implements Initializable {
   private TaskRegistry taskRegistry;
   private FXMLLoader taskFormLoader;
   private FXMLLoader displayTaskLoader;
-  private FXMLLoader editTaskLoader;
 
   /**
    * Called when the navBarController is initialized.
@@ -49,7 +47,6 @@ public class MainController implements Initializable {
       loadAllTasksView();
       taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
       displayTaskLoader = getFXMLLoader(VIEW_TASK_FXML_NAME);
-      editTaskLoader = getFXMLLoader(EDIT_TASK_FXML_NAME);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -139,7 +136,7 @@ public class MainController implements Initializable {
     taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
     Parent root = taskFormLoader.load();
     TaskFormController controller = taskFormLoader.getController();
-    controller.initData( this, task);
+    controller.initData(this, task);
     pane.setCenter(root);
   }
 
@@ -170,11 +167,10 @@ public class MainController implements Initializable {
 
       event.consume();
     }
-
   }
 
   @FXML
-  void trashDragOver(DragEvent event) throws IOException {
+  void trashDragOver(DragEvent event) {
     if (DRAG_TO_TRASH_ENABLED) {
       if (event.getDragboard().hasString()) {
         event.acceptTransferModes(TransferMode.MOVE);
