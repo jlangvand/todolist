@@ -21,7 +21,7 @@ import static utilities.Utilities.getFXMLLoader;
 public class MainController implements Initializable {
   private static final String ALL_TASKS_FXML_NAME = "AllTasks";
   private static final String TRASH_TASKS_FXML_NAME = "Trash";
-  private static final String NEW_TASK_FXML_NAME = "NewTask";
+  private static final String TASK_FORM_FXML_NAME = "TaskForm";
   private static final String EDIT_TASK_FXML_NAME = "EditTask";
   private static final String VIEW_TASK_FXML_NAME = "ViewTask";
 
@@ -30,8 +30,8 @@ public class MainController implements Initializable {
   @FXML
   BorderPane pane;
 
-  private TaskRegistry allTasks;
-  private FXMLLoader newTaskLoader;
+  private TaskRegistry taskRegistry;
+  private FXMLLoader taskFormLoader;
   private FXMLLoader displayTaskLoader;
   private FXMLLoader editTaskLoader;
 
@@ -45,9 +45,9 @@ public class MainController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     try {
-      allTasks = new TaskRegistry();
+      taskRegistry = new TaskRegistry();
       loadAllTasksView();
-      newTaskLoader = getFXMLLoader(NEW_TASK_FXML_NAME);
+      taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
       displayTaskLoader = getFXMLLoader(VIEW_TASK_FXML_NAME);
       editTaskLoader = getFXMLLoader(EDIT_TASK_FXML_NAME);
     } catch (IOException e) {
@@ -115,15 +115,15 @@ public class MainController implements Initializable {
     FXMLLoader fxmlLoader = getFXMLLoader(ALL_TASKS_FXML_NAME);
     Parent root = fxmlLoader.load();
     AllTasksController allTasksController = fxmlLoader.getController();
-    allTasksController.initData(allTasks, this);
+    allTasksController.initData(taskRegistry, this);
     pane.setCenter(root);
   }
 
-  public void loadNewTaskView(TaskRegistry tasks) throws IOException {
-    newTaskLoader = getFXMLLoader(NEW_TASK_FXML_NAME);
-    Parent root = newTaskLoader.load();
-    NewTaskController newTaskController = newTaskLoader.getController();
-    newTaskController.initData(tasks, this);
+  public void loadNewTaskView() throws IOException {
+    taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
+    Parent root = taskFormLoader.load();
+    TaskFormController taskFormController = taskFormLoader.getController();
+    taskFormController.initData(this, new Task());
     pane.setCenter(root);
   }
 
@@ -136,10 +136,10 @@ public class MainController implements Initializable {
   }
 
   public void loadEditTaskView(Task task) throws IOException {
-    editTaskLoader = getFXMLLoader(EDIT_TASK_FXML_NAME);
-    Parent root = editTaskLoader.load();
-    EditTaskController controller = editTaskLoader.getController();
-    controller.initData(task, allTasks, this);
+    taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
+    Parent root = taskFormLoader.load();
+    TaskFormController controller = taskFormLoader.getController();
+    controller.initData( this, task);
     pane.setCenter(root);
   }
 
@@ -147,7 +147,7 @@ public class MainController implements Initializable {
     FXMLLoader fxmlLoader = getFXMLLoader(TRASH_TASKS_FXML_NAME);
     Parent root = fxmlLoader.load();
     TrashController trashController = fxmlLoader.getController();
-    trashController.initData(allTasks, this);
+    trashController.initData(taskRegistry, this);
     pane.setCenter(root);
   }
 
@@ -160,7 +160,7 @@ public class MainController implements Initializable {
 
       if (db.hasString()) {
         int draggedIdx = Integer.parseInt(db.getString());
-        allTasks.removeTask(draggedIdx);
+        taskRegistry.removeTask(draggedIdx);
         success = true;
       }
 
@@ -181,7 +181,9 @@ public class MainController implements Initializable {
       }
       event.consume();
     }
-
   }
 
+  public TaskRegistry getTaskRegistry() {
+    return taskRegistry;
+  }
 }

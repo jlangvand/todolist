@@ -27,7 +27,7 @@ public class AllTasksController implements ListController {
   @FXML
   void displayNewTask(ActionEvent event) {
     try {
-      mainController.loadNewTaskView(tasks);
+      mainController.loadNewTaskView();
     } catch (IOException e) {
       e.printStackTrace();
     }

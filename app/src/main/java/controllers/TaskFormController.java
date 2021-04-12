@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXTimePicker;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import models.Task;
@@ -22,7 +23,7 @@ import java.time.LocalTime;
 
 import static utilities.Utilities.getDialog;
 
-public class NewTaskController {
+public class TaskFormController {
 
   @FXML
   private StackPane stackPane;
@@ -54,13 +55,18 @@ public class NewTaskController {
   @FXML
   private JFXButton cancelButton;
 
+  @FXML
+  private Label titleText;
+
   private TaskRegistry tasks;
   private Task task;
   private MainController mainController;
+  private boolean editing;
 
   @FXML
   void cancelTask(ActionEvent event) throws IOException {
-    mainController.displayAllTasks(null);
+    if (editing) mainController.loadDisplayTaskView(task);
+    else mainController.displayAllTasks(null);
   }
 
   @FXML
@@ -74,10 +80,8 @@ public class NewTaskController {
       task.setDeadLineTime(deadlineTimeField.getValue());
       task.setDeadline(deadlineDateField.getValue());
       task.setPriority(priorityField.getValue());
-      tasks.addTask(task);
-      JFXDialog dialog = getDialog(stackPane, mainPane, "New " +
-          "task has been " +
-          "added successfully");
+      if (!editing) tasks.addTask(task);
+      JFXDialog dialog = getDialog(stackPane, mainPane, "Task saved");
       dialog.setOnDialogClosed(event1 -> {
         try {
           mainController.displayAllTasks(null);
@@ -100,14 +104,19 @@ public class NewTaskController {
     return ok;
   }
 
-  public void initData(TaskRegistry tasks, MainController mainController) {
-    this.tasks = tasks;
-    this.task = new Task();
+  public void initData(MainController mainController, Task task) {
+    this.tasks = mainController.getTaskRegistry();
+    this.task = task;
     this.mainController = mainController;
+    this.editing = tasks.contains(task);
+    titleText.setText(editing ? "Edit task" : "New task");
+    nameField.setText(task.getTitle());
+    descriptionField.setText((task.getDescription()));
     deadlineDateField.setValue(task.getDeadline());
     deadlineTimeField.setValue(task.getDeadLineTime());
+    categoryField.setText(task.getCategory());
     priorityField.setItems(FXCollections.observableArrayList(Priority.values()));
-    priorityField.setValue(Priority.DEFAULT);
+    priorityField.setValue(task.getPriority());
   }
 
 }

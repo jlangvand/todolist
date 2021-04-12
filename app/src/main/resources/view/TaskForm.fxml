@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<StackPane fx:id="stackPane" stylesheets="@../css/menus.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewTaskController">
+<StackPane fx:id="stackPane" stylesheets="@../css/menus.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TaskFormController">
    <children>
       <BorderPane fx:id="mainPane" stylesheets="@../css/menus.css">
          <left>
