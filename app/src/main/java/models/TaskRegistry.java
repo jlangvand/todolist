@@ -5,6 +5,7 @@ import utilities.Priority;
 import utilities.Status;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
  * This class represents a register of tasks.
  */
 public class TaskRegistry extends ArrayList<Task> implements Serializable {
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   private final transient PersistentRegistry fileHandle;
 
   /**

@@ -3,6 +3,7 @@ package models;
 import utilities.Priority;
 import utilities.Status;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,7 +16,7 @@ import java.util.Objects;
  * @since 1.0
  */
 public class Task implements Serializable {
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   private String title;
   private String description;
