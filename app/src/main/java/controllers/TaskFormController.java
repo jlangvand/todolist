@@ -20,10 +20,14 @@ import utilities.Priority;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.logging.Logger;
 
+import static java.util.logging.Level.SEVERE;
 import static utilities.Utilities.getDialog;
 
 public class TaskFormController {
+  private static final Logger LOGGER =
+      Logger.getLogger(TaskFormController.class.getName());
 
   @FXML
   private StackPane stackPane;
@@ -86,7 +90,7 @@ public class TaskFormController {
         try {
           mainController.displayAllTasks(null);
         } catch (IOException e) {
-          e.printStackTrace();
+          LOGGER.log(SEVERE, () -> "Failed to load view: " + e.toString());
         }
       });
     }
