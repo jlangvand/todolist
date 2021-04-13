@@ -26,9 +26,11 @@ public class Utilities {
    * @throws IOException exception is thrown if file I/O fails
    */
   public static FXMLLoader getFXMLLoader(String fxml) throws IOException {
-    return new FXMLLoader(
-        new File("src/main/resources/view/" + fxml + ".fxml")
-            .toURI().toURL());
+    FXMLLoader loader =
+        new FXMLLoader(Utilities.class.getResource("/view/" + fxml +
+        ".fxml"));
+//    loader.setLocation(Utilities.class.getResource(fxml + ".fxml"));
+    return loader;
   }
 
   public static JFXDialog getDialog(StackPane stackPane, Pane mainPane,
@@ -37,7 +39,8 @@ public class Utilities {
     JFXDialogLayout dialogLayout = new JFXDialogLayout();
     JFXButton okButton = new JFXButton("Ok!");
 
-    okButton.getStylesheets().add(new File("src/main/resources/css/dialogJFX.css").toURI().toString());
+    okButton.getStylesheets().add(Utilities.class.getResource("/css/dialogJFX" +
+        ".css").toString());
 
     JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
 
@@ -52,6 +55,18 @@ public class Utilities {
     mainPane.setEffect(blur);
     dialog.show();
     return dialog;
+  }
+
+  private static String getResourcePath(String path) {
+    return Utilities.class.getResource(path).toString();
+  }
+
+  public static String getImagePath(String file) {
+    return getResourcePath("/images/" + file);
+  }
+
+  public static String getCSSPath(String file) {
+    return getResourcePath("/css/" + file);
   }
 
   public static boolean dateIsInRange(LocalDate date, LocalDate from,

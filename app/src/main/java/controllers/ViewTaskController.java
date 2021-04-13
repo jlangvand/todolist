@@ -110,11 +110,10 @@ public class ViewTaskController {
     JFXDialogLayout dialogLayout = new JFXDialogLayout();
     JFXButton delete = new JFXButton("Delete");
     JFXButton cancel = new JFXButton("Cancel");
-
-    delete.getStylesheets().add(new File("src/main/resources/css/dialogJFX" +
-        ".css").toURI().toString());
-    cancel.getStylesheets().add(new File("src/main/resources/css/dialogJFX" +
-        ".css").toURI().toString());
+    String styleSheetPath = ViewTaskController.class.getResource("/css" +
+        "/dialogJFX.css").toString();
+    delete.getStylesheets().add(styleSheetPath);
+    cancel.getStylesheets().add(styleSheetPath);
 
     JFXDialog dialog = new JFXDialog(stackPane, dialogLayout,
         JFXDialog.DialogTransition.TOP);
@@ -138,7 +137,6 @@ public class ViewTaskController {
     });
 
     cancel.setOnAction(event1 -> dialog.close());
-
     dialog.setOnDialogClosed(event1 -> mainPane.setEffect(null));
 
     Label label = new Label("Delete this task?");

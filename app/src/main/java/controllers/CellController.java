@@ -18,10 +18,11 @@ import utilities.Status;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.ResourceBundle;
+
+import static utilities.Utilities.getImagePath;
 
 public class CellController extends JFXListCell<Task> {
   private static final Logger LOGGER =
@@ -60,13 +61,14 @@ public class CellController extends JFXListCell<Task> {
       if (getItem() == null) return;
 
       ObservableList<Task> items = getListView().getItems();
-      if (getItem().getStatus() == Status.ACTIVE) { //Not allowing reorder in trash page
+      if (getItem().getStatus() == Status.ACTIVE) { //Not allowing reorder in
+        // trash page
         Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
         ClipboardContent content = new ClipboardContent();
         content.putString(String.valueOf(items.indexOf(getItem())));
         dragboard.setContent(content);
-        dragboard.setDragView(new Image("file:src/main/resources/images/Task_icon.png"));
-
+        dragboard.setDragView(new Image(getImagePath("Task_icon" +
+            ".png")));
       }
     });
 
@@ -80,7 +82,7 @@ public class CellController extends JFXListCell<Task> {
 
     setOnDragExited(event -> {
       if (event.getGestureSource() != thisCell &&
-              event.getDragboard().hasString()) {
+          event.getDragboard().hasString()) {
         setOpacity(1);
       }
     });
@@ -98,7 +100,7 @@ public class CellController extends JFXListCell<Task> {
 
         int[] indexInAllTasks = new int[allTasks.getActiveTasks().size()];
         int c = 0;
-        for (int i = 0; i<allTasks.size(); i++) {
+        for (int i = 0; i < allTasks.size(); i++) {
           if (allTasks.get(i).getStatus() == Status.ACTIVE) {
             indexInAllTasks[c] = i;
             c++;
@@ -107,13 +109,14 @@ public class CellController extends JFXListCell<Task> {
 
         try {
           if (thisIdx > draggedIdx) {
-            for (int i = draggedIdx; i<thisIdx; i++) {
-              allTasks.swapTasksByIndex(indexInAllTasks[i], indexInAllTasks[i+1]);
+            for (int i = draggedIdx; i < thisIdx; i++) {
+              allTasks.swapTasksByIndex(indexInAllTasks[i],
+                  indexInAllTasks[i + 1]);
             }
-
-          } else if (draggedIdx > thisIdx){
+          } else if (draggedIdx > thisIdx) {
             for (int i = draggedIdx; i > thisIdx; i--) {
-              allTasks.swapTasksByIndex(indexInAllTasks[i], indexInAllTasks[i-1]);
+              allTasks.swapTasksByIndex(indexInAllTasks[i],
+                  indexInAllTasks[i - 1]);
             }
           }
         } catch (IOException e) {
@@ -125,9 +128,7 @@ public class CellController extends JFXListCell<Task> {
       event.setDropCompleted(success);
 
       event.consume();
-
     });
-
   }
 
   @Override
@@ -141,7 +142,8 @@ public class CellController extends JFXListCell<Task> {
       if (fxmlLoader == null) {
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/view/TaskCell.fxml"));
-        fxmlLoader.setController(this); //This class is the controller for the TaskCell.fxml
+        fxmlLoader.setController(this); //This class is the controller for
+        // the TaskCell.fxml
 
         try {
           fxmlLoader.load();
@@ -156,12 +158,13 @@ public class CellController extends JFXListCell<Task> {
       updateStatusImage(task.getStatus());
 
       statusButton.setOnMousePressed(event -> {
-        Status newStatus = (task.getStatus().equals(Status.ACTIVE)) ? Status.DONE : Status.ACTIVE;
+        Status newStatus = (task.getStatus().equals(Status.ACTIVE)) ?
+            Status.DONE : Status.ACTIVE;
         task.setStatus(newStatus);
         updateStatusImage(newStatus);
 
-        LOGGER.log(Level.INFO, task.getStatus().toString()); //To test the actual status
-
+        LOGGER.log(Level.INFO, task.getStatus().toString()); //To test the
+        // actual status
 
         try {
           listController.refreshData();
@@ -171,17 +174,18 @@ public class CellController extends JFXListCell<Task> {
       });
 
       setText(null);
-      setGraphic(taskCellPane); // Inserting all graphics (Description, date, etc.) in root Pane (taskCellPane)
+      setGraphic(taskCellPane); // Inserting all graphics (Description, date,
+      // etc.) in root Pane (taskCellPane)
     }
   }
 
-  private void updateStatusImage(Status status){
+  private void updateStatusImage(Status status) {
     if (status.equals(Status.DONE)) {
-      cellStatusImage.setImage(new Image("file:src/main/resources" +
-              "/images/Done2.png", 48, 48, true, true));
+      cellStatusImage.setImage(new Image(getImagePath("Done2.png"),
+          48, 48, true,
+          true));
     } else {
-      cellStatusImage.setImage(new Image("file:src/main/resources" +
-              "/images/not_Done.png", 48, 48, true, true));
+      cellStatusImage.setImage(new Image(getImagePath("not_Done.png")));
     }
   }
 }

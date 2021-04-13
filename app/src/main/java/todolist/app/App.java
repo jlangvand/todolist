@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXDecorator;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import utilities.Utilities;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,10 +42,9 @@ public class App extends Application {
     decorator.setCustomMaximize(true);
     stage.setTitle(TITLE);
     decorator.setTitle(TITLE);
-    URI uri = new File("src/main/resources/css/main.css").toURI();
     Scene scene =
         new Scene(decorator, DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT);
-    scene.getStylesheets().add(uri.toString());
+    scene.getStylesheets().add(Utilities.getCSSPath("main.css"));
     stage.setScene(scene);
     stage.show();
   }
