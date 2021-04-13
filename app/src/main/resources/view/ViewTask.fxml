@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<StackPane fx:id="stackPane" stylesheets="@../css/menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ViewTaskController">
+<StackPane fx:id="stackPane" stylesheets="@../css/menus.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ViewTaskController">
    <children>
       <BorderPane fx:id="mainPane" stylesheets="@../css/menus.css">
          <left>
@@ -42,16 +50,26 @@
                            <Label fx:id="taskPriority" styleClass="mainLabel" text=" x Priority" />
                          </children>
                        </HBox>
-                        <HBox spacing="15.0">
+                        <HBox alignment="CENTER_LEFT">
                            <children>
-                              <Label styleClass="description" text="Category:" />
-                              <Label fx:id="taskCategory" styleClass="description" text="..." />
+                              <ImageView fitHeight="36.0" fitWidth="36.0">
+                                 <image>
+                                    <Image url="@../images/Info_icon.png" />
+                                 </image>
+                              </ImageView>
+                              <Label styleClass="mainLabel" text="Category: " />
+                              <Label fx:id="taskCategory" styleClass="mainLabel" text="..." />
                            </children>
                         </HBox>
-                        <HBox spacing="15.0">
+                        <HBox alignment="CENTER_LEFT">
                            <children>
-                              <Label styleClass="description" text="Added:" />
-                              <Label fx:id="taskStartedDate" styleClass="description" text="..." />
+                              <ImageView fitHeight="36.0" fitWidth="36.0">
+                                 <image>
+                                    <Image url="@../images/More_time_icon.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="taskPriority11" styleClass="mainLabel" text="Date Added: " />
+                              <Label fx:id="taskStartedDate" styleClass="mainLabel" text="..." />
                            </children>
                         </HBox>
                      </children>

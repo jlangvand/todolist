@@ -126,8 +126,8 @@ public class ViewTaskController {
       //return days,h,m, with deadline date and time
       deadlineString = period.getDays() + " days, " +
           hours + " hours, " +
-          minutes + " min" +
-          " " + task.getDeadline() + " " + task.getDeadLineTime();
+          minutes + " min until deadline." +
+          " (" + task.getDeadline() + ", " + task.getDeadLineTime().getHour() + ":" + task.getDeadLineTime().getMinute() + ")";
     }
     return deadlineString;
   }

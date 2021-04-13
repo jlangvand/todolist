@@ -1,10 +1,10 @@
 package utilities;
 
 public enum Priority {
-  HIGH("High"),
-  MEDIUM("Medium"),
-  LOW("Low"),
-  DEFAULT("Not set");
+  HIGH("High Priority"),
+  MEDIUM("Medium Priority"),
+  LOW("Low Priority"),
+  DEFAULT("No Priority");
 
   private String description;
 
