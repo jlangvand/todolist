@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+This file is the view for navigation bar. Use BorderPane.setCenter() method
+to change the area outside of the navigation bar (right side of view).
+
+This view uses JFeonix.
+-->
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="pane" minWidth="500.0" styleClass="background" stylesheets="@../css/navbar.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+   <left>
+      <VBox styleClass="navbar" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton fx:id="allTasksButton" alignment="BASELINE_LEFT" onMouseClicked="#displayAllTasks" prefHeight="90.0" prefWidth="240.0" ripplerFill="WHITE" text="All Tasks">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Star_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <Region VBox.vgrow="ALWAYS" />
+            <JFXButton alignment="BASELINE_LEFT" onDragDropped="#trashDropped" onDragOver="#trashDragOver" onMouseClicked="#displayDoneTasks" prefHeight="90.0" prefWidth="240.0" text="Done Tasks">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Trash_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children></VBox>
+   </left>
+</BorderPane>
