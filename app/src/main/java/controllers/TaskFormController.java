@@ -3,7 +3,6 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
@@ -22,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.logging.Logger;
 
+import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
 import static utilities.Utilities.getDialog;
 
@@ -79,39 +79,51 @@ public class TaskFormController {
 
   @FXML
   void saveTask(ActionEvent event) throws IOException {
-    if (validateInput()) {
-      String category = categoryField.getText();
-      if (category.isEmpty()) category = "Default";
-      task.setTitle(nameField.getText());
-      task.setDescription(descriptionField.getText());
-      task.setCategory(category);
-      task.setDeadLineTime(deadlineTimeField.getValue());
-      task.setDeadline(deadlineDateField.getValue());
-      task.setPriority(priorityField.getValue());
-      // Add to registry only if this is a new task (avoid duplicates)
-      if (!editing) tasks.addTask(task);
-      // TODO(joakilan): Replace this dialog with a snackbar?
-      JFXDialog dialog = getDialog(stackPane, mainPane, "Task saved");
-      dialog.setOnDialogClosed(event1 -> {
+    try {
+      saveOrExcept();
+      getDialog(stackPane, mainPane, "Task saved").setOnDialogClosed(event1 -> {
         try {
           back();
         } catch (IOException e) {
           LOGGER.log(SEVERE, () -> "Failed to load view: " + e.toString());
         }
       });
+      LOGGER.log(INFO, () -> "Task saved! Title: " + task.getTitle());
+    } catch (IllegalArgumentException e) {
+      getDialog(stackPane, mainPane, e.getMessage());
+    } catch (IOException e) {
+      getDialog(stackPane, mainPane, "Could not save file: " + e.getMessage());
+      LOGGER.log(SEVERE, () -> "Could not save file: " + e.toString());
     }
   }
 
-  private boolean validateInput() {
+  private void saveOrExcept() throws IllegalArgumentException, IOException {
+    if (nameField.getText().isEmpty()) throw new IllegalArgumentException(
+        "Task must have a title");
     LocalDate deadlineDate = deadlineDateField.getValue();
     LocalTime deadlineTime = deadlineTimeField.getValue();
-    boolean ok;
-    ok = !nameField.getText().isEmpty();
-    ok = ok && deadlineDate.isAfter(LocalDate.now().minusDays(1));
-    if (deadlineDate.isEqual(LocalDate.now())) {
-      ok = ok && deadlineTime.isAfter(LocalTime.now());
+    final String deadlineError = "Deadline must be in the future";
+    if (deadlineDate.isBefore(LocalDate.now()))
+      throw new IllegalArgumentException(deadlineError);
+    if (deadlineDate.equals(LocalDate.now()) && deadlineTime.isBefore(LocalTime.now()))
+      throw new IllegalArgumentException(deadlineError);
+    String category = categoryField.getText();
+    if (category.isEmpty()) category = "Default";
+    task.setTitle(nameField.getText());
+    task.setDescription(descriptionField.getText());
+    task.setCategory(category);
+    task.setDeadLineTime(deadlineTimeField.getValue());
+    task.setDeadline(deadlineDateField.getValue());
+    task.setPriority(priorityField.getValue());
+    // Add to registry only if this is a new task (avoid duplicates)
+    if (!editing) {
+      tasks.addTask(task);
+      LOGGER.log(INFO, () -> "Task with title " + task.getTitle() + " added " +
+          "to registry");
+    } else {
+      LOGGER.log(INFO, () -> "Task with title " + task.getTitle() + " already" +
+          " in registry");
     }
-    return ok;
   }
 
   public void initData(MainController mainController, Task task) {
