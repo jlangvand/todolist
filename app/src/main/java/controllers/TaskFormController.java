@@ -68,7 +68,7 @@ public class TaskFormController {
   private boolean editing;
 
   @FXML
-  void cancelTask(ActionEvent event) throws IOException {
+  void cancelAction() throws IOException {
     back();
   }
 
@@ -88,7 +88,9 @@ public class TaskFormController {
       task.setDeadLineTime(deadlineTimeField.getValue());
       task.setDeadline(deadlineDateField.getValue());
       task.setPriority(priorityField.getValue());
+      // Add to registry only if this is a new task (avoid duplicates)
       if (!editing) tasks.addTask(task);
+      // TODO(joakilan): Replace this dialog with a snackbar?
       JFXDialog dialog = getDialog(stackPane, mainPane, "Task saved");
       dialog.setOnDialogClosed(event1 -> {
         try {

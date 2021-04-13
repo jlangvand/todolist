@@ -82,7 +82,7 @@
                <children>
                   <HBox alignment="CENTER" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                      <children>
-                        <JFXButton fx:id="cancelButton" buttonType="RAISED" onAction="#cancelTask" styleClass="secondaryButton" text="Cancel" />
+                        <JFXButton fx:id="cancelButton" buttonType="RAISED" onAction="#cancelAction" styleClass="secondaryButton" text="Cancel" />
                         <Region prefWidth="15.0" />
                         <JFXButton fx:id="saveButton" onAction="#saveTask" style="-jfx-button-type: RAISED;" styleClass="primaryButton" text="Save" />
                      </children>
