@@ -47,6 +47,14 @@
     -jfx-button-type: RAISED;
 }
 
+.dangerButton {
+    -fx-border-radius: 6px;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #c40000;
+    -fx-font-size: 18pt;
+    -jfx-button-type: RAISED;
+}
+
 .imageButton {
     -fx-background-color: #2d3436;
     -fx-font-size: 18pt;

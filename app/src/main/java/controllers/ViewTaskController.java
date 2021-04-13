@@ -1,13 +1,19 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import models.Task;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
@@ -15,6 +21,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
 import java.util.ResourceBundle;
+
+import static utilities.Utilities.getDialog;
 
 public class ViewTaskController {
 
@@ -47,6 +55,11 @@ public class ViewTaskController {
 
   @FXML
   private Pane viewPane;
+
+  @FXML
+  private StackPane stackPane;
+
+  @FXML private BorderPane mainPane;
 
   @FXML
   private ImageView statusImage;
@@ -89,6 +102,52 @@ public class ViewTaskController {
   @FXML
   public void backEvent() throws IOException {
     mainController.displayAllTasks(null);
+  }
+
+  @FXML
+  public void deleteAction() {
+    BoxBlur blur = new BoxBlur(3, 3, 3);
+    JFXDialogLayout dialogLayout = new JFXDialogLayout();
+    JFXButton delete = new JFXButton("Delete");
+    JFXButton cancel = new JFXButton("Cancel");
+
+    delete.getStylesheets().add(new File("src/main/resources/css/dialogJFX" +
+        ".css").toURI().toString());
+    cancel.getStylesheets().add(new File("src/main/resources/css/dialogJFX" +
+        ".css").toURI().toString());
+
+    JFXDialog dialog = new JFXDialog(stackPane, dialogLayout,
+        JFXDialog.DialogTransition.TOP);
+
+    delete.setOnAction(event1 -> {
+      try {
+        mainController.getTaskRegistry().removeTask(task);
+
+        JFXDialog deletedDialog = getDialog(stackPane, mainPane, "The " +
+            "task has been deleted successfully");
+        deletedDialog.setOnDialogClosed(event2 -> {
+          try {
+            mainController.displayAllTasks(null);
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    });
+
+    cancel.setOnAction(event1 -> dialog.close());
+
+    dialog.setOnDialogClosed(event1 -> mainPane.setEffect(null));
+
+    Label label = new Label("Delete this task?");
+    label.setStyle("-fx-text-fill: #2c3e50; -fx-font-size: 17pt");
+    dialogLayout.setBody(label);
+    dialogLayout.setActions(delete, cancel);
+    mainPane.setEffect(blur);
+    dialog.show();
+    dialog.setEffect(null);
   }
 
   /**
