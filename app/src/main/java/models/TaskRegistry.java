@@ -161,7 +161,7 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
    * @throws IOException throws exception if file IO fails
    */
   public void addTask(Task task) throws IOException {
-    add(task);
+    add(0, task);
     save();
   }
 
