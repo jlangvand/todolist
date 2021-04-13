@@ -20,7 +20,7 @@ import static utilities.Utilities.getFXMLLoader;
 
 public class MainController implements Initializable {
   private static final String ALL_TASKS_FXML_NAME = "AllTasks";
-  private static final String TRASH_TASKS_FXML_NAME = "Trash";
+  private static final String DONE_TASKS_FXML_NAME = "DoneTasks";
   private static final String TASK_FORM_FXML_NAME = "TaskForm";
   private static final String VIEW_TASK_FXML_NAME = "ViewTask";
 
@@ -98,8 +98,8 @@ public class MainController implements Initializable {
    * @param event
    */
   @FXML
-  void displayTrash(MouseEvent event) throws IOException {
-    loadTrashView();
+  void displayDoneTasks(MouseEvent event) throws IOException {
+    loadDoneTasksView();
   }
 
   /**
@@ -140,8 +140,8 @@ public class MainController implements Initializable {
     pane.setCenter(root);
   }
 
-  public void loadTrashView() throws IOException {
-    FXMLLoader fxmlLoader = getFXMLLoader(TRASH_TASKS_FXML_NAME);
+  public void loadDoneTasksView() throws IOException {
+    FXMLLoader fxmlLoader = getFXMLLoader(DONE_TASKS_FXML_NAME);
     Parent root = fxmlLoader.load();
     TrashController trashController = fxmlLoader.getController();
     trashController.initData(taskRegistry, this);
@@ -162,9 +162,6 @@ public class MainController implements Initializable {
       }
 
       event.setDropCompleted(success);
-      event.consume();
-      event.setDropCompleted(success);
-
       event.consume();
     }
   }
