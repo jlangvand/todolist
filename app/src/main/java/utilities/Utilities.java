@@ -6,7 +6,7 @@ import com.jfoenix.controls.JFXDialogLayout;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 import java.time.LocalDate;
@@ -17,37 +17,36 @@ public class Utilities {
   }
 
   /**
-   * Loads an fxml file from the path app/src/main/resources/view
+   * Get an FXMLLoaader by filename.
    *
    * @param fxml Filename of fxml, without the file extension (.fxml)
-   * @return Parent object representing the view
+   * @return FXMLLoader object representing the view
    */
   public static FXMLLoader getFXMLLoader(String fxml) {
     return new FXMLLoader(Utilities.class.getResource("/view/" + fxml +
         ".fxml"));
   }
 
-  public static JFXDialog getDialog(StackPane stackPane, Pane mainPane,
-                                    String dialogText) {
+  public static JFXDialog getDialog(StackPane dialogContainer,
+                                    Region blurredRegion, String dialogText) {
     BoxBlur blur = new BoxBlur(3, 3, 3);
     JFXDialogLayout dialogLayout = new JFXDialogLayout();
     JFXButton okButton = new JFXButton("Ok!");
 
-    okButton.getStylesheets().add(Utilities.class.getResource("/css/dialogJFX" +
-        ".css").toString());
+    okButton.getStylesheets().add(getCSSPath("dialogJFX.css"));
 
-    JFXDialog dialog = new JFXDialog(stackPane, dialogLayout,
+    JFXDialog dialog = new JFXDialog(dialogContainer, dialogLayout,
         JFXDialog.DialogTransition.TOP);
 
     okButton.setOnAction(event -> dialog.close());
-    dialog.setOnDialogClosed(event1 -> mainPane.setEffect(null));
+    dialog.setOnDialogClosed(event1 -> blurredRegion.setEffect(null));
 
     Label label = new Label(dialogText);
     label.setStyle("-fx-text-fill: #2c3e50; -fx-font-size: 17pt");
     dialogLayout.setBody(label);
     dialogLayout.setActions(okButton);
 
-    mainPane.setEffect(blur);
+    blurredRegion.setEffect(blur);
     dialog.show();
     return dialog;
   }
