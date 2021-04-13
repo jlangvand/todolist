@@ -6,7 +6,7 @@ public enum Priority {
   LOW("Low Priority"),
   DEFAULT("No Priority");
 
-  private String description;
+  private final String description;
 
   Priority(String description) {
     this.description = description;

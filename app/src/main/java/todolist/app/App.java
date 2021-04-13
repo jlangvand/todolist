@@ -6,9 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import utilities.Utilities;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 
 import static utilities.Utilities.getFXMLLoader;
 

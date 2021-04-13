@@ -9,8 +9,6 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 
 public class Utilities {
@@ -23,26 +21,23 @@ public class Utilities {
    *
    * @param fxml Filename of fxml, without the file extension (.fxml)
    * @return Parent object representing the view
-   * @throws IOException exception is thrown if file I/O fails
    */
-  public static FXMLLoader getFXMLLoader(String fxml) throws IOException {
-    FXMLLoader loader =
-        new FXMLLoader(Utilities.class.getResource("/view/" + fxml +
+  public static FXMLLoader getFXMLLoader(String fxml) {
+    return new FXMLLoader(Utilities.class.getResource("/view/" + fxml +
         ".fxml"));
-//    loader.setLocation(Utilities.class.getResource(fxml + ".fxml"));
-    return loader;
   }
 
   public static JFXDialog getDialog(StackPane stackPane, Pane mainPane,
-                             String dialogText){
-    BoxBlur blur = new BoxBlur(3,3,3);
+                                    String dialogText) {
+    BoxBlur blur = new BoxBlur(3, 3, 3);
     JFXDialogLayout dialogLayout = new JFXDialogLayout();
     JFXButton okButton = new JFXButton("Ok!");
 
     okButton.getStylesheets().add(Utilities.class.getResource("/css/dialogJFX" +
         ".css").toString());
 
-    JFXDialog dialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
+    JFXDialog dialog = new JFXDialog(stackPane, dialogLayout,
+        JFXDialog.DialogTransition.TOP);
 
     okButton.setOnAction(event -> dialog.close());
     dialog.setOnDialogClosed(event1 -> mainPane.setEffect(null));
