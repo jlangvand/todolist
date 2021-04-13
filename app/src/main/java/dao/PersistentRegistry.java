@@ -33,7 +33,10 @@ public class PersistentRegistry {
   /**
    * Create an instance using a default file name.
    *
-   * @throws IOException exception is thrown if, for some reason, file I/O fails
+   * <p>Creates a new file if the file does not exist.
+   *
+   * @throws IOException exception is thrown if, for some reason, file I/O
+   *                     fails
    */
   public PersistentRegistry() throws IOException {
     this("default");
@@ -45,7 +48,8 @@ public class PersistentRegistry {
    * <p>Creates a new file if the file does not exist.
    *
    * @param fileName file name/path
-   * @throws IOException exception is thrown if, for some reason, file I/O fails
+   * @throws IOException exception is thrown if, for some reason, file I/O
+   *                     fails
    */
   public PersistentRegistry(String fileName) throws IOException {
     this.file = new File(fileName);
@@ -64,8 +68,12 @@ public class PersistentRegistry {
   /**
    * Get tasks stored in file.
    *
+   * <p>Attempts to handle cases where the file is not readable. If the file
+   * is corrupt, it will be deleted and replaced by a new file.
+   *
    * @return list of tasks as an ArrayList
-   * @throws IOException exception is thrown if, for some reason, file I/O fails
+   * @throws IOException exception is thrown if, for some reason, file I/O
+   *                     fails
    */
   @SuppressWarnings("unchecked")
   public List<Task> read() throws IOException {
@@ -74,10 +82,16 @@ public class PersistentRegistry {
       return (ArrayList<Task>) ois.readObject();
     } catch (ClassNotFoundException | InvalidClassException
         | ClassCastException e) {
+      /*
+       The file is most probably from an old, incompatible build. We don't
+       have any means to restore the data. Panic! Delete it! Create a new
+       file! This might not be the best way though..
+      */
       LOGGER.log(SEVERE, () -> "File is corrupt! Deleting file.");
       Files.delete(Path.of(file.getAbsolutePath()));
       createOrOpenFile();
     } catch (EOFException e) {
+      // The file does not contain any data yet.
       LOGGER.log(INFO, "File is empty, returning new ArrayList.");
     }
     return new ArrayList<>();
@@ -87,7 +101,8 @@ public class PersistentRegistry {
    * Save list of tasks to file.
    *
    * @param tasks list of tasks
-   * @throws IOException exception is thrown if, for some reason, file I/O fails
+   * @throws IOException exception is thrown if, for some reason, file I/O
+   *                     fails
    */
   public void save(List<Task> tasks) throws IOException {
     try (FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());

@@ -16,7 +16,12 @@ import java.util.stream.Collectors;
 import static utilities.Utilities.dateIsInRange;
 
 /**
- * This class represents a register of tasks.
+ * Persistent, ordered list of Task objects.
+ *
+ * <p>Provides methods for filtering and reordering tasks. Upon creation, it
+ * loads tasks from a file if it exists, else it creates a new file. Tasks
+ * are written to or removed from the file as they are added to or removed
+ * from the list.
  */
 public class TaskRegistry extends ArrayList<Task> implements Serializable {
   @Serial private static final long serialVersionUID = 1L;
@@ -43,6 +48,11 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
     addAll(fileHandle.read());
   }
 
+  /**
+   * Save the current list to file.
+   *
+   * @throws IOException if file IO fails
+   */
   public void save() throws IOException {
     fileHandle.save(this);
   }
@@ -176,6 +186,12 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
     save();
   }
 
+  /**
+   * Remove task by index, saves new list to file.
+   *
+   * @param index task to remove
+   * @throws IOException if file IO fails
+   */
   public void removeTask(int index) throws IOException {
     removeTask(get(index));
   }
