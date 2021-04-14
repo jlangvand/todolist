@@ -59,7 +59,7 @@ public class AllTasksController implements ListController {
   @FXML
   @Override
   public void refreshData() throws IOException {
-    allTasksList.setItems(FXCollections.observableArrayList(tasks.getActiveTasks()));
-    tasks.save();
+    allTasksList.setItems(
+        FXCollections.observableArrayList(tasks.getActiveTasks()));
   }
 }
