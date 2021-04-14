@@ -55,7 +55,7 @@ This view uses JFeonix.
                </graphic>
             </JFXButton>
             <Region VBox.vgrow="ALWAYS" />
-            <JFXButton alignment="BASELINE_LEFT" onDragDropped="#trashDropped" onDragOver="#trashDragOver" onMouseClicked="#displayDoneTasks" prefHeight="90.0" prefWidth="240.0" text="Done Tasks">
+            <JFXButton alignment="BASELINE_LEFT" onMouseClicked="#displayDoneTasks" prefHeight="90.0" prefWidth="240.0" text="Done Tasks">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>

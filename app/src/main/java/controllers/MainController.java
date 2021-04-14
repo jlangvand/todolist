@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import models.Task;
 import models.TaskRegistry;
@@ -23,8 +20,6 @@ public class MainController implements Initializable {
   private static final String DONE_TASKS_FXML_NAME = "DoneTasks";
   private static final String TASK_FORM_FXML_NAME = "TaskForm";
   private static final String VIEW_TASK_FXML_NAME = "ViewTask";
-
-  private static final boolean DRAG_TO_TRASH_ENABLED = false;
 
   @FXML
   BorderPane pane;
@@ -146,34 +141,6 @@ public class MainController implements Initializable {
     TrashController trashController = fxmlLoader.getController();
     trashController.initData(taskRegistry, this);
     pane.setCenter(root);
-  }
-
-  @FXML
-  void trashDropped(DragEvent event) throws IOException {
-    if (DRAG_TO_TRASH_ENABLED) {
-      System.out.println("hi");
-      Dragboard db = event.getDragboard();
-      boolean success = false;
-
-      if (db.hasString()) {
-        int draggedIdx = Integer.parseInt(db.getString());
-        taskRegistry.removeTask(draggedIdx);
-        success = true;
-      }
-
-      event.setDropCompleted(success);
-      event.consume();
-    }
-  }
-
-  @FXML
-  void trashDragOver(DragEvent event) {
-    if (DRAG_TO_TRASH_ENABLED) {
-      if (event.getDragboard().hasString()) {
-        event.acceptTransferModes(TransferMode.MOVE);
-      }
-      event.consume();
-    }
   }
 
   public TaskRegistry getTaskRegistry() {
