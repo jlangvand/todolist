@@ -22,17 +22,22 @@
                      <children>
                         <Label fx:id="taskTitle" styleClass="labelTitle" text="Task name" />
                         <Label fx:id="taskDescription" styleClass="description" text="Task description" />
-                       <HBox alignment="CENTER_LEFT">
+                       <HBox alignment="CENTER_LEFT" spacing="15.0">
                          <children>
                            <ImageView>
                              <image>
                                <Image url="@../images/Clock_icon.png" />
                              </image>
                            </ImageView>
-                           <Label fx:id="taskDeadline" styleClass="mainLabel" text=" x days, 10 mins x mins" />
+                              <VBox spacing="15.0">
+                                 <children>
+                                    <Label fx:id="deadlineDateTime" styleClass="mainLabel" text="Deadline: ..." />
+                                 <Label fx:id="deadlineTimeLeft" styleClass="mainLabel" text="... left" />
+                                 </children>
+                              </VBox>
                          </children>
                        </HBox>
-                       <HBox alignment="CENTER_LEFT">
+                       <HBox alignment="CENTER_LEFT" spacing="15.0">
                          <children>
                            <ImageView>
                              <image>
@@ -42,7 +47,7 @@
                            <Label fx:id="taskPriority" styleClass="mainLabel" text=" x Priority" />
                          </children>
                        </HBox>
-                        <HBox alignment="CENTER_LEFT">
+                        <HBox alignment="CENTER_LEFT" spacing="15.0">
                            <children>
                               <ImageView fitHeight="36.0" fitWidth="36.0">
                                  <image>
@@ -53,7 +58,7 @@
                               <Label fx:id="taskCategory" styleClass="mainLabel" text="..." />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT">
+                        <HBox alignment="CENTER_LEFT" spacing="15.0">
                            <children>
                               <ImageView fitHeight="36.0" fitWidth="36.0">
                                  <image>

@@ -10,6 +10,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
@@ -65,22 +66,37 @@ public class Utilities {
     return getResourcePath("/css/%s".formatted(file));
   }
 
-  public static String durationToString(LocalDate date, LocalTime time) {
+  public static String deadlineRemainingTimeString(LocalDate date,
+                                                   LocalTime time) {
+    final int HIDE_HOURS_IF_DAYS_MORE_THAN = 1;
+    final int HIDE_MINUTES_IF_HOURS_MORE_THAN = 10;
+    if (LocalDateTime.of(date, time).isBefore(LocalDateTime.now()))
+      return "Deadline had passed";
     int days = (int) ChronoUnit.DAYS.between(LocalDate.now(), date);
     int hours = (int) ChronoUnit.HOURS.between(LocalTime.now(), time) % 24;
     int minutes = (int) ChronoUnit.MINUTES.between(LocalTime.now(), time) % 60;
-    if (days > 1) return plural("day", days);
-    if (days == 1) return "1 day and %s".formatted(plural("hour", hours));
-    if (hours < 10) {
-      if (hours == 0) return plural("minute", minutes);
-      return "%s and %s".formatted(plural("hour", hours),
-          plural("minute", minutes));
+    StringBuilder sb = new StringBuilder();
+    if (days > HIDE_HOURS_IF_DAYS_MORE_THAN) {
+      sb.append(plural("day", days));
+    } else if (days > 0) {
+      sb.append("%s and %s".formatted(plural("day", days),
+          plural("hour", hours)));
+    } else if (hours < HIDE_MINUTES_IF_HOURS_MORE_THAN) {
+      if (hours < 1) {
+        sb.append(plural("minute", minutes));
+      } else {
+        sb.append("%s and %s".formatted(plural("hour", hours),
+            plural("minute", minutes)));
+      }
+    } else {
+      sb.append(plural("hour", hours));
     }
-    return plural("hour", hours);
+    sb.append("remaining");
+    return sb.toString().strip();
   }
 
   public static String plural(String str, int n) {
-    return "%d %s%s".formatted(n, str, n == 1 ? "" : "s");
+    return "%d %s%s ".formatted(n, str, n == 1 ? "" : "s");
   }
 
   public static boolean dateIsInRange(LocalDate date, LocalDate from,

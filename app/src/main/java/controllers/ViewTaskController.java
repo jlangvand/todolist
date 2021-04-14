@@ -18,8 +18,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+import static utilities.Utilities.deadlineRemainingTimeString;
 import static utilities.Utilities.getDialog;
 
 public class ViewTaskController {
@@ -37,7 +39,10 @@ public class ViewTaskController {
   private Label taskDescription;
 
   @FXML
-  private Label taskDeadline;
+  private Label deadlineTimeLeft;
+
+  @FXML
+  private Label deadlineDateTime;
 
   @FXML
   private Label taskPriority;
@@ -88,7 +93,12 @@ public class ViewTaskController {
     taskCategory.setText(task.getCategory());
     taskDescription.setText(task.getDescription());
     taskStartedDate.setText(task.getDateAdded().toString());
-    taskDeadline.setText(this.getDeadlineString(task));
+    deadlineDateTime.setText("Deadline: %s %s".formatted(
+        task.getDeadline().format(DateTimeFormatter.ISO_LOCAL_DATE),
+        task.getDeadLineTime().format(DateTimeFormatter.ISO_LOCAL_TIME)
+            .substring(0,5)));
+    deadlineTimeLeft.setText(deadlineRemainingTimeString(task.getDeadline(),
+        task.getDeadLineTime()));
     this.mainController = mainController;
   }
 
@@ -158,7 +168,7 @@ public class ViewTaskController {
       return "The deadline has passed   (%s %s)".formatted(task.getDeadline()
           , task.getDeadLineTime());
     } else {
-      return "%s until deadline".formatted(Utilities.durationToString(
+      return "%s until deadline".formatted(Utilities.deadlineRemainingTimeString(
           task.getDeadline(), task.getDeadLineTime()));
     }
   }
