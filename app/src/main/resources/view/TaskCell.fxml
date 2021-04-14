@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="taskCellPane" minHeight="-Infinity" minWidth="300.0" styleClass="taskBackground" stylesheets="@../css/taskpage.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label fx:id="cellTitle" layoutX="14.0" layoutY="2.0" styleClass="normalLabel" text="Title" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="cellDate" layoutX="14.0" layoutY="30.0" text="Date" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+      <JFXButton fx:id="statusButton" blendMode="COLOR_DODGE" layoutX="204.0" layoutY="7.0" text=" " AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <graphic>
+              <ImageView fx:id="cellStatusImage" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" translateX="6.0">
+                  <image>
+                      <Image url="@../images/not_Done.png" />
+                  </image>
+               <cursor>
+                  <Cursor fx:constant="NONE" />
+               </cursor>
+              </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+    </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</AnchorPane>
