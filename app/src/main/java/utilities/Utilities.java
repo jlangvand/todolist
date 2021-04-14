@@ -10,6 +10,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 public class Utilities {
   private Utilities() {
@@ -61,6 +63,23 @@ public class Utilities {
 
   public static String getCSSPath(String file) {
     return getResourcePath("/css/" + file);
+  }
+
+  public static String durationToString(LocalDate date, LocalTime time) {
+    int days = (int) ChronoUnit.DAYS.between(LocalDate.now(), date);
+    int hours = (int) ChronoUnit.HOURS.between(LocalTime.now(), time) % 24;
+    int minutes = (int) ChronoUnit.MINUTES.between(LocalTime.now(), time) % 60;
+    if (days > 1) return plural("day", days);
+    if (days == 1) return "1 day and " + plural("hour", hours);
+    if (hours < 10) {
+      if (hours == 0) return plural("minute", minutes);
+      return plural("hour", hours) + " and " + plural("minute", minutes);
+    }
+    return plural("hour", hours);
+  }
+
+  public static String plural(String str, int n) {
+    return n + " " + str + (n == 1 ? "" : "s");
   }
 
   public static boolean dateIsInRange(LocalDate date, LocalDate from,
