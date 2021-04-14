@@ -12,13 +12,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import models.Task;
+import utilities.Utilities;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Period;
 import java.util.ResourceBundle;
 
 import static utilities.Utilities.getDialog;
@@ -151,40 +150,16 @@ public class ViewTaskController {
    * @return deadline in form: x days, x hours, x minutes.
    */
   public String getDeadlineString(Task task) {
-    final long SECONDS_PER_HOUR = 3600;
-    final long SECONDS_PER_MINUTE = 60;
-    String deadlineString;
-
     //if deadline date is today and the time passed  OR  the deadline date
     // passed(before today)
-    if ((task.getDeadline().isEqual(LocalDate.now()) && task.getDeadLineTime().isBefore(LocalTime.now()))
+    if ((task.getDeadline().isEqual(LocalDate.now())
+        && task.getDeadLineTime().isBefore(LocalTime.now()))
         || (task.getDeadline().isBefore(LocalDate.now()))) {
-      deadlineString =
-          "The deadline has passed" + "   (" + task.getDeadline() + " " + task.getDeadLineTime() + ")";
+      return "The deadline has passed   (%s %s)".formatted(task.getDeadline()
+          , task.getDeadLineTime());
     } else {
-      Period period = Period.between(LocalDate.now(), task.getDeadline());
-      Duration duration = Duration.between(LocalTime.now(),
-          task.getDeadLineTime());
-
-      //fix the bug that returns negative number of days.
-      if (duration.isNegative()) {
-        period = period.minusDays(1);
-        duration = duration.plusDays(1);
-      }
-
-      //get total seconds from now to finished time, and calculate how many
-      // hours and minutes.
-      long seconds = duration.getSeconds();
-
-      long hours = seconds / SECONDS_PER_HOUR;
-      long minutes = ((seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
-
-      //return days,h,m, with deadline date and time
-      deadlineString = period.getDays() + " days, " +
-          hours + " hours, " +
-          minutes + " min until deadline." +
-          " (" + task.getDeadline() + ", " + task.getDeadLineTime().getHour() + ":" + task.getDeadLineTime().getMinute() + ")";
+      return "%s until deadline".formatted(Utilities.durationToString(
+          task.getDeadline(), task.getDeadLineTime()));
     }
-    return deadlineString;
   }
 }
