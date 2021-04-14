@@ -25,8 +25,8 @@ public class Utilities {
    * @return FXMLLoader object representing the view
    */
   public static FXMLLoader getFXMLLoader(String fxml) {
-    return new FXMLLoader(Utilities.class.getResource("/view/" + fxml +
-        ".fxml"));
+    return new FXMLLoader(Utilities.class.getResource(
+        "/view/%s.fxml".formatted(fxml)));
   }
 
   public static JFXDialog getDialog(StackPane dialogContainer,
@@ -58,11 +58,11 @@ public class Utilities {
   }
 
   public static String getImagePath(String file) {
-    return getResourcePath("/images/" + file);
+    return getResourcePath("/images/%s".formatted(file));
   }
 
   public static String getCSSPath(String file) {
-    return getResourcePath("/css/" + file);
+    return getResourcePath("/css/%s".formatted(file));
   }
 
   public static String durationToString(LocalDate date, LocalTime time) {
@@ -70,16 +70,17 @@ public class Utilities {
     int hours = (int) ChronoUnit.HOURS.between(LocalTime.now(), time) % 24;
     int minutes = (int) ChronoUnit.MINUTES.between(LocalTime.now(), time) % 60;
     if (days > 1) return plural("day", days);
-    if (days == 1) return "1 day and " + plural("hour", hours);
+    if (days == 1) return "1 day and %s".formatted(plural("hour", hours));
     if (hours < 10) {
       if (hours == 0) return plural("minute", minutes);
-      return plural("hour", hours) + " and " + plural("minute", minutes);
+      return "%s and %s".formatted(plural("hour", hours),
+          plural("minute", minutes));
     }
     return plural("hour", hours);
   }
 
   public static String plural(String str, int n) {
-    return n + " " + str + (n == 1 ? "" : "s");
+    return "%d %s%s".formatted(n, str, n == 1 ? "" : "s");
   }
 
   public static boolean dateIsInRange(LocalDate date, LocalDate from,
