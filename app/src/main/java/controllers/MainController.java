@@ -8,13 +8,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import models.Task;
 import models.TaskRegistry;
-import utilities.Priority;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 
+import static utilities.Priority.HIGH;
+import static utilities.Priority.LOW;
+import static utilities.Priority.MEDIUM;
 import static utilities.Utilities.getFXMLLoader;
 
 public class MainController implements Initializable {
@@ -30,10 +32,6 @@ public class MainController implements Initializable {
   private FXMLLoader taskFormLoader;
   private FXMLLoader displayTaskLoader;
 
-  private static final Function<Task, Boolean> filterAllTasks = t -> true;
-  private static final Function<Task, Boolean> filterHighPriorityTasks =
-      t -> t.getPriority() == Priority.HIGH;
-
   /**
    * Called when the navBarController is initialized.
    *
@@ -45,7 +43,7 @@ public class MainController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     try {
       taskRegistry = new TaskRegistry();
-      loadAllTasksView(filterAllTasks);
+      loadAllTasksView(t -> true);
       taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
       displayTaskLoader = getFXMLLoader(VIEW_TASK_FXML_NAME);
     } catch (IOException e) {
@@ -60,7 +58,7 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayAllTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(filterAllTasks);
+    loadAllTasksView(t -> true);
   }
 
   /**
@@ -70,7 +68,7 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayHighPriorityTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(filterHighPriorityTasks);
+    loadAllTasksView(task -> task.getPriority().equals(HIGH));
   }
 
   /**
@@ -79,8 +77,8 @@ public class MainController implements Initializable {
    * @param event
    */
   @FXML
-  void displayMediumPriorityTasks(MouseEvent event) {
-    // To be implemented
+  void displayMediumPriorityTasks(MouseEvent event) throws IOException {
+    loadAllTasksView(task -> task.getPriority().equals(MEDIUM));
   }
 
   /**
@@ -89,8 +87,8 @@ public class MainController implements Initializable {
    * @param event
    */
   @FXML
-  void displayLowPriorityTasks(MouseEvent event) {
-    // To be implemented
+  void displayLowPriorityTasks(MouseEvent event) throws IOException {
+    loadAllTasksView(task -> task.getPriority().equals(LOW));
   }
 
   /**
