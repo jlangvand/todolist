@@ -8,10 +8,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import models.Task;
 import models.TaskRegistry;
+import utilities.Priority;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import static utilities.Utilities.getFXMLLoader;
 
@@ -28,6 +30,10 @@ public class MainController implements Initializable {
   private FXMLLoader taskFormLoader;
   private FXMLLoader displayTaskLoader;
 
+  private Function<Task, Boolean> filterAllTasks = t -> true;
+  private Function<Task, Boolean> filterHighPriorityTasks =
+      t -> t.getPriority() == Priority.HIGH;
+
   /**
    * Called when the navBarController is initialized.
    *
@@ -39,7 +45,7 @@ public class MainController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     try {
       taskRegistry = new TaskRegistry();
-      loadAllTasksView();
+      loadAllTasksView(filterAllTasks);
       taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
       displayTaskLoader = getFXMLLoader(VIEW_TASK_FXML_NAME);
     } catch (IOException e) {
@@ -54,7 +60,7 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayAllTasks(MouseEvent event) throws IOException {
-    loadAllTasksView();
+    loadAllTasksView(filterAllTasks);
   }
 
   /**
@@ -63,8 +69,8 @@ public class MainController implements Initializable {
    * @param event
    */
   @FXML
-  void displayHighPriorityTasks(MouseEvent event) {
-    // To be implemented
+  void displayHighPriorityTasks(MouseEvent event) throws IOException {
+    loadAllTasksView(filterHighPriorityTasks);
   }
 
   /**
@@ -103,11 +109,11 @@ public class MainController implements Initializable {
    *
    * @throws IOException
    */
-  public void loadAllTasksView() throws IOException {
+  public void loadAllTasksView(Function<Task, Boolean> filter) throws IOException {
     FXMLLoader fxmlLoader = getFXMLLoader(ALL_TASKS_FXML_NAME);
     Parent root = fxmlLoader.load();
     AllTasksController allTasksController = fxmlLoader.getController();
-    allTasksController.initData(taskRegistry, this);
+    allTasksController.initData(taskRegistry, filter, this);
     pane.setCenter(root);
   }
 
