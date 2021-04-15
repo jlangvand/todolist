@@ -39,7 +39,7 @@ public class PersistentRegistry {
    *                     fails
    */
   public PersistentRegistry() throws IOException {
-    this("default");
+    this("default.bin");
   }
 
   /**
