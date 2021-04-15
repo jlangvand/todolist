@@ -30,8 +30,8 @@ public class MainController implements Initializable {
   private FXMLLoader taskFormLoader;
   private FXMLLoader displayTaskLoader;
 
-  private Function<Task, Boolean> filterAllTasks = t -> true;
-  private Function<Task, Boolean> filterHighPriorityTasks =
+  private static final Function<Task, Boolean> filterAllTasks = t -> true;
+  private static final Function<Task, Boolean> filterHighPriorityTasks =
       t -> t.getPriority() == Priority.HIGH;
 
   /**
