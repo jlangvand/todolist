@@ -1,11 +1,15 @@
 package controllers;
 
+import com.jfoenix.controls.JFXDialog;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import models.Task;
 import models.TaskRegistry;
 
@@ -13,13 +17,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Function;
+import java.util.logging.Logger;
 
+import static java.util.logging.Level.SEVERE;
 import static utilities.Priority.HIGH;
 import static utilities.Priority.LOW;
 import static utilities.Priority.MEDIUM;
+import static utilities.Utilities.getDialog;
 import static utilities.Utilities.getFXMLLoader;
 
 public class MainController implements Initializable {
+  private static final Logger LOGGER =
+      Logger.getLogger(MainController.class.getName());
+
   private static final String ALL_TASKS_FXML_NAME = "AllTasks";
   private static final String DONE_TASKS_FXML_NAME = "DoneTasks";
   private static final String TASK_FORM_FXML_NAME = "TaskForm";
@@ -145,6 +155,19 @@ public class MainController implements Initializable {
     TrashController trashController = fxmlLoader.getController();
     trashController.initData(taskRegistry, this);
     pane.setCenter(root);
+  }
+
+  public void exceptionHandler(Throwable e, String message) {
+    LOGGER.log(SEVERE, () -> ("""
+        %s caught
+        Message from caller: %s
+        Exception message: %s%s""").formatted(e.getClass().getName(), message
+        , e.getMessage(), e.toString()));
+    StackPane container = new StackPane();
+    Node center = pane.getCenter();
+    pane.setCenter(container);
+    JFXDialog dialog = getDialog(container, new Pane(), message);
+    dialog.setOnDialogClosed(event -> pane.setCenter(center));
   }
 
   public TaskRegistry getTaskRegistry() {

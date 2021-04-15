@@ -96,7 +96,7 @@ public class ViewTaskController {
     deadlineDateTime.setText("Deadline: %s %s".formatted(
         task.getDeadline().format(DateTimeFormatter.ISO_LOCAL_DATE),
         task.getDeadLineTime().format(DateTimeFormatter.ISO_LOCAL_TIME)
-            .substring(0,5)));
+            .substring(0, 5)));
     deadlineTimeLeft.setText(deadlineRemainingTimeString(task.getDeadline(),
         task.getDeadLineTime()));
     this.mainController = mainController;
@@ -132,13 +132,14 @@ public class ViewTaskController {
 
         JFXDialog deletedDialog = getDialog(stackPane, mainPane, "The " +
             "task has been deleted successfully");
-        deletedDialog.setOnDialogClosed(event2 -> {
-          try {
-            mainController.displayAllTasks(null);
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        });
+        deletedDialog.setOnDialogClosed(
+            event2 -> {
+              try {
+                mainController.displayAllTasks(null);
+              } catch (IOException e) {
+                mainController.exceptionHandler(e, "Failed to load tasks");
+              }
+            });
       } catch (IOException e) {
         e.printStackTrace();
       }
