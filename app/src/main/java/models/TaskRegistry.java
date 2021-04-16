@@ -155,6 +155,21 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
   }
 
   /**
+   * @return List with index of active tasks (increasing order)
+   */
+  public int[] getActiveTasksIndex() {
+    int[] indexes = new int[getActiveTasks().size()];
+    int c = 0;
+    for (int i = 0; i < size(); i++) {
+      if (get(i).getStatus() == Status.ACTIVE) {
+        indexes[c] = i;
+        c++;
+      }
+    }
+    return indexes;
+  }
+
+  /**
    * @return String representation of TaskRegistry object.
    */
   @Override
