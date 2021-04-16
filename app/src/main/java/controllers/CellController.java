@@ -91,10 +91,11 @@ public class CellController extends JFXListCell<Task> {
       // Inserting all graphics (Description, date, etc.) in root Pane (taskCellPane)
       setText(null);
       setGraphic(taskCellPane);
+
+      //Event handling
+      statusButton.setOnMousePressed(event -> updateTaskStatus(task));
     }
 
-    //Event handling
-    statusButton.setOnMousePressed(event -> updateTaskStatus(task));
   }
 
   private void updateStatusImage(Status status) {
