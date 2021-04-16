@@ -12,15 +12,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import models.Task;
+import utilities.Utilities;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+import static utilities.Utilities.deadlineRemainingTimeString;
 import static utilities.Utilities.getDialog;
 
 public class ViewTaskController {
@@ -38,7 +39,10 @@ public class ViewTaskController {
   private Label taskDescription;
 
   @FXML
-  private Label taskDeadline;
+  private Label deadlineTimeLeft;
+
+  @FXML
+  private Label deadlineDateTime;
 
   @FXML
   private Label taskPriority;
@@ -89,7 +93,12 @@ public class ViewTaskController {
     taskCategory.setText(task.getCategory());
     taskDescription.setText(task.getDescription());
     taskStartedDate.setText(task.getDateAdded().toString());
-    taskDeadline.setText(this.getDeadlineString(task));
+    deadlineDateTime.setText("Deadline: %s %s".formatted(
+        task.getDeadline().format(DateTimeFormatter.ISO_LOCAL_DATE),
+        task.getDeadLineTime().format(DateTimeFormatter.ISO_LOCAL_TIME)
+            .substring(0, 5)));
+    deadlineTimeLeft.setText(deadlineRemainingTimeString(task.getDeadline(),
+        task.getDeadLineTime()));
     this.mainController = mainController;
   }
 
@@ -123,13 +132,14 @@ public class ViewTaskController {
 
         JFXDialog deletedDialog = getDialog(stackPane, mainPane, "The " +
             "task has been deleted successfully");
-        deletedDialog.setOnDialogClosed(event2 -> {
-          try {
-            mainController.displayAllTasks(null);
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        });
+        deletedDialog.setOnDialogClosed(
+            event2 -> {
+              try {
+                mainController.displayAllTasks(null);
+              } catch (IOException e) {
+                mainController.exceptionHandler(e, "Failed to load tasks");
+              }
+            });
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -151,40 +161,16 @@ public class ViewTaskController {
    * @return deadline in form: x days, x hours, x minutes.
    */
   public String getDeadlineString(Task task) {
-    final long SECONDS_PER_HOUR = 3600;
-    final long SECONDS_PER_MINUTE = 60;
-    String deadlineString;
-
     //if deadline date is today and the time passed  OR  the deadline date
     // passed(before today)
-    if ((task.getDeadline().isEqual(LocalDate.now()) && task.getDeadLineTime().isBefore(LocalTime.now()))
+    if ((task.getDeadline().isEqual(LocalDate.now())
+        && task.getDeadLineTime().isBefore(LocalTime.now()))
         || (task.getDeadline().isBefore(LocalDate.now()))) {
-      deadlineString =
-          "The deadline has passed" + "   (" + task.getDeadline() + " " + task.getDeadLineTime() + ")";
+      return "The deadline has passed   (%s %s)".formatted(task.getDeadline()
+          , task.getDeadLineTime());
     } else {
-      Period period = Period.between(LocalDate.now(), task.getDeadline());
-      Duration duration = Duration.between(LocalTime.now(),
-          task.getDeadLineTime());
-
-      //fix the bug that returns negative number of days.
-      if (duration.isNegative()) {
-        period = period.minusDays(1);
-        duration = duration.plusDays(1);
-      }
-
-      //get total seconds from now to finished time, and calculate how many
-      // hours and minutes.
-      long seconds = duration.getSeconds();
-
-      long hours = seconds / SECONDS_PER_HOUR;
-      long minutes = ((seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
-
-      //return days,h,m, with deadline date and time
-      deadlineString = period.getDays() + " days, " +
-          hours + " hours, " +
-          minutes + " min until deadline." +
-          " (" + task.getDeadline() + ", " + task.getDeadLineTime().getHour() + ":" + task.getDeadLineTime().getMinute() + ")";
+      return "%s until deadline".formatted(Utilities.deadlineRemainingTimeString(
+          task.getDeadline(), task.getDeadLineTime()));
     }
-    return deadlineString;
   }
 }

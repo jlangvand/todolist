@@ -1,30 +1,39 @@
 package controllers;
 
+import com.jfoenix.controls.JFXDialog;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import models.Task;
 import models.TaskRegistry;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Function;
+import java.util.logging.Logger;
 
+import static java.util.logging.Level.SEVERE;
+import static utilities.Priority.HIGH;
+import static utilities.Priority.LOW;
+import static utilities.Priority.MEDIUM;
+import static utilities.Utilities.getDialog;
 import static utilities.Utilities.getFXMLLoader;
 
 public class MainController implements Initializable {
+  private static final Logger LOGGER =
+      Logger.getLogger(MainController.class.getName());
+
   private static final String ALL_TASKS_FXML_NAME = "AllTasks";
   private static final String DONE_TASKS_FXML_NAME = "DoneTasks";
   private static final String TASK_FORM_FXML_NAME = "TaskForm";
   private static final String VIEW_TASK_FXML_NAME = "ViewTask";
-
-  private static final boolean DRAG_TO_TRASH_ENABLED = false;
 
   @FXML
   BorderPane pane;
@@ -44,7 +53,7 @@ public class MainController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     try {
       taskRegistry = new TaskRegistry();
-      loadAllTasksView();
+      loadAllTasksView(t -> true);
       taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
       displayTaskLoader = getFXMLLoader(VIEW_TASK_FXML_NAME);
     } catch (IOException e) {
@@ -59,7 +68,7 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayAllTasks(MouseEvent event) throws IOException {
-    loadAllTasksView();
+    loadAllTasksView(t -> true);
   }
 
   /**
@@ -68,8 +77,8 @@ public class MainController implements Initializable {
    * @param event
    */
   @FXML
-  void displayHighPriorityTasks(MouseEvent event) {
-    // To be implemented
+  void displayHighPriorityTasks(MouseEvent event) throws IOException {
+    loadAllTasksView(task -> task.getPriority().equals(HIGH));
   }
 
   /**
@@ -78,8 +87,8 @@ public class MainController implements Initializable {
    * @param event
    */
   @FXML
-  void displayMediumPriorityTasks(MouseEvent event) {
-    // To be implemented
+  void displayMediumPriorityTasks(MouseEvent event) throws IOException {
+    loadAllTasksView(task -> task.getPriority().equals(MEDIUM));
   }
 
   /**
@@ -88,8 +97,8 @@ public class MainController implements Initializable {
    * @param event
    */
   @FXML
-  void displayLowPriorityTasks(MouseEvent event) {
-    // To be implemented
+  void displayLowPriorityTasks(MouseEvent event) throws IOException {
+    loadAllTasksView(task -> task.getPriority().equals(LOW));
   }
 
   /**
@@ -108,11 +117,11 @@ public class MainController implements Initializable {
    *
    * @throws IOException
    */
-  public void loadAllTasksView() throws IOException {
+  public void loadAllTasksView(Function<Task, Boolean> filter) throws IOException {
     FXMLLoader fxmlLoader = getFXMLLoader(ALL_TASKS_FXML_NAME);
     Parent root = fxmlLoader.load();
     AllTasksController allTasksController = fxmlLoader.getController();
-    allTasksController.initData(taskRegistry, this);
+    allTasksController.initData(taskRegistry, filter, this);
     pane.setCenter(root);
   }
 
@@ -148,32 +157,17 @@ public class MainController implements Initializable {
     pane.setCenter(root);
   }
 
-  @FXML
-  void trashDropped(DragEvent event) throws IOException {
-    if (DRAG_TO_TRASH_ENABLED) {
-      System.out.println("hi");
-      Dragboard db = event.getDragboard();
-      boolean success = false;
-
-      if (db.hasString()) {
-        int draggedIdx = Integer.parseInt(db.getString());
-        taskRegistry.removeTask(draggedIdx);
-        success = true;
-      }
-
-      event.setDropCompleted(success);
-      event.consume();
-    }
-  }
-
-  @FXML
-  void trashDragOver(DragEvent event) {
-    if (DRAG_TO_TRASH_ENABLED) {
-      if (event.getDragboard().hasString()) {
-        event.acceptTransferModes(TransferMode.MOVE);
-      }
-      event.consume();
-    }
+  public void exceptionHandler(Throwable e, String message) {
+    LOGGER.log(SEVERE, () -> ("""
+        %s caught
+        Message from caller: %s
+        Exception message: %s%s""").formatted(e.getClass().getName(), message
+        , e.getMessage(), e.toString()));
+    StackPane container = new StackPane();
+    Node center = pane.getCenter();
+    pane.setCenter(container);
+    JFXDialog dialog = getDialog(container, new Pane(), message);
+    dialog.setOnDialogClosed(event -> pane.setCenter(center));
   }
 
   public TaskRegistry getTaskRegistry() {

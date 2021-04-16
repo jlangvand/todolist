@@ -124,6 +124,7 @@ public class TaskFormController {
       LOGGER.log(INFO, () -> "Task with title " + task.getTitle() + " already" +
           " in registry");
     }
+    tasks.save();
   }
 
   public void initData(MainController mainController, Task task) {

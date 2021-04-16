@@ -39,7 +39,7 @@ public class PersistentRegistry {
    *                     fails
    */
   public PersistentRegistry() throws IOException {
-    this("default");
+    this("default.bin");
   }
 
   /**
@@ -108,6 +108,7 @@ public class PersistentRegistry {
     try (FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
          ObjectOutputStream oos = new ObjectOutputStream(fos)) {
       oos.writeObject(tasks);
+      LOGGER.log(INFO, () -> "Saved to file");
     }
   }
 }

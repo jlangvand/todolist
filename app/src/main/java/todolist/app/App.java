@@ -1,7 +1,9 @@
 package todolist.app;
 
 import com.jfoenix.controls.JFXDecorator;
+import controllers.MainController;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import utilities.Utilities;
@@ -35,8 +37,16 @@ public class App extends Application {
    */
   @Override
   public void start(Stage stage) throws IOException {
+    FXMLLoader mainLoader = getFXMLLoader("Main");
+    Thread.setDefaultUncaughtExceptionHandler((thread, throwable) ->
+        // TODO(joakilan): Find a way to print the original Exception's message
+        ((MainController) mainLoader.getController())
+            .exceptionHandler(throwable, """
+                An unknown error occurred!
+                                
+                Error type: %s""".formatted(throwable.getMessage())));
     JFXDecorator decorator =
-        new JFXDecorator(stage, getFXMLLoader("Main_MVP").load());
+        new JFXDecorator(stage, mainLoader.load());
     decorator.setCustomMaximize(true);
     stage.setTitle(TITLE);
     decorator.setTitle(TITLE);

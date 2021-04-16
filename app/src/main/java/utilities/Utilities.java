@@ -10,6 +10,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 public class Utilities {
   private Utilities() {
@@ -23,8 +26,8 @@ public class Utilities {
    * @return FXMLLoader object representing the view
    */
   public static FXMLLoader getFXMLLoader(String fxml) {
-    return new FXMLLoader(Utilities.class.getResource("/view/" + fxml +
-        ".fxml"));
+    return new FXMLLoader(Utilities.class.getResource(
+        "/view/%s.fxml".formatted(fxml)));
   }
 
   public static JFXDialog getDialog(StackPane dialogContainer,
@@ -56,11 +59,44 @@ public class Utilities {
   }
 
   public static String getImagePath(String file) {
-    return getResourcePath("/images/" + file);
+    return getResourcePath("/images/%s".formatted(file));
   }
 
   public static String getCSSPath(String file) {
-    return getResourcePath("/css/" + file);
+    return getResourcePath("/css/%s".formatted(file));
+  }
+
+  public static String deadlineRemainingTimeString(LocalDate date,
+                                                   LocalTime time) {
+    final int HIDE_HOURS_IF_DAYS_MORE_THAN = 1;
+    final int HIDE_MINUTES_IF_HOURS_MORE_THAN = 10;
+    if (LocalDateTime.of(date, time).isBefore(LocalDateTime.now()))
+      return "Deadline had passed";
+    int days = (int) ChronoUnit.DAYS.between(LocalDate.now(), date);
+    int hours = (int) ChronoUnit.HOURS.between(LocalTime.now(), time) % 24;
+    int minutes = (int) ChronoUnit.MINUTES.between(LocalTime.now(), time) % 60;
+    StringBuilder sb = new StringBuilder();
+    if (days > HIDE_HOURS_IF_DAYS_MORE_THAN) {
+      sb.append(plural("day", days));
+    } else if (days > 0) {
+      sb.append("%s and %s".formatted(plural("day", days),
+          plural("hour", hours)));
+    } else if (hours < HIDE_MINUTES_IF_HOURS_MORE_THAN) {
+      if (hours < 1) {
+        sb.append(plural("minute", minutes));
+      } else {
+        sb.append("%s and %s".formatted(plural("hour", hours),
+            plural("minute", minutes)));
+      }
+    } else {
+      sb.append(plural("hour", hours));
+    }
+    sb.append("remaining");
+    return sb.toString().strip();
+  }
+
+  public static String plural(String str, int n) {
+    return "%d %s%s ".formatted(n, str, n == 1 ? "" : "s");
   }
 
   public static boolean dateIsInRange(LocalDate date, LocalDate from,

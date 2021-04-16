@@ -9,6 +9,8 @@ import models.Task;
 import models.TaskRegistry;
 
 import java.io.IOException;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class AllTasksController implements ListController {
 
@@ -17,6 +19,7 @@ public class AllTasksController implements ListController {
 
   private TaskRegistry tasks;
   private MainController mainController;
+  private Function<Task, Boolean> filter;
 
   /**
    * Method called when user clicks on add button.
@@ -48,8 +51,11 @@ public class AllTasksController implements ListController {
     }
   }
 
-  void initData(TaskRegistry tasks, MainController mainController) throws IOException {
+  void initData(TaskRegistry tasks,
+                Function<Task, Boolean> filter,
+                MainController mainController) throws IOException {
     this.tasks = tasks;
+    this.filter = filter;
     refreshData();
     allTasksList.setCellFactory(cellController -> new CellController(this,
         tasks));
@@ -59,7 +65,9 @@ public class AllTasksController implements ListController {
   @FXML
   @Override
   public void refreshData() throws IOException {
-    allTasksList.setItems(FXCollections.observableArrayList(tasks.getActiveTasks()));
-    tasks.save();
+    allTasksList.setItems(
+        FXCollections.observableArrayList(
+            tasks.getActiveTasks().stream().filter(filter::apply)
+                .collect(Collectors.toList())));
   }
 }
