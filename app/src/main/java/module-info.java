@@ -1,7 +1,8 @@
 module todolist.app.main {
+  requires javafx.fxml;
+  requires javafx.graphics;
   requires javafx.controls;
   requires com.jfoenix;
-  requires javafx.fxml;
   requires java.logging;
 
   opens todolist.app to javafx.fxml;

@@ -1,30 +1,25 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
 plugins {
   id 'todolist.java-application-conventions'
   id 'application'
-  id 'org.openjfx.javafxplugin' version '0.0.9'
+  id 'idea'
+  id 'edu.sc.seis.launch4j' version '2.5.0'
+  id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 repositories {
   mavenCentral()
 }
 
-run {
-  jvmArgs = [
-      "--add-exports=javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED",
-      "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=ALL-UNNAMED",
-      "--add-exports=javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED",
-      "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix",
-      "--add-exports=javafx.controls/com.sun.javafx.binding=com.jfoenix",
-      "--illegal-access=warn",
-      "--add-opens=javafx.controls/javafx.scene.control.skin=com.jfoenix",
-      "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
-      "--add-opens=java.base/java.lang.reflect=com.jfoenix",
-      "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix",
-      "--add-exports=javafx.controls/com.sun.javafx.scene.control=com.jfoenix",
-      "--add-exports=javafx.base/com.sun.javafx.binding=com.jfoenix",
-      "--add-exports=javafx.graphics/com.sun.javafx.stage=com.jfoenix",
-      "--add-exports=javafx.base/com.sun.javafx.event=com.jfoenix"
-  ]
+def currentOS = DefaultNativePlatform.currentOperatingSystem;
+def platform
+if (currentOS.isWindows()) {
+  platform = 'win'
+} else if (currentOS.isLinux()) {
+  platform = 'linux'
+} else if (currentOS.isMacOsX()) {
+  platform = 'mac'
 }
 
 dependencies {
@@ -33,20 +28,101 @@ dependencies {
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.5.1'
   implementation 'com.jfoenix:jfoenix:9.0.10'
+
+  // JavaFX modules for building on the current system
+  implementation "org.openjfx:javafx-base:15.0.1:${platform}"
+  implementation "org.openjfx:javafx-controls:15.0.1:${platform}"
+  implementation "org.openjfx:javafx-graphics:15.0.1:${platform}"
+  implementation "org.openjfx:javafx-fxml:15.0.1:${platform}"
+
+  // Runtime modules for Windows
+  runtime "org.openjfx:javafx-base:15.0.1:win"
+  runtime "org.openjfx:javafx-controls:15.0.1:win"
+  runtime "org.openjfx:javafx-graphics:15.0.1:win"
+  runtime "org.openjfx:javafx-fxml:15.0.1:win"
 }
 
-test {
-  useJUnitPlatform()
+def MainClassName = 'todolist.app.Main'
+applicationName = 'Todolist'
+version = '0.3.0'
+
+java {
+  modularity.inferModulePath = true
 }
 
-javafx {
-  version = "15.0.1"
-  modules = ['javafx.controls', 'javafx.fxml', 'javafx.graphics']
-}
+def args = [
+    "--add-exports=javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED",
+    "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior" +
+        "=ALL-UNNAMED",
+    "--add-exports=javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED",
+    "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior" +
+        "=com.jfoenix",
+    "--add-exports=javafx.controls/com.sun.javafx.binding=com.jfoenix",
+    "--illegal-access=warn",
+    "--add-opens=javafx.controls/javafx.scene.control.skin=com.jfoenix",
+    "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
+    "--add-opens=java.base/java.lang.reflect=com.jfoenix",
+    "--add-exports=javafx.controls/com.sun.javafx.scene.control.behavior" +
+        "=com.jfoenix",
+    "--add-exports=javafx.controls/com.sun.javafx.scene.control=com.jfoenix",
+    "--add-exports=javafx.base/com.sun.javafx.binding=com.jfoenix",
+    "--add-exports=javafx.graphics/com.sun.javafx.stage=com.jfoenix",
+    "--add-exports=javafx.base/com.sun.javafx.event=com.jfoenix"
+]
 
 application {
   //noinspection GroovyAccessibility
-  mainClass = 'todolist.app.App'
+  mainModule = 'todolist.app.main'
+  mainClass = MainClassName
+  applicationDefaultJvmArgs = args
+}
+
+compileJava {
+  options.release = 15
+}
+
+task packageExecutableDistribution(type: Zip) {
+  archiveName = applicationName + '-' + version + '.zip'
+  destinationDir = file("$buildDir/distExecutable")
+
+  from "$buildDir/launch4j"
+}
+
+task addJreToDistributable(type: Copy) {
+  from zipTree("jre/OpenJDK15U-jre_x64_windows_hotspot_15.0.2_7.zip")
+  destinationDir = file("$buildDir/launch4j")
+}
+
+jar {
+  manifest {
+    attributes 'Main-Class': MainClassName
+  }
+  from {
+    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+}
+
+shadowJar {
+  archiveBaseName.set('shadow')
+  mainClassName = MainClassName
+}
+
+launch4j { //used for windows
+  mainClassName = MainClassName
+  bundledJrePath = 'jdk-15.0.2+7-jre'
+  bundledJre64Bit = true
+  jreMinVersion = '15'
+  copyConfigurable = []
+  jarTask = shadowJar
+  jvmOptions = args
+  outfile = applicationName + '.exe'
+}
+
+packageExecutableDistribution.dependsOn createExe
+packageExecutableDistribution.dependsOn addJreToDistributable
+
+test {
+  useJUnitPlatform()
 }
 
 sourceSets {
