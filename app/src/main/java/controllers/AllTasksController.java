@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import models.Task;
 import models.TaskRegistry;
 
@@ -16,6 +17,9 @@ public class AllTasksController implements ListController {
 
   @FXML
   private JFXListView<Task> allTasksList;
+
+  @FXML
+  private Text title;
 
   private TaskRegistry tasks;
   private MainController mainController;
@@ -53,13 +57,14 @@ public class AllTasksController implements ListController {
 
   void initData(TaskRegistry tasks,
                 Function<Task, Boolean> filter,
-                MainController mainController) throws IOException {
+                MainController mainController, String title) throws IOException {
     this.tasks = tasks;
     this.filter = filter;
     refreshData();
     allTasksList.setCellFactory(cellController -> new CellController(this,
         tasks));
     this.mainController = mainController;
+    this.title.setText(title);
   }
 
   @FXML
