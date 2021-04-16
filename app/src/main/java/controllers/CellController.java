@@ -8,9 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import models.Task;
 import models.TaskRegistry;
@@ -51,89 +49,22 @@ public class CellController extends JFXListCell<Task> {
 
   private FXMLLoader fxmlLoader;
   private ListController listController;
+  private TaskRegistry allTasks;
 
   public CellController(ListController listController, TaskRegistry allTasks) {
     this.listController = listController;
+    this.allTasks = allTasks;
 
-    JFXListCell<Task> thisCell = this;
-
-    setOnDragDetected(event -> {
-      if (getItem() == null) return;
-
-      ObservableList<Task> items = getListView().getItems();
-      if (getItem().getStatus() == Status.ACTIVE) { //Not allowing reorder in
-        // trash page
-        Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
-        ClipboardContent content = new ClipboardContent();
-        content.putString(String.valueOf(items.indexOf(getItem())));
-        dragboard.setContent(content);
-        dragboard.setDragView(new Image(getImagePath("Task_icon" +
-            ".png")));
-      }
-    });
-
-    setOnDragOver(event -> {
-      if (event.getGestureSource() != thisCell && event.getDragboard().hasString()) {
-        event.acceptTransferModes(TransferMode.MOVE);
-      }
-
-      event.consume();
-    });
-
-    setOnDragExited(event -> {
-      if (event.getGestureSource() != thisCell &&
-          event.getDragboard().hasString()) {
-        setOpacity(1);
-      }
-    });
-
-    setOnDragDropped(event -> {
-      if (getItem() == null) return;
-
-      Dragboard db = event.getDragboard();
-      boolean success = false;
-
-      if (db.hasString()) {
-        ObservableList<Task> items = getListView().getItems();
-        int draggedIdx = Integer.parseInt(db.getString());
-        int thisIdx = items.indexOf(getItem());
-
-        int[] indexInAllTasks = new int[allTasks.getActiveTasks().size()];
-        int c = 0;
-        for (int i = 0; i < allTasks.size(); i++) {
-          if (allTasks.get(i).getStatus() == Status.ACTIVE) {
-            indexInAllTasks[c] = i;
-            c++;
-          }
-        }
-
-        try {
-          if (thisIdx > draggedIdx) {
-            for (int i = draggedIdx; i < thisIdx; i++) {
-              allTasks.swapTasksByIndex(indexInAllTasks[i],
-                  indexInAllTasks[i + 1]);
-            }
-          } else if (draggedIdx > thisIdx) {
-            for (int i = draggedIdx; i > thisIdx; i--) {
-              allTasks.swapTasksByIndex(indexInAllTasks[i],
-                  indexInAllTasks[i - 1]);
-            }
-          }
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-        success = true;
-      }
-
-      event.setDropCompleted(success);
-
-      event.consume();
-    });
+    setOnDragDetected(this::onDragDetected);
+    setOnDragOver(this::onDragOver);
+    setOnDragExited(this::onDragExited);
+    setOnDragDropped(this::onDragDropped);
   }
 
   @Override
   protected void updateItem(Task task, boolean empty) {
     super.updateItem(task, empty);
+
 
     if (empty || task == null) {
       setText(null);
@@ -142,8 +73,7 @@ public class CellController extends JFXListCell<Task> {
       if (fxmlLoader == null) {
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/view/TaskCell.fxml"));
-        fxmlLoader.setController(this); //This class is the controller for
-        // the TaskCell.fxml
+        fxmlLoader.setController(this); //This class is the controller for the TaskCell.fxml
 
         try {
           fxmlLoader.load();
@@ -157,26 +87,14 @@ public class CellController extends JFXListCell<Task> {
       cellDate.setText(task.getDateAdded().toString());
       updateStatusImage(task.getStatus());
 
-      statusButton.setOnMousePressed(event -> {
-        Status newStatus = (task.getStatus().equals(Status.ACTIVE)) ?
-            Status.DONE : Status.ACTIVE;
-        task.setStatus(newStatus);
-        updateStatusImage(newStatus);
 
-        LOGGER.log(Level.INFO, task.getStatus().toString()); //To test the
-        // actual status
-
-        try {
-          listController.refreshData();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      });
-
+      // Inserting all graphics (Description, date, etc.) in root Pane (taskCellPane)
       setText(null);
-      setGraphic(taskCellPane); // Inserting all graphics (Description, date,
-      // etc.) in root Pane (taskCellPane)
+      setGraphic(taskCellPane);
     }
+
+    //Event handling
+    statusButton.setOnMousePressed(event -> updateTaskStatus(task));
   }
 
   private void updateStatusImage(Status status) {
@@ -188,5 +106,91 @@ public class CellController extends JFXListCell<Task> {
       cellStatusImage.setImage(new Image(getImagePath("not_Done.png")));
     }
   }
+
+  private void onDragDetected(MouseEvent event) {
+    if (getItem() == null) return;
+    ObservableList<Task> items = getListView().getItems();
+    if (getItem().getStatus() == Status.ACTIVE) { //Not allowing reorder in trash page
+      Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
+      ClipboardContent content = new ClipboardContent();
+      content.putString(String.valueOf(items.indexOf(getItem())));
+      dragboard.setContent(content);
+      dragboard.setDragView(new Image(getImagePath("Task_icon" +
+              ".png")));
+    }
+
+  }
+
+  private void onDragOver(DragEvent event) {
+    if (event.getGestureSource() != this && event.getDragboard().hasString()) {
+      event.acceptTransferModes(TransferMode.MOVE);
+    }
+    event.consume();
+  }
+
+  private void onDragExited(DragEvent event) {
+    if (event.getGestureSource() != this &&
+            event.getDragboard().hasString()) {
+      setOpacity(1);
+    }
+  }
+
+  private void onDragDropped(DragEvent event) {
+    if (getItem() == null) return;
+
+    Dragboard db = event.getDragboard();
+
+    boolean success = false;
+
+    if (db.hasString()) {
+      ObservableList<Task> items = getListView().getItems();
+      int draggedIdx = Integer.parseInt(db.getString());
+      int thisIdx = items.indexOf(getItem());
+
+      try {
+        if (thisIdx > draggedIdx) {
+          for (int i = draggedIdx; i < thisIdx; i++) {
+            allTasks.swapTasksByIndex(allTasks.getActiveTasksIndex()[i],
+                    allTasks.getActiveTasksIndex()[i + 1]);
+          }
+        } else if (draggedIdx > thisIdx) {
+          for (int i = draggedIdx; i > thisIdx; i--) {
+            allTasks.swapTasksByIndex(allTasks.getActiveTasksIndex()[i],
+                    allTasks.getActiveTasksIndex()[i - 1]);
+          }
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      success = true;
+    }
+
+    event.setDropCompleted(success);
+    event.consume();
+  }
+
+  /**
+   * Updates the status of a task (both field and image) when user marks the task as done.
+   * The method also updates the UI, such that the update is visible.
+   *
+    * @param task Task to be updated
+   */
+  private void updateTaskStatus(Task task) {
+    Status newStatus = (task.getStatus().equals(Status.ACTIVE)) ?
+            Status.DONE : Status.ACTIVE;
+    task.setStatus(newStatus);
+    updateStatusImage(newStatus);
+
+    LOGGER.log(Level.INFO, task.getStatus().toString()); //To test the actual status
+
+    try {
+      listController.refreshData();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+  }
+
+
 }
 
