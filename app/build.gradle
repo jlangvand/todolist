@@ -2,17 +2,15 @@ import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 plugins {
   id 'todolist.java-application-conventions'
-  id 'application'
   id 'idea'
-  id 'edu.sc.seis.launch4j' version '2.5.0'
-  id 'com.github.johnrengelman.shadow' version '6.1.0'
+  id 'org.beryx.jlink' version '2.23.6'
 }
 
 repositories {
   mavenCentral()
 }
 
-def currentOS = DefaultNativePlatform.currentOperatingSystem;
+def currentOS = DefaultNativePlatform.currentOperatingSystem
 def platform
 if (currentOS.isWindows()) {
   platform = 'win'
@@ -34,21 +32,15 @@ dependencies {
   implementation "org.openjfx:javafx-controls:15.0.1:${platform}"
   implementation "org.openjfx:javafx-graphics:15.0.1:${platform}"
   implementation "org.openjfx:javafx-fxml:15.0.1:${platform}"
-
-  // Runtime modules for Windows
-  runtime "org.openjfx:javafx-base:15.0.1:win"
-  runtime "org.openjfx:javafx-controls:15.0.1:win"
-  runtime "org.openjfx:javafx-graphics:15.0.1:win"
-  runtime "org.openjfx:javafx-fxml:15.0.1:win"
 }
 
-def MainClassName = 'todolist.app.Main'
-applicationName = 'Todolist'
+def mainClassName = 'todolist.app.Main'
 version = '0.3.0'
 
 java {
   modularity.inferModulePath = true
 }
+
 
 def args = [
     "--add-exports=javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED",
@@ -73,53 +65,60 @@ def args = [
 application {
   //noinspection GroovyAccessibility
   mainModule = 'todolist.app.main'
-  mainClass = MainClassName
+  mainClass = mainClassName
   applicationDefaultJvmArgs = args
+}
+
+jlink {
+  options = ['--strip-debug', '--compress', '2', '--no-header-files',
+             '--no-man-pages']
+  launcher {
+    name = project.name
+    noConsole = true
+    jvmArgs = args
+  }
+  targetPlatform('win') {
+    jdkHome = jdkDownload("https://github.com/AdoptOpenJDK" +
+        "/openjdk15-binaries/releases/download/jdk-15.0.2%2B7" +
+        "/OpenJDK15U-jdk_x64_windows_hotspot_15.0.2_7.zip")
+    addExtraModulePath('jmods/javafx-jmods-15-win')
+  }
+  targetPlatform('linux') {
+    jdkHome = jdkDownload("https://github.com/AdoptOpenJDK" +
+        "/openjdk15-binaries/releases/download/jdk-15.0.2%2B7" +
+        "/OpenJDK15U-jdk_x64_linux_hotspot_15.0.2_7.tar.gz")
+    addExtraModulePath('jmods/javafx-jmods-15-linux')
+  }
+  targetPlatform('osx') {
+    jdkHome = jdkDownload("https://github.com/AdoptOpenJDK" +
+        "/openjdk15-binaries/releases/download/jdk-15.0.2%2B7" +
+        "/OpenJDK15U-jdk_x64_mac_hotspot_15.0.2_7.tar.gz")
+    addExtraModulePath('jmods/javafx-jmods-15-osx')
+  }
+  jpackage {
+    targetPlatformName = 'win'
+    installerType = 'msi'
+    skipInstaller = false
+    jvmArgs = args
+    imageName = project.name
+    installerName = project.name
+    appVersion = version
+    installerOptions = ['--win-menu', '--win-shortcut']
+  }
 }
 
 compileJava {
   options.release = 15
 }
 
-task packageExecutableDistribution(type: Zip) {
-  archiveName = applicationName + '-' + version + '.zip'
-  destinationDir = file("$buildDir/distExecutable")
-
-  from "$buildDir/launch4j"
-}
-
-task addJreToDistributable(type: Copy) {
-  from zipTree("jre/OpenJDK15U-jre_x64_windows_hotspot_15.0.2_7.zip")
-  destinationDir = file("$buildDir/launch4j")
-}
-
 jar {
   manifest {
-    attributes 'Main-Class': MainClassName
+    attributes 'Main-Class': mainClassName
   }
   from {
     configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
   }
 }
-
-shadowJar {
-  archiveBaseName.set('shadow')
-  mainClassName = MainClassName
-}
-
-launch4j { //used for windows
-  mainClassName = MainClassName
-  bundledJrePath = 'jdk-15.0.2+7-jre'
-  bundledJre64Bit = true
-  jreMinVersion = '15'
-  copyConfigurable = []
-  jarTask = shadowJar
-  jvmOptions = args
-  outfile = applicationName + '.exe'
-}
-
-packageExecutableDistribution.dependsOn createExe
-packageExecutableDistribution.dependsOn addJreToDistributable
 
 test {
   useJUnitPlatform()
