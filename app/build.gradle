@@ -96,14 +96,17 @@ jlink {
     addExtraModulePath('jmods/javafx-jmods-15-osx')
   }
   jpackage {
-    targetPlatformName = 'win'
-    installerType = 'msi'
-    skipInstaller = false
+    targetPlatformName = platform
+    if (platform == 'win') {
+      skipInstaller = false
+      installerOptions = ['--win-menu', '--win-shortcut']
+    } else {
+      skipInstaller = true
+    }
     jvmArgs = args
     imageName = project.name
     installerName = project.name
     appVersion = version
-    installerOptions = ['--win-menu', '--win-shortcut']
   }
 }
 
