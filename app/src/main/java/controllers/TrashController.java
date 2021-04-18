@@ -31,11 +31,10 @@ public class TrashController implements ListController {
     }
   }
 
-  void initData(TaskRegistry tasks, MainController mainController) throws IOException {
-    this.tasks = tasks;
+  void initData(MainController mainController) throws IOException {
+    this.tasks = mainController.getTaskRegistry();
     refreshData();
-    allTasksList.setCellFactory(cellController -> new CellController(this,
-        tasks));
+    allTasksList.setCellFactory(cellController -> new CellController(mainController, this));
     this.mainController = mainController;
   }
 

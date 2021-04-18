@@ -59,7 +59,7 @@ public class TaskListController implements ListController {
     this.tasks = mainController.getTaskRegistry();
     this.filter = filter;
     refreshData();
-    allTasksList.setCellFactory(c -> new CellController(this, tasks));
+    allTasksList.setCellFactory(c -> new CellController(mainController, this));
     this.mainController = mainController;
     this.title.setText(title);
   }

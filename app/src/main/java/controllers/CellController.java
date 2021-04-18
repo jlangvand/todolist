@@ -21,7 +21,6 @@ import utilities.Status;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static utilities.Utilities.getImagePath;
@@ -43,11 +42,12 @@ public class CellController extends JFXListCell<Task> {
 
   private FXMLLoader fxmlLoader;
   private final ListController listController;
-  private final TaskRegistry allTasks;
+  private final TaskRegistry tasks;
 
-  public CellController(ListController listController, TaskRegistry allTasks) {
+  public CellController(MainController mainController,
+                        ListController listController) {
     this.listController = listController;
-    this.allTasks = allTasks;
+    this.tasks = mainController.getTaskRegistry();
 
     setOnDragDetected(this::onDragDetected);
     setOnDragOver(this::onDragOver);
@@ -162,13 +162,13 @@ public class CellController extends JFXListCell<Task> {
       try {
         if (thisIdx > draggedIdx) {
           for (int i = draggedIdx; i < thisIdx; i++) {
-            allTasks.swapTasksByIndex(allTasks.getActiveTasksIndex()[i],
-                allTasks.getActiveTasksIndex()[i + 1]);
+            tasks.swapTasksByIndex(tasks.getActiveTasksIndex()[i],
+                tasks.getActiveTasksIndex()[i + 1]);
           }
         } else if (draggedIdx > thisIdx) {
           for (int i = draggedIdx; i > thisIdx; i--) {
-            allTasks.swapTasksByIndex(allTasks.getActiveTasksIndex()[i],
-                allTasks.getActiveTasksIndex()[i - 1]);
+            tasks.swapTasksByIndex(tasks.getActiveTasksIndex()[i],
+                tasks.getActiveTasksIndex()[i - 1]);
           }
         }
       } catch (IOException e) {

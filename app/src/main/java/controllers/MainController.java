@@ -50,6 +50,8 @@ public class MainController implements Initializable {
   private TaskDetailController taskViewController;
   private Parent taskListParent;
   private TaskListController taskListController;
+  private Parent doneTasksParent;
+  private TrashController doneTasksController;
 
   /**
    * {@inheritDoc}
@@ -68,7 +70,11 @@ public class MainController implements Initializable {
       FXMLLoader taskListLoader = getFXMLLoader(ALL_TASKS_FXML_NAME);
       taskListParent = taskListLoader.load();
       taskListController = taskListLoader.getController();
-      loadAllTasksView(t -> true, "All Tasks");
+      FXMLLoader doneTasksLoader = getFXMLLoader(DONE_TASKS_FXML_NAME);
+      doneTasksParent = doneTasksLoader.load();
+      doneTasksController = doneTasksLoader.getController();
+      doneTasksController.initData(this);
+      loadTaskListView(t -> true, "All Tasks");
     } catch (IOException e) {
       LOGGER.log(SEVERE,
           () -> "Caught exception while initializing: " + e.toString());
@@ -84,18 +90,17 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayAllTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(t -> true, "All Tasks");
+    loadTaskListView(t -> true, "All Tasks");
   }
 
   /**
    * Called when highPriorityButton is clicked.
    *
    * @param event MouseEvent from view
-   * @throws IOException upon IO failure
    */
   @FXML
-  void displayHighPriorityTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(task -> task.getPriority().equals(HIGH), "High Priority " +
+  void displayHighPriorityTasks(MouseEvent event) {
+    loadTaskListView(task -> task.getPriority().equals(HIGH), "High Priority " +
         "Tasks");
   }
 
@@ -103,11 +108,10 @@ public class MainController implements Initializable {
    * Called when mediumPriorityButton is clicked.
    *
    * @param event MouseEvent from view
-   * @throws IOException upon IO failure
    */
   @FXML
-  void displayMediumPriorityTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(task -> task.getPriority().equals(MEDIUM), "Medium " +
+  void displayMediumPriorityTasks(MouseEvent event) {
+    loadTaskListView(task -> task.getPriority().equals(MEDIUM), "Medium " +
         "Priority Tasks");
   }
 
@@ -115,11 +119,10 @@ public class MainController implements Initializable {
    * Called when lowPriorityButton is clicked.
    *
    * @param event MouseEvent from view
-   * @throws IOException upon IO failure
    */
   @FXML
-  void displayLowPriorityTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(task -> task.getPriority().equals(LOW), "Low Priority " +
+  void displayLowPriorityTasks(MouseEvent event) {
+    loadTaskListView(task -> task.getPriority().equals(LOW), "Low Priority " +
         "Tasks");
   }
 
@@ -131,7 +134,8 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayDoneTasks(MouseEvent event) throws IOException {
-    loadDoneTasksView();
+    doneTasksController.refreshData();
+    pane.setCenter(doneTasksParent);
   }
 
   /**
@@ -140,16 +144,18 @@ public class MainController implements Initializable {
    *
    * @param filter function for filtering tasks (boolean test)
    * @param title  title for view
-   * @throws IOException upon IO failure
    */
-  public void loadAllTasksView(Function<Task, Boolean> filter, String title)
-      throws IOException {
-    taskListController.initData(this, filter, title);
-    pane.setCenter(taskListParent);
+  public void loadTaskListView(Function<Task, Boolean> filter, String title) {
+    try {
+      taskListController.initData(this, filter, title);
+      pane.setCenter(taskListParent);
+    } catch (IOException e) {
+      exceptionHandler(e, "Failed to load task list");
+    }
   }
 
-  public void loadDoneTasksView() throws IOException {
-    loadAllTasksView(task -> task.getStatus().equals(DONE), "Done tasks");
+  public void loadDoneTasksView() {
+    loadTaskListView(task -> task.getStatus().equals(DONE), "Done tasks");
   }
 
   public void loadTaskDetailView(Task task, Parent parent,
@@ -158,11 +164,11 @@ public class MainController implements Initializable {
     pane.setCenter(parent);
   }
 
-  public void loadTaskFormView(Task task) throws IOException {
+  public void loadTaskFormView(Task task) {
     loadTaskDetailView(task, taskFormParent, taskFormController);
   }
 
-  public void loadDisplayTaskView(Task task) throws IOException {
+  public void loadDisplayTaskView(Task task) {
     loadTaskDetailView(task, taskViewParent, taskViewController);
   }
 
