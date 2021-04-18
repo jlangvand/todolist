@@ -101,6 +101,11 @@ public class Utilities {
 
   public static boolean dateIsInRange(LocalDate date, LocalDate from,
                                       LocalDate to) {
+    if (to.isBefore(from)) {
+      LocalDate temp = to;
+      to = from;
+      from = temp;
+    }
     return date.isBefore(to.plusDays(1)) && date.isAfter(from.minusDays(1));
   }
 }
