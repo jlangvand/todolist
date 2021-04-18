@@ -69,12 +69,15 @@ public class TaskFormController implements TaskDetailController, Initializable {
       saveOrExcept();
       getDialog(stackPane, mainPane, "Task saved")
           .setOnDialogClosed(this::back);
-      LOGGER.log(INFO, () -> "Task saved! Title: " + task.getTitle());
+      LOGGER.log(INFO, () ->
+          "Task saved! Title: %s".formatted(task.getTitle()));
     } catch (IllegalArgumentException e) {
       getDialog(stackPane, mainPane, e.getMessage());
     } catch (IOException e) {
-      getDialog(stackPane, mainPane, "Could not save file: " + e.getMessage());
-      LOGGER.log(SEVERE, () -> "Could not save file: " + e.toString());
+      getDialog(stackPane, mainPane,
+          "Could not save file: %s".formatted(e.getMessage()));
+      LOGGER.log(SEVERE, () ->
+          "Could not save file: %s".formatted(e.toString()));
     }
   }
 
@@ -88,22 +91,20 @@ public class TaskFormController implements TaskDetailController, Initializable {
       throw new IllegalArgumentException(deadlineError);
     if (deadlineDate.equals(LocalDate.now()) && deadlineTime.isBefore(LocalTime.now()))
       throw new IllegalArgumentException(deadlineError);
-    String category = categoryField.getText();
-    if (category.isEmpty()) category = "Default";
     task.setTitle(nameField.getText());
     task.setDescription(descriptionField.getText());
-    task.setCategory(category);
+    task.setCategory(categoryField.getText());
     task.setDeadLineTime(deadlineTimeField.getValue());
     task.setDeadline(deadlineDateField.getValue());
     task.setPriority(priorityField.getValue());
     // Add to registry only if this is a new task (avoid duplicates)
     if (!editing) {
       tasks.addTask(task);
-      LOGGER.log(INFO, () -> "Task with title " + task.getTitle() + " added " +
-          "to registry");
+      LOGGER.log(INFO, () ->
+          "Task with title %s added to registry".formatted(task.getTitle()));
     } else {
-      LOGGER.log(INFO, () -> "Task with title " + task.getTitle() + " already" +
-          " in registry");
+      LOGGER.log(INFO, () ->
+          "Task with title %s already in registry".formatted(task.getTitle()));
     }
     tasks.save();
   }

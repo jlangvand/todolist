@@ -12,12 +12,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import models.Task;
-import utilities.Utilities;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -81,8 +78,8 @@ public class ViewTaskController implements TaskDetailController, Initializable {
     JFXDialogLayout dialogLayout = new JFXDialogLayout();
     JFXButton delete = new JFXButton("Delete");
     JFXButton cancel = new JFXButton("Cancel");
-    String styleSheetPath = ViewTaskController.class.getResource("/css" +
-        "/dialogJFX.css").toString();
+    String styleSheetPath = ViewTaskController.class.
+        getResource("/css/dialogJFX.css").toString();
     delete.getStylesheets().add(styleSheetPath);
     cancel.getStylesheets().add(styleSheetPath);
 
@@ -93,8 +90,8 @@ public class ViewTaskController implements TaskDetailController, Initializable {
       try {
         mainController.getTaskRegistry().removeTask(task);
 
-        JFXDialog deletedDialog = getDialog(stackPane, mainPane, "The " +
-            "task has been deleted successfully");
+        JFXDialog deletedDialog = getDialog(stackPane, mainPane,
+            "The task has been deleted successfully");
         deletedDialog.setOnDialogClosed(
             event2 -> mainController.loadTaskListView());
       } catch (IOException e) {
@@ -112,22 +109,5 @@ public class ViewTaskController implements TaskDetailController, Initializable {
     mainPane.setEffect(blur);
     dialog.show();
     dialog.setEffect(null);
-  }
-
-  /**
-   * @return deadline in form: x days, x hours, x minutes.
-   */
-  public String getDeadlineString(Task task) {
-    //if deadline date is today and the time passed  OR  the deadline date
-    // passed(before today)
-    if ((task.getDeadline().isEqual(LocalDate.now())
-        && task.getDeadLineTime().isBefore(LocalTime.now()))
-        || (task.getDeadline().isBefore(LocalDate.now()))) {
-      return "The deadline has passed   (%s %s)".formatted(task.getDeadline()
-          , task.getDeadLineTime());
-    } else {
-      return "%s until deadline".formatted(Utilities.deadlineRemainingTimeString(
-          task.getDeadline(), task.getDeadLineTime()));
-    }
   }
 }

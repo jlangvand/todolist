@@ -65,8 +65,8 @@ public class MainController implements Initializable {
     try {
       taskRegistry = new TaskRegistry();
     } catch (IOException e) {
-      LOGGER.log(SEVERE,
-          () -> "Caught exception while initializing: " + e.toString());
+      LOGGER.log(SEVERE, () ->
+          "Caught exception while initializing: %s".formatted(e.toString()));
       exceptionHandler(e, "Exception caught in MainController::initialize");
     }
     initViews();
@@ -90,7 +90,8 @@ public class MainController implements Initializable {
       doneTasksController.initData(this);
       loadTaskListView();
     } catch (IOException e) {
-      LOGGER.log(SEVERE, () -> "Failed to init views: " + e.toString());
+      LOGGER.log(SEVERE, () ->
+          "Failed to init views: %s".formatted(e.toString()));
       exceptionHandler(e, "Error: Could not load views!");
     }
   }
@@ -174,8 +175,8 @@ public class MainController implements Initializable {
     LOGGER.log(SEVERE, () -> ("""
         %s caught
         Message from caller: %s
-        Exception message: %s%s""").formatted(e.getClass().getName(), message
-        , e.getMessage(), e.toString()));
+        Exception message: %s%s""").formatted(e.getClass().getName(), message,
+        e.getMessage(), e.toString()));
     StackPane container = new StackPane();
     Node center = pane.getCenter();
     pane.setCenter(container);
