@@ -126,10 +126,12 @@ public class Task implements Serializable {
     this.title = title;
   }
 
+  /** Get deadline time. */
   public LocalTime getDeadLineTime() {
     return deadLineTime;
   }
 
+  /** Set deadline time. */
   public void setDeadLineTime(LocalTime deadLineTime) {
     this.deadLineTime = deadLineTime;
   }
@@ -139,21 +141,14 @@ public class Task implements Serializable {
     this.status = status;
   }
 
-
-  /** Get priority as String */
-  public String getPriorityString() {
-    return priority.toString();
-  }
-
   /**
-   * Check equality.
+   * Indicates whether some other object is "equal to" this one.
    *
    * @param object Task instance to compare to
    * @return true if equal, else false
    */
   @Override
   public boolean equals(Object object) {
-    // TODO(joakilan): Any reason not to simply return equality of hashCode()?
     boolean result;
     if (this == object) {
       result = true;
@@ -179,7 +174,7 @@ public class Task implements Serializable {
         getFinishedDate(), getDeadline(), getTitle());
   }
 
-  /** Get String representation of this instance. */
+  /** Returns a String representation of this instance. */
   @Override
   public String toString() {
     return "Task{" +

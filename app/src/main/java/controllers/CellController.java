@@ -21,12 +21,15 @@ import utilities.Status;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static utilities.Utilities.getImagePath;
 
 /**
- * Controller for rendering individual tasks in a list.
+ * This class represents a task cell.
+ * A task cell is responsible for interaction between a user and a task,
+ * and to display a task with basic information.
  */
 public class CellController extends JFXListCell<Task> {
   private static final Logger LOGGER =
@@ -44,19 +47,32 @@ public class CellController extends JFXListCell<Task> {
   private final ListController listController;
   private final TaskRegistry tasks;
 
+  /**
+   * Creates a CellController object.
+   *
+   * @param listController Controller of the display where this cell should be displayed
+   * @param tasks The TaskRegistry the task of this cell is apart of
+   * @param dragAndDroppable True: drag and drop enabled, False: drag and drop disabled
+   */
   public CellController(MainController mainController,
-                        ListController listController) {
+                        ListController listController,
+                        boolean dragAndDroppable) {
     this.listController = listController;
     this.tasks = mainController.getTaskRegistry();
 
-    setOnDragDetected(this::onDragDetected);
-    setOnDragOver(this::onDragOver);
-    setOnDragExited(this::onDragExited);
-    setOnDragDropped(this::onDragDropped);
+    if (dragAndDroppable){
+      setOnDragDetected(this::onDragDetected);
+      setOnDragOver(this::onDragOver);
+      setOnDragExited(this::onDragExited);
+      setOnDragDropped(this::onDragDropped);
+    }
   }
 
   /**
-   * {@inheritDoc}
+   * Updates this task cell.
+   *
+   * @param task Task belonging to this cell
+   * @param empty
    */
   @Override
   protected void updateItem(Task task, boolean empty) {
@@ -96,9 +112,9 @@ public class CellController extends JFXListCell<Task> {
   }
 
   /**
-   * Set tick mark according to status.
+   * Updates the status image of this task cell.
    *
-   * @param status current task status
+   * @param status current status of a task to be updated
    */
   private void updateStatusImage(Status status) {
     if (status.equals(Status.DONE)) {
@@ -163,12 +179,12 @@ public class CellController extends JFXListCell<Task> {
         if (thisIdx > draggedIdx) {
           for (int i = draggedIdx; i < thisIdx; i++) {
             tasks.swapTasksByIndex(tasks.getActiveTasksIndex()[i],
-                tasks.getActiveTasksIndex()[i + 1]);
+                    tasks.getActiveTasksIndex()[i + 1]);
           }
         } else if (draggedIdx > thisIdx) {
           for (int i = draggedIdx; i > thisIdx; i--) {
             tasks.swapTasksByIndex(tasks.getActiveTasksIndex()[i],
-                tasks.getActiveTasksIndex()[i - 1]);
+                    tasks.getActiveTasksIndex()[i - 1]);
           }
         }
       } catch (IOException e) {

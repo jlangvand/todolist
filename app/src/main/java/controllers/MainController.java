@@ -74,7 +74,7 @@ public class MainController implements Initializable {
       doneTasksParent = doneTasksLoader.load();
       doneTasksController = doneTasksLoader.getController();
       doneTasksController.initData(this);
-      loadTaskListView(t -> true, "All Tasks");
+      loadTaskListView(t -> true, "All Tasks", true);
     } catch (IOException e) {
       LOGGER.log(SEVERE,
           () -> "Caught exception while initializing: " + e.toString());
@@ -90,7 +90,7 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayAllTasks(MouseEvent event) throws IOException {
-    loadTaskListView(t -> true, "All Tasks");
+    loadTaskListView(t -> true, "All Tasks", true);
   }
 
   /**
@@ -100,8 +100,8 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayHighPriorityTasks(MouseEvent event) {
-    loadTaskListView(task -> task.getPriority().equals(HIGH), "High Priority " +
-        "Tasks");
+    loadTaskListView(task -> task.getPriority().equals(HIGH),
+        "High Priority Tasks", false);
   }
 
   /**
@@ -111,8 +111,8 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayMediumPriorityTasks(MouseEvent event) {
-    loadTaskListView(task -> task.getPriority().equals(MEDIUM), "Medium " +
-        "Priority Tasks");
+    loadTaskListView(task -> task.getPriority().equals(MEDIUM),
+        "Medium Priority Tasks", false);
   }
 
   /**
@@ -122,8 +122,8 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayLowPriorityTasks(MouseEvent event) {
-    loadTaskListView(task -> task.getPriority().equals(LOW), "Low Priority " +
-        "Tasks");
+    loadTaskListView(task -> task.getPriority().equals(LOW),
+        "Low Priority Tasks", false);
   }
 
   /**
@@ -145,9 +145,10 @@ public class MainController implements Initializable {
    * @param filter function for filtering tasks (boolean test)
    * @param title  title for view
    */
-  public void loadTaskListView(Function<Task, Boolean> filter, String title) {
+  public void loadTaskListView(Function<Task, Boolean> filter,
+                               String title, boolean dragAndDroppable) {
     try {
-      taskListController.initData(this, filter, title);
+      taskListController.initData(this, filter, title, dragAndDroppable);
       pane.setCenter(taskListParent);
     } catch (IOException e) {
       exceptionHandler(e, "Failed to load task list");

@@ -119,44 +119,33 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
     return getTasksByDeadline(date, date);
   }
 
-  /**
-   * @return List of high priority tasks
-   */
+  /** Returns a list of high priority tasks */
   public List<Task> getHighPriorityTasks() {
     return getTasksByPriority(Priority.HIGH);
   }
 
-  /**
-   * @return List of medium priority tasks
-   */
+  /** Returns a list of medium priority tasks */
   public List<Task> getMediumPriorityTasks() {
     return getTasksByPriority(Priority.MEDIUM);
   }
 
-  /**
-   * @return List of low priority tasks
-   */
+  /** Returns a list of low priority tasks */
   public List<Task> getLowPriorityTasks() {
     return getTasksByPriority(Priority.LOW);
   }
 
-  /**
-   * @return List of done tasks
-   */
+  /** Returns a list of done tasks */
   public List<Task> getDoneTasks() {
     return getTasksByStatus(Status.DONE);
   }
 
-  /**
-   * @return List of active tasks
-   */
+
+  /** Returns a list of active tasks */
   public List<Task> getActiveTasks() {
     return getTasksByStatus(Status.ACTIVE);
   }
 
-  /**
-   * @return List with index of active tasks (increasing order)
-   */
+  /** Returns a list with index of currently active tasks in increasing order */
   public int[] getActiveTasksIndex() {
     int[] indexes = new int[getActiveTasks().size()];
     int c = 0;
@@ -169,9 +158,7 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
     return indexes;
   }
 
-  /**
-   * @return String representation of TaskRegistry object.
-   */
+  /** Returns a String representation of TaskRegistry object. */
   @Override
   public String toString() {
     return "TaskRegistry{" +
@@ -226,15 +213,22 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
     save();
   }
 
+  /**
+   * Indicates whether some other object is "equal to" this one.
+   *
+   * @param object TaskRegistry instance to compare to
+   * @return true if equal, else false
+   */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    TaskRegistry registry = (TaskRegistry) o;
+  public boolean equals(Object object) {
+    if (this == object) return true;
+    if (object == null || getClass() != object.getClass()) return false;
+    if (!super.equals(object)) return false;
+    TaskRegistry registry = (TaskRegistry) object;
     return fileHandle.equals(registry.fileHandle);
   }
 
+  /** Get hash of this instance. */
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), fileHandle);

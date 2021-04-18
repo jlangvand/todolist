@@ -63,7 +63,7 @@ public class ViewTaskController implements TaskDetailController {
   public void initData(MainController mainController, Task task) {
     this.task = task;
     taskTitle.setText(task.getTitle());
-    taskPriority.setText(task.getPriorityString());
+    taskPriority.setText(task.getPriority().toString());
     taskCategory.setText(task.getCategory());
     taskDescription.setText(task.getDescription());
     taskStartedDate.setText(task.getDateAdded().toString());

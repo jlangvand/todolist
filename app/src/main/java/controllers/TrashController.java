@@ -34,7 +34,8 @@ public class TrashController implements ListController {
   void initData(MainController mainController) throws IOException {
     this.tasks = mainController.getTaskRegistry();
     refreshData();
-    allTasksList.setCellFactory(cellController -> new CellController(mainController, this));
+    allTasksList.setCellFactory(c -> new CellController(mainController, this,
+     false));
     this.mainController = mainController;
   }
 
