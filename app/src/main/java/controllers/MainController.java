@@ -163,10 +163,27 @@ public class MainController implements Initializable {
     pane.setCenter(parent);
   }
 
+  /**
+   * Load view for new task.
+   */
+  public void loadTaskFormView() {
+    loadTaskFormView(new Task());
+  }
+
+  /**
+   * Load view for editing task.
+   *
+   * @param task task to edit
+   */
   public void loadTaskFormView(Task task) {
     loadTaskDetailView(task, taskFormParent, taskFormController);
   }
 
+  /**
+   * Load view for displaying task.
+   *
+   * @param task task to display
+   */
   public void loadDisplayTaskView(Task task) {
     loadTaskDetailView(task, taskViewParent, taskViewController);
   }

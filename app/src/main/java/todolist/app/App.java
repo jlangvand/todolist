@@ -32,8 +32,7 @@ public class App extends Application {
   /**
    * Called when the javaFX application is started.
    *
-   * @param stage Primary stage of the application
-   * @throws IOException exception is thrown if file I/O fails
+   * @param stage primary stage of the application
    */
   @Override
   public void start(Stage stage) {

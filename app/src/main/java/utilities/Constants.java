@@ -1,5 +1,8 @@
 package utilities;
 
+/**
+ * Utility class holding project wide constants.
+ */
 public class Constants {
   public static final String ALL_TASKS_FXML_NAME = "AllTasks";
   public static final String DONE_TASKS_FXML_NAME = "DoneTasks";

@@ -95,10 +95,33 @@ public class Utilities {
     return sb.toString().strip();
   }
 
+  /**
+   * Pluralise a word.
+   *
+   * <p>Takes a String and an int. Returns a String consisting of the
+   * provided int, a space, the provided String with an "s" appended if the
+   * int is not equal to 1, and a space.
+   *
+   * <p>Example: plural("apple", 1) will return "1 apple ",
+   * plural("green onion", 2) will return "2 green onions ". It does not handle
+   * irregular words; plural("sheep", 3) returns "3 sheeps" (sic).
+   *
+   * @param str word or sentence to pluralise
+   * @param n number of occurrences
+   * @return pluralised string ending with a space
+   */
   public static String plural(String str, int n) {
     return "%d %s%s ".formatted(n, str, n == 1 ? "" : "s");
   }
 
+  /**
+   * Check if a date is within range of two dates, inclusive.
+   *
+   * @param date date to test
+   * @param from range starting from (inclusive)
+   * @param to range ending at (inclusive)
+   * @return true if date is within the range
+   */
   public static boolean dateIsInRange(LocalDate date, LocalDate from,
                                       LocalDate to) {
     if (to.isBefore(from)) {

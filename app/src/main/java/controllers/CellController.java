@@ -23,6 +23,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import static utilities.Status.ACTIVE;
+import static utilities.Status.DONE;
 import static utilities.Utilities.getImagePath;
 
 /**
@@ -46,11 +48,10 @@ public class CellController extends JFXListCell<Task> {
   /**
    * Creates a CellController object.
    *
-   * @param listController   Controller of the display where this cell should be
+   * @param mainController   main controller for callbacks
+   * @param listController   controller of the display where this cell should be
    *                         displayed
-   * @param tasks            The TaskRegistry the task of this cell is apart of
-   * @param dragAndDroppable True: drag and drop enabled, False: drag and drop
-   *                         disabled
+   * @param dragAndDroppable true if list can be rearranged by user, else false
    */
   public CellController(MainController mainController,
                         ListController listController,
@@ -105,7 +106,12 @@ public class CellController extends JFXListCell<Task> {
       setGraphic(taskCellPane);
 
       //Event handling
-      statusButton.setOnMouseReleased(event -> updateTaskStatus(task));
+      statusButton.setOnMouseReleased(event -> {
+        Status status = task.getStatus() == ACTIVE ? DONE : ACTIVE;
+        task.setStatus(status);
+        updateStatusImage(status);
+        listController.refreshData();
+      });
     }
   }
 
@@ -132,7 +138,7 @@ public class CellController extends JFXListCell<Task> {
     if (getItem() == null) return;
     ObservableList<Task> items = getListView().getItems();
     // No reordering in trash list
-    if (getItem().getStatus() == Status.ACTIVE) {
+    if (getItem().getStatus() == ACTIVE) {
       Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
       ClipboardContent content = new ClipboardContent();
       content.putString(String.valueOf(items.indexOf(getItem())));
@@ -193,23 +199,6 @@ public class CellController extends JFXListCell<Task> {
 
     event.setDropCompleted(success);
     event.consume();
-  }
-
-  /**
-   * Update task when marked as done.
-   *
-   * <p>Updates the status of a task (both field and image) when user marks the
-   * task as done. The method also updates the UI, such that the update is
-   * visible.
-   *
-   * @param task Task to be updated
-   */
-  private void updateTaskStatus(Task task) {
-    Status newStatus = (task.getStatus().equals(Status.ACTIVE)) ?
-        Status.DONE : Status.ACTIVE;
-    task.setStatus(newStatus);
-    updateStatusImage(newStatus);
-    listController.refreshData();
   }
 }
 
