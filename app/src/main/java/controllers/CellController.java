@@ -51,14 +51,16 @@ public class CellController extends JFXListCell<Task> {
   private ListController listController;
   private TaskRegistry allTasks;
 
-  public CellController(ListController listController, TaskRegistry allTasks) {
+  public CellController(ListController listController, TaskRegistry allTasks, boolean dragAndDroppable) {
     this.listController = listController;
     this.allTasks = allTasks;
 
-    setOnDragDetected(this::onDragDetected);
-    setOnDragOver(this::onDragOver);
-    setOnDragExited(this::onDragExited);
-    setOnDragDropped(this::onDragDropped);
+    if (dragAndDroppable){
+      setOnDragDetected(this::onDragDetected);
+      setOnDragOver(this::onDragOver);
+      setOnDragExited(this::onDragExited);
+      setOnDragDropped(this::onDragDropped);
+    }
   }
 
   @Override

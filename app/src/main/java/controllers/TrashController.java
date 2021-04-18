@@ -37,7 +37,7 @@ public class TrashController implements ListController {
     this.tasks = tasks;
     refreshData();
     allTasksList.setCellFactory(cellController -> new CellController(this,
-        tasks));
+        tasks, false));
     this.mainController = mainController;
   }
 

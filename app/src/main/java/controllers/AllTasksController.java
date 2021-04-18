@@ -57,12 +57,13 @@ public class AllTasksController implements ListController {
 
   void initData(TaskRegistry tasks,
                 Function<Task, Boolean> filter,
-                MainController mainController, String title) throws IOException {
+                MainController mainController,
+                String title, boolean dragAndDroppable) throws IOException {
     this.tasks = tasks;
     this.filter = filter;
     refreshData();
     allTasksList.setCellFactory(cellController -> new CellController(this,
-        tasks));
+        tasks, dragAndDroppable));
     this.mainController = mainController;
     this.title.setText(title);
   }

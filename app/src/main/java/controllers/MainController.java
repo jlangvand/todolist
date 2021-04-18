@@ -53,7 +53,7 @@ public class MainController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     try {
       taskRegistry = new TaskRegistry();
-      loadAllTasksView(t -> true, "All Tasks");
+      loadAllTasksView(t -> true, "All Tasks", true);
       taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
       displayTaskLoader = getFXMLLoader(VIEW_TASK_FXML_NAME);
     } catch (IOException e) {
@@ -68,7 +68,7 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayAllTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(t -> true, "All Tasks");
+    loadAllTasksView(t -> true, "All Tasks", true);
   }
 
   /**
@@ -78,7 +78,7 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayHighPriorityTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(task -> task.getPriority().equals(HIGH), "High Priority Tasks");
+    loadAllTasksView(task -> task.getPriority().equals(HIGH), "High Priority Tasks", false);
   }
 
   /**
@@ -88,7 +88,7 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayMediumPriorityTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(task -> task.getPriority().equals(MEDIUM), "Medium Priority Tasks");
+    loadAllTasksView(task -> task.getPriority().equals(MEDIUM), "Medium Priority Tasks", false);
   }
 
   /**
@@ -98,7 +98,7 @@ public class MainController implements Initializable {
    */
   @FXML
   void displayLowPriorityTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(task -> task.getPriority().equals(LOW), "Low Priority Tasks");
+    loadAllTasksView(task -> task.getPriority().equals(LOW), "Low Priority Tasks", false);
   }
 
   /**
@@ -117,11 +117,12 @@ public class MainController implements Initializable {
    *
    * @throws IOException
    */
-  public void loadAllTasksView(Function<Task, Boolean> filter, String title) throws IOException {
+  public void loadAllTasksView(Function<Task, Boolean> filter,
+                               String title, boolean dragAndDroppable) throws IOException {
     FXMLLoader fxmlLoader = getFXMLLoader(ALL_TASKS_FXML_NAME);
     Parent root = fxmlLoader.load();
     AllTasksController allTasksController = fxmlLoader.getController();
-    allTasksController.initData(taskRegistry, filter, this, title);
+    allTasksController.initData(taskRegistry, filter, this, title, dragAndDroppable);
     pane.setCenter(root);
   }
 
