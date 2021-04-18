@@ -26,46 +26,20 @@ import static utilities.Utilities.getDialog;
 
 public class ViewTaskController implements TaskDetailController {
 
-  @FXML
-  private ResourceBundle resources;
-
-  @FXML
-  private URL location;
-
-  @FXML
-  private Label taskTitle;
-
-  @FXML
-  private Label taskDescription;
-
-  @FXML
-  private Label deadlineTimeLeft;
-
-  @FXML
-  private Label deadlineDateTime;
-
-  @FXML
-  private Label taskPriority;
-
-  @FXML
-  private Label taskCategory;
-
-  @FXML
-  private Label taskStartedDate;
-
-  @FXML
-  private JFXButton editButton;
-
-  @FXML
-  private Pane viewPane;
-
-  @FXML
-  private StackPane stackPane;
-
+  @FXML private ResourceBundle resources;
+  @FXML private URL location;
+  @FXML private Label taskTitle;
+  @FXML private Label taskDescription;
+  @FXML private Label deadlineTimeLeft;
+  @FXML private Label deadlineDateTime;
+  @FXML private Label taskPriority;
+  @FXML private Label taskCategory;
+  @FXML private Label taskStartedDate;
+  @FXML private JFXButton editButton;
+  @FXML private Pane viewPane;
+  @FXML private StackPane stackPane;
   @FXML private BorderPane mainPane;
-
-  @FXML
-  private ImageView statusImage;
+  @FXML private ImageView statusImage;
 
   private Task task;
   private MainController mainController;

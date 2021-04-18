@@ -12,7 +12,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import models.Task;
 import models.TaskRegistry;
-import utilities.Status;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,7 +41,7 @@ public class MainController implements Initializable {
   private static final String TASK_FORM_FXML_NAME = "TaskForm";
   private static final String VIEW_TASK_FXML_NAME = "ViewTask";
 
-  @FXML  BorderPane pane;
+  @FXML BorderPane pane;
 
   private TaskRegistry taskRegistry;
   private Parent taskFormParent;
@@ -83,7 +82,8 @@ public class MainController implements Initializable {
    * @param event MouseEvent from view
    * @throws IOException upon IO failure
    */
-  @FXML  void displayAllTasks(MouseEvent event) throws IOException {
+  @FXML
+  void displayAllTasks(MouseEvent event) throws IOException {
     loadAllTasksView(t -> true, "All Tasks");
   }
 
@@ -93,7 +93,8 @@ public class MainController implements Initializable {
    * @param event MouseEvent from view
    * @throws IOException upon IO failure
    */
-  @FXML  void displayHighPriorityTasks(MouseEvent event) throws IOException {
+  @FXML
+  void displayHighPriorityTasks(MouseEvent event) throws IOException {
     loadAllTasksView(task -> task.getPriority().equals(HIGH), "High Priority " +
         "Tasks");
   }
@@ -104,7 +105,8 @@ public class MainController implements Initializable {
    * @param event MouseEvent from view
    * @throws IOException upon IO failure
    */
-  @FXML  void displayMediumPriorityTasks(MouseEvent event) throws IOException {
+  @FXML
+  void displayMediumPriorityTasks(MouseEvent event) throws IOException {
     loadAllTasksView(task -> task.getPriority().equals(MEDIUM), "Medium " +
         "Priority Tasks");
   }
@@ -115,7 +117,8 @@ public class MainController implements Initializable {
    * @param event MouseEvent from view
    * @throws IOException upon IO failure
    */
-  @FXML  void displayLowPriorityTasks(MouseEvent event) throws IOException {
+  @FXML
+  void displayLowPriorityTasks(MouseEvent event) throws IOException {
     loadAllTasksView(task -> task.getPriority().equals(LOW), "Low Priority " +
         "Tasks");
   }
@@ -126,7 +129,8 @@ public class MainController implements Initializable {
    * @param event MouseEvent from view
    * @throws IOException upon IO failure
    */
-  @FXML void displayDoneTasks(MouseEvent event) throws IOException {
+  @FXML
+  void displayDoneTasks(MouseEvent event) throws IOException {
     loadDoneTasksView();
   }
 
@@ -135,7 +139,7 @@ public class MainController implements Initializable {
    * initializing allTasks variable in allTasksController.
    *
    * @param filter function for filtering tasks (boolean test)
-   * @param title title for view
+   * @param title  title for view
    * @throws IOException upon IO failure
    */
   public void loadAllTasksView(Function<Task, Boolean> filter, String title)

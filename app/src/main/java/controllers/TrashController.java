@@ -11,12 +11,10 @@ import java.io.IOException;
 
 public class TrashController implements ListController {
 
-  @FXML
-  private JFXListView<Task> allTasksList;
+  @FXML private JFXListView<Task> allTasksList;
 
   private TaskRegistry tasks;
   private MainController mainController;
-
 
   /**
    * Method called when user clicks on a task.

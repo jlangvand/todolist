@@ -29,38 +29,17 @@ public class TaskFormController implements TaskDetailController {
   private static final Logger LOGGER =
       Logger.getLogger(TaskFormController.class.getName());
 
-  @FXML
-  private StackPane stackPane;
-
-  @FXML
-  private BorderPane mainPane;
-
-  @FXML
-  private JFXTextField nameField;
-
-  @FXML
-  private JFXTextArea descriptionField;
-
-  @FXML
-  private JFXDatePicker deadlineDateField;
-
-  @FXML
-  private JFXTimePicker deadlineTimeField;
-
-  @FXML
-  private JFXTextField categoryField;
-
-  @FXML
-  private JFXComboBox<Priority> priorityField;
-
-  @FXML
-  private JFXButton saveButton;
-
-  @FXML
-  private JFXButton cancelButton;
-
-  @FXML
-  private Label titleText;
+  @FXML private StackPane stackPane;
+  @FXML private BorderPane mainPane;
+  @FXML private JFXTextField nameField;
+  @FXML private JFXTextArea descriptionField;
+  @FXML private JFXDatePicker deadlineDateField;
+  @FXML private JFXTimePicker deadlineTimeField;
+  @FXML private JFXTextField categoryField;
+  @FXML private JFXComboBox<Priority> priorityField;
+  @FXML private JFXButton saveButton;
+  @FXML private JFXButton cancelButton;
+  @FXML private Label titleText;
 
   private TaskRegistry tasks;
   private Task task;
