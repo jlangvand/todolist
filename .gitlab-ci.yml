@@ -15,7 +15,7 @@ before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
 
-javadoc:
+pages:
   stage: deploy
   script:
   - mkdir .public
@@ -24,3 +24,5 @@ javadoc:
   artifacts:
     paths:
     - public
+  only:
+  - master
