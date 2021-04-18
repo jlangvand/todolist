@@ -16,7 +16,7 @@ import java.time.temporal.ChronoUnit;
 
 public class Utilities {
   private Utilities() {
-
+    // Hiding the implicit constructor
   }
 
   /**
@@ -30,6 +30,17 @@ public class Utilities {
         "/view/%s.fxml".formatted(fxml)));
   }
 
+  /**
+   * Create and display a dialog.
+   *
+   * <p>Display a dialog and blur the background while the dialog is visible.
+   * Returns a reference to the dialog.
+   *
+   * @param dialogContainer StackPane inside which the dialog will be rendered
+   * @param blurredRegion   region to blur
+   * @param dialogText      message to display
+   * @return a reference to the dialog
+   */
   public static JFXDialog getDialog(StackPane dialogContainer,
                                     Region blurredRegion, String dialogText) {
     BoxBlur blur = new BoxBlur(3, 3, 3);
@@ -54,18 +65,42 @@ public class Utilities {
     return dialog;
   }
 
+  /**
+   * Get absolute path to a generic resource.
+   *
+   * @param path relative path
+   * @return absolute path
+   */
   private static String getResourcePath(String path) {
     return Utilities.class.getResource(path).toString();
   }
 
+  /**
+   * Get path to a image resource.
+   *
+   * @param file name of image
+   * @return absolute path
+   */
   public static String getImagePath(String file) {
     return getResourcePath("/images/%s".formatted(file));
   }
 
+  /**
+   * Get path to a CSS resource
+   * @param file name of stylesheet
+   * @return absolute path
+   */
   public static String getCSSPath(String file) {
     return getResourcePath("/css/%s".formatted(file));
   }
 
+  /**
+   * Human readable representation of remaining time.
+   *
+   * @param date date to calculate
+   * @param time time of day
+   * @return human readable string
+   */
   public static String deadlineRemainingTimeString(LocalDate date,
                                                    LocalTime time) {
     final int HIDE_HOURS_IF_DAYS_MORE_THAN = 1;
@@ -99,15 +134,15 @@ public class Utilities {
    * Pluralise a word.
    *
    * <p>Takes a String and an int. Returns a String consisting of the
-   * provided int, a space, the provided String with an "s" appended if the
-   * int is not equal to 1, and a space.
+   * provided int, a space, the provided String with an "s" appended if the int
+   * is not equal to 1, and a space.
    *
    * <p>Example: plural("apple", 1) will return "1 apple ",
    * plural("green onion", 2) will return "2 green onions ". It does not handle
    * irregular words; plural("sheep", 3) returns "3 sheeps" (sic).
    *
    * @param str word or sentence to pluralise
-   * @param n number of occurrences
+   * @param n   number of occurrences
    * @return pluralised string ending with a space
    */
   public static String plural(String str, int n) {
@@ -119,7 +154,7 @@ public class Utilities {
    *
    * @param date date to test
    * @param from range starting from (inclusive)
-   * @param to range ending at (inclusive)
+   * @param to   range ending at (inclusive)
    * @return true if date is within the range
    */
   public static boolean dateIsInRange(LocalDate date, LocalDate from,
