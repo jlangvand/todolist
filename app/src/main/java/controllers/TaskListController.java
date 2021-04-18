@@ -54,12 +54,13 @@ public class TaskListController implements ListController {
    * @throws IOException if IO fails
    */
   void initData(MainController mainController, Function<Task, Boolean> filter,
-                String title)
+                String title, boolean dragAndDroppable)
       throws IOException {
     this.tasks = mainController.getTaskRegistry();
     this.filter = filter;
     refreshData();
-    allTasksList.setCellFactory(c -> new CellController(mainController, this));
+    allTasksList.setCellFactory(c -> new CellController(mainController, this,
+        dragAndDroppable));
     this.mainController = mainController;
     this.title.setText(title);
   }

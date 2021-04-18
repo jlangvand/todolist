@@ -155,10 +155,6 @@ public class MainController implements Initializable {
     }
   }
 
-  public void loadDoneTasksView() {
-    loadTaskListView(task -> task.getStatus().equals(DONE), "Done tasks");
-  }
-
   public void loadTaskDetailView(Task task, Parent parent,
                                  TaskDetailController controller) {
     controller.initData(this, task);
