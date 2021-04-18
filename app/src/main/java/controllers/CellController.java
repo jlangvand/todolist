@@ -8,7 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import models.Task;
 import models.TaskRegistry;
@@ -22,34 +26,24 @@ import java.util.logging.Logger;
 
 import static utilities.Utilities.getImagePath;
 
+/**
+ * Controller for rendering individual tasks in a list.
+ */
 public class CellController extends JFXListCell<Task> {
   private static final Logger LOGGER =
       Logger.getLogger(CellController.class.getName());
 
-  @FXML
-  private ResourceBundle resources;
-
-  @FXML
-  private URL location;
-
-  @FXML
-  private AnchorPane taskCellPane;
-
-  @FXML
-  private Label cellTitle;
-
-  @FXML
-  private ImageView cellStatusImage;
-
-  @FXML
-  private Label cellDate;
-
-  @FXML
-  private JFXButton statusButton;
+  @FXML private ResourceBundle resources;
+  @FXML private URL location;
+  @FXML private AnchorPane taskCellPane;
+  @FXML private Label cellTitle;
+  @FXML private ImageView cellStatusImage;
+  @FXML private Label cellDate;
+  @FXML private JFXButton statusButton;
 
   private FXMLLoader fxmlLoader;
-  private ListController listController;
-  private TaskRegistry allTasks;
+  private final ListController listController;
+  private final TaskRegistry allTasks;
 
   public CellController(ListController listController, TaskRegistry allTasks) {
     this.listController = listController;
@@ -61,10 +55,12 @@ public class CellController extends JFXListCell<Task> {
     setOnDragDropped(this::onDragDropped);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void updateItem(Task task, boolean empty) {
     super.updateItem(task, empty);
-
 
     if (empty || task == null) {
       setText(null);
@@ -73,7 +69,7 @@ public class CellController extends JFXListCell<Task> {
       if (fxmlLoader == null) {
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/view/TaskCell.fxml"));
-        fxmlLoader.setController(this); //This class is the controller for the TaskCell.fxml
+        fxmlLoader.setController(this);
 
         try {
           fxmlLoader.load();
@@ -87,39 +83,49 @@ public class CellController extends JFXListCell<Task> {
       cellDate.setText(task.getDateAdded().toString());
       updateStatusImage(task.getStatus());
 
-
-      // Inserting all graphics (Description, date, etc.) in root Pane (taskCellPane)
+      /*
+       Inserting all graphics (Description, date, etc.) in root Pane
+       (taskCellPane)
+      */
       setText(null);
       setGraphic(taskCellPane);
 
       //Event handling
       statusButton.setOnMousePressed(event -> updateTaskStatus(task));
     }
-
   }
 
+  /**
+   * Set tick mark according to status.
+   *
+   * @param status current task status
+   */
   private void updateStatusImage(Status status) {
     if (status.equals(Status.DONE)) {
       cellStatusImage.setImage(new Image(getImagePath("Done2.png"),
-          48, 48, true,
-          true));
+          48, 48, true, true));
     } else {
       cellStatusImage.setImage(new Image(getImagePath("not_Done.png")));
     }
   }
 
+  /**
+   * Handle mouse drag events for reordering tasks.
+   *
+   * @param event MouseEvent from view
+   */
   private void onDragDetected(MouseEvent event) {
     if (getItem() == null) return;
     ObservableList<Task> items = getListView().getItems();
-    if (getItem().getStatus() == Status.ACTIVE) { //Not allowing reorder in trash page
+    // No reordering in trash list
+    if (getItem().getStatus() == Status.ACTIVE) {
       Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
       ClipboardContent content = new ClipboardContent();
       content.putString(String.valueOf(items.indexOf(getItem())));
       dragboard.setContent(content);
       dragboard.setDragView(new Image(getImagePath("Task_icon" +
-              ".png")));
+          ".png")));
     }
-
   }
 
   private void onDragOver(DragEvent event) {
@@ -131,11 +137,16 @@ public class CellController extends JFXListCell<Task> {
 
   private void onDragExited(DragEvent event) {
     if (event.getGestureSource() != this &&
-            event.getDragboard().hasString()) {
+        event.getDragboard().hasString()) {
       setOpacity(1);
     }
   }
 
+  /**
+   * Update index in task registry when dropped.
+   *
+   * @param event DragEvent from view
+   */
   private void onDragDropped(DragEvent event) {
     if (getItem() == null) return;
 
@@ -152,12 +163,12 @@ public class CellController extends JFXListCell<Task> {
         if (thisIdx > draggedIdx) {
           for (int i = draggedIdx; i < thisIdx; i++) {
             allTasks.swapTasksByIndex(allTasks.getActiveTasksIndex()[i],
-                    allTasks.getActiveTasksIndex()[i + 1]);
+                allTasks.getActiveTasksIndex()[i + 1]);
           }
         } else if (draggedIdx > thisIdx) {
           for (int i = draggedIdx; i > thisIdx; i--) {
             allTasks.swapTasksByIndex(allTasks.getActiveTasksIndex()[i],
-                    allTasks.getActiveTasksIndex()[i - 1]);
+                allTasks.getActiveTasksIndex()[i - 1]);
           }
         }
       } catch (IOException e) {
@@ -171,27 +182,25 @@ public class CellController extends JFXListCell<Task> {
   }
 
   /**
-   * Updates the status of a task (both field and image) when user marks the task as done.
-   * The method also updates the UI, such that the update is visible.
+   * Update task when marked as done.
    *
-    * @param task Task to be updated
+   * <p>Updates the status of a task (both field and image) when user marks the
+   * task as done. The method also updates the UI, such that the update is
+   * visible.
+   *
+   * @param task Task to be updated
    */
   private void updateTaskStatus(Task task) {
     Status newStatus = (task.getStatus().equals(Status.ACTIVE)) ?
-            Status.DONE : Status.ACTIVE;
+        Status.DONE : Status.ACTIVE;
     task.setStatus(newStatus);
     updateStatusImage(newStatus);
-
-    LOGGER.log(Level.INFO, task.getStatus().toString()); //To test the actual status
 
     try {
       listController.refreshData();
     } catch (IOException e) {
       e.printStackTrace();
     }
-
   }
-
-
 }
 

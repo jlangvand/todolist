@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 import static utilities.Utilities.deadlineRemainingTimeString;
 import static utilities.Utilities.getDialog;
 
-public class ViewTaskController {
+public class ViewTaskController implements TaskDetailController {
 
   @FXML
   private ResourceBundle resources;
@@ -78,7 +78,7 @@ public class ViewTaskController {
    */
   @FXML
   void displayEdit(ActionEvent event) throws IOException {
-    mainController.loadEditTaskView(task);
+    mainController.loadTaskFormView(task);
   }
 
   /**
@@ -86,7 +86,7 @@ public class ViewTaskController {
    *
    * @param task
    */
-  public void initData(Task task, MainController mainController) {
+  public void initData(MainController mainController, Task task) {
     this.task = task;
     taskTitle.setText(task.getTitle());
     taskPriority.setText(task.getPriorityString());
@@ -104,7 +104,7 @@ public class ViewTaskController {
 
   @FXML
   public void refreshData() {
-    initData(task, mainController);
+    initData(mainController, task);
   }
 
   @FXML

@@ -36,7 +36,7 @@ public class App extends Application {
    * @throws IOException exception is thrown if file I/O fails
    */
   @Override
-  public void start(Stage stage) throws IOException {
+  public void start(Stage stage) {
     FXMLLoader mainLoader = getFXMLLoader("Main");
     Thread.setDefaultUncaughtExceptionHandler((thread, throwable) ->
         // TODO(joakilan): Find a way to print the original Exception's message
@@ -45,8 +45,14 @@ public class App extends Application {
                 An unknown error occurred!
                                 
                 Error type: %s""".formatted(throwable.getMessage())));
-    JFXDecorator decorator =
-        new JFXDecorator(stage, mainLoader.load());
+    JFXDecorator decorator = null;
+    try {
+      decorator = new JFXDecorator(stage, mainLoader.load());
+    } catch (IOException e) {
+      ((MainController) mainLoader.getController()).exceptionHandler(e,
+          "IOException in start method when loading JFXDecorator");
+      e.printStackTrace();
+    }
     decorator.setCustomMaximize(true);
     stage.setTitle(TITLE);
     decorator.setTitle(TITLE);

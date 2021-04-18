@@ -25,7 +25,7 @@ import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
 import static utilities.Utilities.getDialog;
 
-public class TaskFormController {
+public class TaskFormController implements TaskDetailController {
   private static final Logger LOGGER =
       Logger.getLogger(TaskFormController.class.getName());
 
