@@ -13,6 +13,10 @@ import java.io.IOException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for views that are displaying tasks from a task registry.
+ * (Currently All Task Page and Priority Pages)
+ */
 public class AllTasksController implements ListController {
 
   @FXML
@@ -29,7 +33,6 @@ public class AllTasksController implements ListController {
    * Method called when user clicks on add button.
    *
    * @param event
-   * @throws IOException, the exception will be handled in the method.
    */
   @FXML
   void displayNewTask(ActionEvent event) {
@@ -42,6 +45,7 @@ public class AllTasksController implements ListController {
 
   /**
    * Method called when user clicks on a task.
+   * The method displays information about the task that was clicked on.
    *
    * @param event
    * @throws IOException
@@ -55,22 +59,36 @@ public class AllTasksController implements ListController {
     }
   }
 
-  void initData(TaskRegistry tasks,
-                Function<Task, Boolean> filter,
-                MainController mainController,
-                String title, boolean dragAndDroppable) throws IOException {
+  /**
+   * Initializes data needed for this controller.
+   *
+   * @param tasks TaskRegistry to display tasks from
+   * @param filter
+   * @param mainController MainController
+   * @param title Title of the task display
+   * @param dragAndDroppable True: drag and drop enabled, False: drag and drop disabled
+   * @throws IOException
+   */
+  void initData(TaskRegistry tasks, Function<Task, Boolean> filter,
+                MainController mainController, String title,
+                boolean dragAndDroppable) throws IOException {
     this.tasks = tasks;
     this.filter = filter;
     refreshData();
-    allTasksList.setCellFactory(cellController -> new CellController(this,
-        tasks, dragAndDroppable));
+    allTasksList.setCellFactory(cellController ->
+            new CellController (this, tasks, dragAndDroppable));
     this.mainController = mainController;
     this.title.setText(title);
   }
 
+  /**
+   * Refreshes the view.
+   *
+   * @throws IOException
+   */
   @FXML
   @Override
-  public void refreshData() throws IOException {
+  public void refreshData() {
     allTasksList.setItems(
         FXCollections.observableArrayList(
             tasks.getActiveTasks().stream().filter(filter::apply)

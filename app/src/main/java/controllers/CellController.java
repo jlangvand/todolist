@@ -22,6 +22,11 @@ import java.util.logging.Logger;
 
 import static utilities.Utilities.getImagePath;
 
+/**
+ * This class represents a task cell.
+ * A task cell is responsible for interaction between a user and a task,
+ * and to display a task with basic information.
+ */
 public class CellController extends JFXListCell<Task> {
   private static final Logger LOGGER =
       Logger.getLogger(CellController.class.getName());
@@ -49,11 +54,18 @@ public class CellController extends JFXListCell<Task> {
 
   private FXMLLoader fxmlLoader;
   private ListController listController;
-  private TaskRegistry allTasks;
+  private TaskRegistry tasks;
 
-  public CellController(ListController listController, TaskRegistry allTasks, boolean dragAndDroppable) {
+  /**
+   * Creates a CellController object.
+   *
+   * @param listController Controller of the display where this cell should be displayed
+   * @param tasks The TaskRegistry the task of this cell is apart of
+   * @param dragAndDroppable True: drag and drop enabled, False: drag and drop disabled
+   */
+  public CellController(ListController listController, TaskRegistry tasks, boolean dragAndDroppable) {
     this.listController = listController;
-    this.allTasks = allTasks;
+    this.tasks = tasks;
 
     if (dragAndDroppable){
       setOnDragDetected(this::onDragDetected);
@@ -63,6 +75,12 @@ public class CellController extends JFXListCell<Task> {
     }
   }
 
+  /**
+   * Updates this task cell.
+   *
+   * @param task Task belonging to this cell
+   * @param empty
+   */
   @Override
   protected void updateItem(Task task, boolean empty) {
     super.updateItem(task, empty);
@@ -100,6 +118,10 @@ public class CellController extends JFXListCell<Task> {
 
   }
 
+  /**
+   * Updates the status image of this task cell.
+   * @param status Current status of a task to be updated
+   */
   private void updateStatusImage(Status status) {
     if (status.equals(Status.DONE)) {
       cellStatusImage.setImage(new Image(getImagePath("Done2.png"),
@@ -153,13 +175,13 @@ public class CellController extends JFXListCell<Task> {
       try {
         if (thisIdx > draggedIdx) {
           for (int i = draggedIdx; i < thisIdx; i++) {
-            allTasks.swapTasksByIndex(allTasks.getActiveTasksIndex()[i],
-                    allTasks.getActiveTasksIndex()[i + 1]);
+            tasks.swapTasksByIndex(tasks.getActiveTasksIndex()[i],
+                    tasks.getActiveTasksIndex()[i + 1]);
           }
         } else if (draggedIdx > thisIdx) {
           for (int i = draggedIdx; i > thisIdx; i--) {
-            allTasks.swapTasksByIndex(allTasks.getActiveTasksIndex()[i],
-                    allTasks.getActiveTasksIndex()[i - 1]);
+            tasks.swapTasksByIndex(tasks.getActiveTasksIndex()[i],
+                    tasks.getActiveTasksIndex()[i - 1]);
           }
         }
       } catch (IOException e) {
