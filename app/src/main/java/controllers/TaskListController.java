@@ -70,5 +70,6 @@ public class TaskListController implements ListController {
     allTasksList.setItems(FXCollections.observableArrayList(
         tasks.getActiveTasks().stream().filter(filter::apply)
             .collect(Collectors.toList())));
+    tasks.save();
   }
 }
