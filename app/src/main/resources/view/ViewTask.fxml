@@ -91,9 +91,9 @@
                <children>
                   <HBox alignment="CENTER" spacing="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                      <children>
-                       <JFXButton fx:id="backButton" buttonType="RAISED" onAction="#backEvent" styleClass="secondaryButton" text="Back" />
+                       <JFXButton fx:id="backButton" buttonType="RAISED" styleClass="secondaryButton" text="Back" />
                        <JFXButton fx:id="deleteButton" onAction="#deleteAction" style="-jfx-button-type: RAISED;" styleClass="dangerButton" text="Delete" />
-                       <JFXButton fx:id="editButton" onAction="#displayEdit" style="-jfx-button-type: RAISED;" styleClass="primaryButton" text="Edit" />
+                       <JFXButton fx:id="editButton" style="-jfx-button-type: RAISED;" styleClass="primaryButton" text="Edit" />
                      </children>
                   </HBox>
                </children>

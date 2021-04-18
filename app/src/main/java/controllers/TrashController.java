@@ -3,7 +3,6 @@ package controllers;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
 import models.Task;
 import models.TaskRegistry;
 
@@ -16,33 +15,28 @@ public class TrashController implements ListController {
   private TaskRegistry tasks;
   private MainController mainController;
 
-  /**
-   * Method called when user clicks on a task.
-   *
-   * @param event
-   * @throws IOException
-   */
-  @FXML
-  void displayTask(MouseEvent event) throws IOException {
-    if (!allTasksList.getSelectionModel().isEmpty()) {
-      Task selectedTask = allTasksList.getSelectionModel()
-          .getSelectedItem();
-      mainController.loadDisplayTaskView(selectedTask);
-    }
-  }
-
-  void initData(MainController mainController) throws IOException {
+  void initData(MainController mainController) {
     this.tasks = mainController.getTaskRegistry();
     refreshData();
     allTasksList.setCellFactory(c -> new CellController(mainController, this,
-     false));
+        false));
     this.mainController = mainController;
+    allTasksList.setOnMouseReleased(event -> {
+      if (!allTasksList.getSelectionModel().isEmpty()) {
+        mainController.loadDisplayTaskView(
+            allTasksList.getSelectionModel().getSelectedItem());
+      }
+    });
   }
 
   @FXML
   @Override
-  public void refreshData() throws IOException {
+  public void refreshData() {
     allTasksList.setItems(FXCollections.observableArrayList(tasks.getDoneTasks()));
-    tasks.save();
+    try {
+      tasks.save();
+    } catch (IOException e) {
+      mainController.exceptionHandler(e, "Failed to save task");
+    }
   }
 }

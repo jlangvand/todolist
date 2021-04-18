@@ -8,7 +8,9 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -17,15 +19,17 @@ import models.TaskRegistry;
 import utilities.Priority;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
 import static utilities.Utilities.getDialog;
 
-public class TaskFormController implements TaskDetailController {
+public class TaskFormController implements TaskDetailController, Initializable {
   private static final Logger LOGGER =
       Logger.getLogger(TaskFormController.class.getName());
 
@@ -46,27 +50,25 @@ public class TaskFormController implements TaskDetailController {
   private MainController mainController;
   private boolean editing;
 
-  @FXML
-  void cancelAction() throws IOException {
-    back();
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    cancelButton.setOnMouseReleased(this::back);
   }
 
-  private void back() throws IOException {
-    if (editing) mainController.loadDisplayTaskView(task);
-    else mainController.displayAllTasks(null);
+  private void back(Event e) {
+    if (editing) {
+      mainController.loadDisplayTaskView(task);
+    } else {
+      mainController.loadTaskListView();
+    }
   }
 
   @FXML
   void saveTask(ActionEvent event) throws IOException {
     try {
       saveOrExcept();
-      getDialog(stackPane, mainPane, "Task saved").setOnDialogClosed(event1 -> {
-        try {
-          back();
-        } catch (IOException e) {
-          LOGGER.log(SEVERE, () -> "Failed to load view: " + e.toString());
-        }
-      });
+      getDialog(stackPane, mainPane, "Task saved")
+          .setOnDialogClosed(this::back);
       LOGGER.log(INFO, () -> "Task saved! Title: " + task.getTitle());
     } catch (IllegalArgumentException e) {
       getDialog(stackPane, mainPane, e.getMessage());

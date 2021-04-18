@@ -3,8 +3,8 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 import static utilities.Utilities.deadlineRemainingTimeString;
 import static utilities.Utilities.getDialog;
 
-public class ViewTaskController implements TaskDetailController {
+public class ViewTaskController implements TaskDetailController, Initializable {
 
   @FXML private ResourceBundle resources;
   @FXML private URL location;
@@ -36,6 +36,7 @@ public class ViewTaskController implements TaskDetailController {
   @FXML private Label taskCategory;
   @FXML private Label taskStartedDate;
   @FXML private JFXButton editButton;
+  @FXML private JFXButton backButton;
   @FXML private Pane viewPane;
   @FXML private StackPane stackPane;
   @FXML private BorderPane mainPane;
@@ -45,14 +46,12 @@ public class ViewTaskController implements TaskDetailController {
   private MainController mainController;
 
   /**
-   * Method called when user clicks edit button.
-   *
-   * @param event
-   * @throws IOException
+   * {@inheritDoc}
    */
-  @FXML
-  void displayEdit(ActionEvent event) throws IOException {
-    mainController.loadTaskFormView(task);
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    editButton.setOnAction(event -> mainController.loadTaskFormView(task));
+    backButton.setOnAction(event -> mainController.loadTaskListView());
   }
 
   /**
@@ -77,16 +76,6 @@ public class ViewTaskController implements TaskDetailController {
   }
 
   @FXML
-  public void refreshData() {
-    initData(mainController, task);
-  }
-
-  @FXML
-  public void backEvent() throws IOException {
-    mainController.displayAllTasks(null);
-  }
-
-  @FXML
   public void deleteAction() {
     BoxBlur blur = new BoxBlur(3, 3, 3);
     JFXDialogLayout dialogLayout = new JFXDialogLayout();
@@ -107,13 +96,7 @@ public class ViewTaskController implements TaskDetailController {
         JFXDialog deletedDialog = getDialog(stackPane, mainPane, "The " +
             "task has been deleted successfully");
         deletedDialog.setOnDialogClosed(
-            event2 -> {
-              try {
-                mainController.displayAllTasks(null);
-              } catch (IOException e) {
-                mainController.exceptionHandler(e, "Failed to load tasks");
-              }
-            });
+            event2 -> mainController.loadTaskListView());
       } catch (IOException e) {
         e.printStackTrace();
       }

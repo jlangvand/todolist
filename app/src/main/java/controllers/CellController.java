@@ -21,20 +21,19 @@ import utilities.Status;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static utilities.Utilities.getImagePath;
 
 /**
- * This class represents a task cell.
- * A task cell is responsible for interaction between a user and a task,
- * and to display a task with basic information.
+ * This class represents a task cell. A task cell is responsible for interaction
+ * between a user and a task, and to display a task with basic information.
  */
 public class CellController extends JFXListCell<Task> {
   private static final Logger LOGGER =
       Logger.getLogger(CellController.class.getName());
-
+  private final ListController listController;
+  private final TaskRegistry tasks;
   @FXML private ResourceBundle resources;
   @FXML private URL location;
   @FXML private AnchorPane taskCellPane;
@@ -42,17 +41,16 @@ public class CellController extends JFXListCell<Task> {
   @FXML private ImageView cellStatusImage;
   @FXML private Label cellDate;
   @FXML private JFXButton statusButton;
-
   private FXMLLoader fxmlLoader;
-  private final ListController listController;
-  private final TaskRegistry tasks;
 
   /**
    * Creates a CellController object.
    *
-   * @param listController Controller of the display where this cell should be displayed
-   * @param tasks The TaskRegistry the task of this cell is apart of
-   * @param dragAndDroppable True: drag and drop enabled, False: drag and drop disabled
+   * @param listController   Controller of the display where this cell should be
+   *                         displayed
+   * @param tasks            The TaskRegistry the task of this cell is apart of
+   * @param dragAndDroppable True: drag and drop enabled, False: drag and drop
+   *                         disabled
    */
   public CellController(MainController mainController,
                         ListController listController,
@@ -60,7 +58,7 @@ public class CellController extends JFXListCell<Task> {
     this.listController = listController;
     this.tasks = mainController.getTaskRegistry();
 
-    if (dragAndDroppable){
+    if (dragAndDroppable) {
       setOnDragDetected(this::onDragDetected);
       setOnDragOver(this::onDragOver);
       setOnDragExited(this::onDragExited);
@@ -71,7 +69,7 @@ public class CellController extends JFXListCell<Task> {
   /**
    * Updates this task cell.
    *
-   * @param task Task belonging to this cell
+   * @param task  Task belonging to this cell
    * @param empty
    */
   @Override
@@ -107,7 +105,7 @@ public class CellController extends JFXListCell<Task> {
       setGraphic(taskCellPane);
 
       //Event handling
-      statusButton.setOnMousePressed(event -> updateTaskStatus(task));
+      statusButton.setOnMouseReleased(event -> updateTaskStatus(task));
     }
   }
 
@@ -179,12 +177,12 @@ public class CellController extends JFXListCell<Task> {
         if (thisIdx > draggedIdx) {
           for (int i = draggedIdx; i < thisIdx; i++) {
             tasks.swapTasksByIndex(tasks.getActiveTasksIndex()[i],
-                    tasks.getActiveTasksIndex()[i + 1]);
+                tasks.getActiveTasksIndex()[i + 1]);
           }
         } else if (draggedIdx > thisIdx) {
           for (int i = draggedIdx; i > thisIdx; i--) {
             tasks.swapTasksByIndex(tasks.getActiveTasksIndex()[i],
-                    tasks.getActiveTasksIndex()[i - 1]);
+                tasks.getActiveTasksIndex()[i - 1]);
           }
         }
       } catch (IOException e) {
@@ -211,12 +209,7 @@ public class CellController extends JFXListCell<Task> {
         Status.DONE : Status.ACTIVE;
     task.setStatus(newStatus);
     updateStatusImage(newStatus);
-
-    try {
-      listController.refreshData();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    listController.refreshData();
   }
 }
 

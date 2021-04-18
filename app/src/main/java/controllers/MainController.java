@@ -1,12 +1,12 @@
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -20,10 +20,13 @@ import java.util.function.Function;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.SEVERE;
+import static utilities.Constants.ALL_TASKS_FXML_NAME;
+import static utilities.Constants.DONE_TASKS_FXML_NAME;
+import static utilities.Constants.TASK_FORM_FXML_NAME;
+import static utilities.Constants.VIEW_TASK_FXML_NAME;
 import static utilities.Priority.HIGH;
 import static utilities.Priority.LOW;
 import static utilities.Priority.MEDIUM;
-import static utilities.Status.DONE;
 import static utilities.Utilities.getDialog;
 import static utilities.Utilities.getFXMLLoader;
 
@@ -36,12 +39,12 @@ public class MainController implements Initializable {
   private static final Logger LOGGER =
       Logger.getLogger(MainController.class.getName());
 
-  private static final String ALL_TASKS_FXML_NAME = "AllTasks";
-  private static final String DONE_TASKS_FXML_NAME = "DoneTasks";
-  private static final String TASK_FORM_FXML_NAME = "TaskForm";
-  private static final String VIEW_TASK_FXML_NAME = "ViewTask";
-
   @FXML BorderPane pane;
+  @FXML JFXButton allTasksButton;
+  @FXML JFXButton highPriorityButton;
+  @FXML JFXButton mediumPriorityButton;
+  @FXML JFXButton lowPriorityButton;
+  @FXML JFXButton doneTasksButton;
 
   private TaskRegistry taskRegistry;
   private Parent taskFormParent;
@@ -61,6 +64,17 @@ public class MainController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     try {
       taskRegistry = new TaskRegistry();
+    } catch (IOException e) {
+      LOGGER.log(SEVERE,
+          () -> "Caught exception while initializing: " + e.toString());
+      exceptionHandler(e, "Exception caught in MainController::initialize");
+    }
+    initViews();
+    initButtons();
+  }
+
+  private void initViews() {
+    try {
       FXMLLoader taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
       taskFormParent = taskFormLoader.load();
       taskFormController = taskFormLoader.getController();
@@ -74,76 +88,63 @@ public class MainController implements Initializable {
       doneTasksParent = doneTasksLoader.load();
       doneTasksController = doneTasksLoader.getController();
       doneTasksController.initData(this);
-      loadTaskListView(t -> true, "All Tasks", true);
+      loadTaskListView();
     } catch (IOException e) {
-      LOGGER.log(SEVERE,
-          () -> "Caught exception while initializing: " + e.toString());
-      exceptionHandler(e, "Exception caught in MainController::initialize");
+      LOGGER.log(SEVERE, () -> "Failed to init views: " + e.toString());
+      exceptionHandler(e, "Error: Could not load views!");
     }
   }
 
-  /**
-   * Called when allTasksButton is clicked.
-   *
-   * @param event MouseEvent from view
-   * @throws IOException upon IO failure
-   */
-  @FXML
-  void displayAllTasks(MouseEvent event) throws IOException {
-    loadTaskListView(t -> true, "All Tasks", true);
+  private void initButtons() {
+    allTasksButton.setOnAction(event -> loadTaskListView());
+    highPriorityButton.setOnAction(event ->
+        loadTaskListView(task -> task.getPriority() == HIGH,
+            "High priority tasks"));
+    mediumPriorityButton.setOnAction(event ->
+        loadTaskListView(task -> task.getPriority() == MEDIUM,
+            "Medium priority tasks"));
+    lowPriorityButton.setOnAction(event ->
+        loadTaskListView(task -> task.getPriority() == LOW,
+            "Low priority tasks"));
+    doneTasksButton.setOnAction(event -> {
+      doneTasksController.refreshData();
+      pane.setCenter(doneTasksParent);
+    });
   }
 
   /**
-   * Called when highPriorityButton is clicked.
+   * Loads the Task List view.
    *
-   * @param event MouseEvent from view
+   * <p>This includes displaying the view as center and initializing allTasks
+   * variable in allTasksController.
    */
-  @FXML
-  void displayHighPriorityTasks(MouseEvent event) {
-    loadTaskListView(task -> task.getPriority().equals(HIGH),
-        "High Priority Tasks", false);
+  public void loadTaskListView() {
+    loadTaskListView(task -> true, "All Tasks", true);
   }
 
   /**
-   * Called when mediumPriorityButton is clicked.
+   * Loads the Task List view.
    *
-   * @param event MouseEvent from view
-   */
-  @FXML
-  void displayMediumPriorityTasks(MouseEvent event) {
-    loadTaskListView(task -> task.getPriority().equals(MEDIUM),
-        "Medium Priority Tasks", false);
-  }
-
-  /**
-   * Called when lowPriorityButton is clicked.
-   *
-   * @param event MouseEvent from view
-   */
-  @FXML
-  void displayLowPriorityTasks(MouseEvent event) {
-    loadTaskListView(task -> task.getPriority().equals(LOW),
-        "Low Priority Tasks", false);
-  }
-
-  /**
-   * Called when trashButton is clicked.
-   *
-   * @param event MouseEvent from view
-   * @throws IOException upon IO failure
-   */
-  @FXML
-  void displayDoneTasks(MouseEvent event) throws IOException {
-    doneTasksController.refreshData();
-    pane.setCenter(doneTasksParent);
-  }
-
-  /**
-   * Loads the view allTasks. This includes displaying the view as center and
-   * initializing allTasks variable in allTasksController.
+   * <p>This includes displaying the view as center and initializing allTasks
+   * variable in allTasksController.
    *
    * @param filter function for filtering tasks (boolean test)
    * @param title  title for view
+   */
+  public void loadTaskListView(Function<Task, Boolean> filter,
+                               String title) {
+    loadTaskListView(filter, title, false);
+  }
+
+  /**
+   * Loads the Task List view.
+   *
+   * <p>This includes displaying the view as center and initializing allTasks
+   * variable in allTasksController.
+   *
+   * @param filter           function for filtering tasks (boolean test)
+   * @param title            title for view
+   * @param dragAndDroppable true if list can be rearranged
    */
   public void loadTaskListView(Function<Task, Boolean> filter,
                                String title, boolean dragAndDroppable) {

@@ -67,10 +67,14 @@ public class TaskListController implements ListController {
 
   @FXML
   @Override
-  public void refreshData() throws IOException {
+  public void refreshData() {
     allTasksList.setItems(FXCollections.observableArrayList(
         tasks.getActiveTasks().stream().filter(filter::apply)
             .collect(Collectors.toList())));
-    tasks.save();
+    try {
+      tasks.save();
+    } catch (IOException e) {
+      mainController.exceptionHandler(e, "Failed to save task");
+    }
   }
 }
