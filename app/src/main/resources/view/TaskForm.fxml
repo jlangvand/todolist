@@ -107,7 +107,7 @@
           <JFXButton fx:id="cancelButton" buttonType="RAISED"
                      styleClass="secondaryButton" text="Cancel"/>
           <Region prefWidth="15.0"/>
-          <JFXButton fx:id="saveButton" onAction="#saveTask"
+          <JFXButton fx:id="saveButton"
                      style="-jfx-button-type: RAISED;"
                      styleClass="primaryButton" text="Save"/>
         </HBox>

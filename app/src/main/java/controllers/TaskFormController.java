@@ -32,8 +32,8 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
+import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -52,7 +52,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.INFO;
-import static java.util.logging.Level.SEVERE;
 import static utilities.Utilities.getDialog;
 
 public class TaskFormController implements TaskDetailController, Initializable {
@@ -79,6 +78,24 @@ public class TaskFormController implements TaskDetailController, Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     cancelButton.setOnMouseReleased(this::back);
+    saveButton.setOnMouseReleased(event -> {
+      if (nameField.validate()) {
+        try {
+          saveOrExcept();
+          getDialog(stackPane, mainPane, "Task saved")
+              .setOnDialogClosed(this::back);
+          LOGGER.log(INFO, () ->
+              "Task saved! Title: %s".formatted(task.getTitle()));
+        } catch (IllegalArgumentException e) {
+          getDialog(stackPane, mainPane, e.getMessage());
+        } catch (IOException e) {
+          mainController.exceptionHandler(e,
+              "Could not save file: %s".formatted(e.getMessage()));
+        }
+      }
+    });
+    nameField.setValidators(new RequiredFieldValidator(
+        "Task must have a title"));
   }
 
   private void back(Event e) {
@@ -86,24 +103,6 @@ public class TaskFormController implements TaskDetailController, Initializable {
       mainController.loadDisplayTaskView(task);
     } else {
       mainController.loadTaskListView();
-    }
-  }
-
-  @FXML
-  void saveTask(ActionEvent event) throws IOException {
-    try {
-      saveOrExcept();
-      getDialog(stackPane, mainPane, "Task saved")
-          .setOnDialogClosed(this::back);
-      LOGGER.log(INFO, () ->
-          "Task saved! Title: %s".formatted(task.getTitle()));
-    } catch (IllegalArgumentException e) {
-      getDialog(stackPane, mainPane, e.getMessage());
-    } catch (IOException e) {
-      getDialog(stackPane, mainPane,
-          "Could not save file: %s".formatted(e.getMessage()));
-      LOGGER.log(SEVERE, () ->
-          "Could not save file: %s".formatted(e.toString()));
     }
   }
 
