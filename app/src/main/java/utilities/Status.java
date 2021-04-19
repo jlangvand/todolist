@@ -26,7 +26,14 @@
 
 package utilities;
 
+/**
+ * Task active/done status.
+ */
 public enum Status {
+
+  /** Task is active (to do) */
   ACTIVE,
+
+  /** Task marked as done */
   DONE
 }

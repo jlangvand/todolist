@@ -34,6 +34,9 @@ import models.TaskRegistry;
 
 import java.io.IOException;
 
+/**
+ * Controller for listing done tasks.
+ */
 public class TrashController implements ListController {
 
   @FXML private JFXListView<Task> allTasksList;
@@ -41,6 +44,11 @@ public class TrashController implements ListController {
   private TaskRegistry tasks;
   private MainController mainController;
 
+  /**
+   * Init controller.
+   *
+   * @param mainController application main controller
+   */
   void initData(MainController mainController) {
     this.tasks = mainController.getTaskRegistry();
     refreshData();

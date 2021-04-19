@@ -44,14 +44,26 @@ import java.util.Objects;
 public class Task implements Serializable {
   @Serial private static final long serialVersionUID = 1L;
 
-  private String title;
-  private String description;
-  private Priority priority;
-  private String category;
+  /** @serial date added */
   private final LocalDate dateAdded;
+  /** @serial task title */
+  private String title;
+  /** @serial task description */
+  private String description;
+  /** @serial task priority */
+  private Priority priority;
+  /** @serial task category */
+  private String category;
+  /** @serial task date finished */
   private LocalDate finishedDate;
+
+  /** @serial deadline */
   private LocalDate deadline;
+
+  /** @serial task deadline time of day */
   private LocalTime deadLineTime;
+
+  /** @serial task status */
   private Status status;
 
   /** Default constructor. */

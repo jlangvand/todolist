@@ -26,7 +26,16 @@
 
 package todolist.app;
 
+/**
+ * Wrapper for application main class to circumvent "fat jar" limitations.
+ */
 public class Main {
+
+  /**
+   * Run application main method.
+   *
+   * @param args launch arguments
+   */
   public static void main(String[] args) {
     App.main(args);
   }

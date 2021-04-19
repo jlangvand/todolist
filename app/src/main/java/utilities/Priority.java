@@ -30,10 +30,18 @@ package utilities;
  * Priority enum.
  */
 public enum Priority {
+
+  /** Task with high priority */
   HIGH("High Priority"),
+
+  /** Task with medium priority */
   MEDIUM("Medium Priority"),
+
+  /** Task with low priority */
   LOW("Low Priority"),
-  DEFAULT("No Priority");
+
+  /** Priority not set */
+  DEFAULT("Not set");
 
   private final String description;
 
@@ -41,9 +49,7 @@ public enum Priority {
     this.description = description;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public String toString() {
     return description;

@@ -67,9 +67,11 @@ public class TaskListController implements ListController, Initializable {
   }
 
   /**
-   * @param mainController
-   * @param filter
-   * @param title
+   * Init controller.
+   *
+   * @param mainController application main controller
+   * @param filter         function for filtering tasks
+   * @param title          of the view
    * @throws IOException if IO fails
    */
   void initData(MainController mainController, Function<Task, Boolean> filter,
