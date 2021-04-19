@@ -47,7 +47,6 @@ import utilities.Status;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 
 import static utilities.Status.ACTIVE;
 import static utilities.Status.DONE;
@@ -58,10 +57,7 @@ import static utilities.Utilities.getImagePath;
  * between a user and a task, and to display a task with basic information.
  */
 public class CellController extends JFXListCell<Task> {
-  private static final Logger LOGGER =
-      Logger.getLogger(CellController.class.getName());
-  private final ListController listController;
-  private final TaskRegistry tasks;
+
   @FXML private ResourceBundle resources;
   @FXML private URL location;
   @FXML private AnchorPane taskCellPane;
@@ -69,7 +65,10 @@ public class CellController extends JFXListCell<Task> {
   @FXML private ImageView cellStatusImage;
   @FXML private Label cellDate;
   @FXML private JFXButton statusButton;
+
   private FXMLLoader fxmlLoader;
+  private final ListController listController;
+  private final TaskRegistry tasks;
 
   /**
    * Creates a CellController object.
