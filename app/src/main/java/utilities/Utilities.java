@@ -40,6 +40,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Utility class providing project wide convenience methods.
+ */
 public class Utilities {
   private Utilities() {
     // Hiding the implicit constructor

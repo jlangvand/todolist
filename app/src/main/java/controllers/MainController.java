@@ -99,6 +99,9 @@ public class MainController implements Initializable {
     initButtons();
   }
 
+  /**
+   * Initialise parents and controllers for sub views.
+   */
   private void initViews() {
     try {
       FXMLLoader taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
@@ -122,6 +125,9 @@ public class MainController implements Initializable {
     }
   }
 
+  /**
+   * Set button actions.
+   */
   private void initButtons() {
     allTasksButton.setOnMouseReleased(event -> loadTaskListView());
     highPriorityButton.setOnMouseReleased(event ->

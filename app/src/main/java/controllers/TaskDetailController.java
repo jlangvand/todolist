@@ -28,6 +28,16 @@ package controllers;
 
 import models.Task;
 
+/**
+ * Interface for controllers operating on a single task.
+ */
 public interface TaskDetailController {
+
+  /**
+   * Init the controller.
+   *
+   * @param mainController application main controller
+   * @param task           task to operate on
+   */
   void initData(MainController mainController, Task task);
 }

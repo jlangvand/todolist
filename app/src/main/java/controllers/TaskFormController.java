@@ -54,6 +54,9 @@ import java.util.logging.Logger;
 import static java.util.logging.Level.INFO;
 import static utilities.Utilities.getDialog;
 
+/**
+ * Form controller for adding and editing tasks.
+ */
 public class TaskFormController implements TaskDetailController, Initializable {
   private static final Logger LOGGER =
       Logger.getLogger(TaskFormController.class.getName());
@@ -75,6 +78,9 @@ public class TaskFormController implements TaskDetailController, Initializable {
   private MainController mainController;
   private boolean editing;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     cancelButton.setOnMouseReleased(this::back);
@@ -98,6 +104,11 @@ public class TaskFormController implements TaskDetailController, Initializable {
         "Task must have a title"));
   }
 
+  /**
+   * Back to task view is editing task, else back to task list.
+   *
+   * @param e event from view
+   */
   private void back(Event e) {
     if (editing) {
       mainController.loadDisplayTaskView(task);
@@ -106,9 +117,13 @@ public class TaskFormController implements TaskDetailController, Initializable {
     }
   }
 
+  /**
+   * Save the task or throw an exception if validation fails.
+   *
+   * @throws IllegalArgumentException if field validation failed
+   * @throws IOException              if task save failed
+   */
   private void saveOrExcept() throws IllegalArgumentException, IOException {
-    if (nameField.getText().isEmpty()) throw new IllegalArgumentException(
-        "Task must have a title");
     LocalDate deadlineDate = deadlineDateField.getValue();
     LocalTime deadlineTime = deadlineTimeField.getValue();
     final String deadlineError = "Deadline must be in the future";
@@ -134,6 +149,13 @@ public class TaskFormController implements TaskDetailController, Initializable {
     tasks.save();
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * @param mainController {@inheritDoc}
+   * @param task           {@inheritDoc}
+   */
+  @Override
   public void initData(MainController mainController, Task task) {
     this.tasks = mainController.getTaskRegistry();
     this.task = task;
