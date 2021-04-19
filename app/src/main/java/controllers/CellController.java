@@ -96,7 +96,7 @@ public class CellController extends JFXListCell<Task> {
    * Updates this task cell.
    *
    * @param task  Task belonging to this cell
-   * @param empty
+   * @param empty {@inheritDoc}
    */
   @Override
   protected void updateItem(Task task, boolean empty) {
@@ -118,7 +118,7 @@ public class CellController extends JFXListCell<Task> {
         }
       }
 
-      //Filling cell with info from task
+      // Filling cell with info from task
       cellTitle.setText(task.getTitle());
       cellDate.setText(task.getDateAdded().toString());
       updateStatusImage(task.getStatus());
@@ -130,7 +130,7 @@ public class CellController extends JFXListCell<Task> {
       setText(null);
       setGraphic(taskCellPane);
 
-      //Event handling
+      // Event handling
       statusButton.setOnMouseReleased(event -> {
         Status status = task.getStatus() == ACTIVE ? DONE : ACTIVE;
         task.setStatus(status);
