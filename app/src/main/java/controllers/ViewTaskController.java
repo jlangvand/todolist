@@ -119,7 +119,10 @@ public class ViewTaskController implements TaskDetailController, Initializable {
         JFXDialog deletedDialog = getDialog(stackPane, mainPane,
             "The task has been deleted successfully");
         deletedDialog.setOnDialogClosed(
-            event2 -> mainController.loadTaskListView());
+            event2 -> {
+              mainController.loadTaskListView();
+              dialog.close();
+            });
       } catch (IOException e) {
         e.printStackTrace();
       }
