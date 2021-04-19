@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
+<!--
+  ~     Copyright © 2021 Mona Mahmoud Mousa
+  ~
+  ~      Authors (in alphabetical order):
+  ~      Ask Brandsnes Røsand
+  ~      Joakim Skogø Langvand
+  ~      Leonard Sandløkk Schiller
+  ~      Moaaz Bassam Yanes
+  ~      Mona Mahmoud Mousa
+  ~
+  ~     This file is part of Todolist.
+  ~
+  ~     Todolist is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     Todolist is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with Todolist.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
@@ -16,80 +43,75 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-
-<StackPane fx:id="stackPane" stylesheets="@../css/menus.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TaskFormController">
-   <children>
-      <BorderPane fx:id="mainPane" stylesheets="@../css/menus.css">
-         <left>
-            <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
-         </left>
-         <right>
-            <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
-         </right>
-         <center>
-            <AnchorPane BorderPane.alignment="CENTER">
-               <children>
-                  <VBox alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <JFXTextField fx:id="nameField" promptText="Task name">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
-                        </JFXTextField>
-                        <Pane prefHeight="20.0" />
-                        <JFXTextArea fx:id="descriptionField" maxHeight="100.0" prefRowCount="4" promptText="Task descrpition" VBox.vgrow="ALWAYS" />
-                        <Pane prefHeight="30.0" />
-                        <HBox>
-                           <children>
-                              <Label styleClass="mainLabel" text="Deadline" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" spacing="15.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <JFXDatePicker fx:id="deadlineDateField" promptText="Date" />
-                              <JFXTimePicker fx:id="deadlineTimeField" promptText="Time" />
-                           </children>
-                        </HBox>
-                        <Pane prefHeight="20.0" />
-                        <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="15.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label styleClass="mainLabel" text="Category" />
-                              <JFXTextField fx:id="categoryField" />
-                              <Label styleClass="mainLabel" text="Priority" />
-                              <JFXComboBox fx:id="priorityField" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-         </center>
-         <top>
-            <AnchorPane BorderPane.alignment="CENTER">
-               <children>
-                  <Label fx:id="titleText" alignment="CENTER" text="New task" textFill="#fcfcfc" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-                     <font>
-                        <Font size="39.0" />
-                     </font>
-                  </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-               </children>
-            </AnchorPane>
-         </top>
-         <bottom>
-            <AnchorPane BorderPane.alignment="CENTER">
-               <children>
-                  <HBox alignment="CENTER" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
-                     <children>
-                        <JFXButton fx:id="cancelButton" buttonType="RAISED" onAction="#cancelAction" styleClass="secondaryButton" text="Cancel" />
-                        <Region prefWidth="15.0" />
-                        <JFXButton fx:id="saveButton" onAction="#saveTask" style="-jfx-button-type: RAISED;" styleClass="primaryButton" text="Save" />
-                     </children>
-                  </HBox>
-               </children>
-            </AnchorPane>
-         </bottom>
-      </BorderPane>
-   </children>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane"
+           stylesheets="@../css/menus.css"
+           xmlns="http://javafx.com/javafx/15.0.1"
+           fx:controller="controllers.TaskFormController">
+  <BorderPane fx:id="mainPane" stylesheets="@../css/menus.css">
+    <left>
+      <Pane prefWidth="20.0" BorderPane.alignment="CENTER"/>
+    </left>
+    <right>
+      <Pane prefWidth="20.0" BorderPane.alignment="CENTER"/>
+    </right>
+    <center>
+      <AnchorPane BorderPane.alignment="CENTER">
+        <VBox alignment="CENTER" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <JFXTextField fx:id="nameField" promptText="Task name">
+            <font>
+              <Font size="23.0"/>
+            </font>
+          </JFXTextField>
+          <Pane prefHeight="20.0"/>
+          <JFXTextArea fx:id="descriptionField" maxHeight="100.0"
+                       prefRowCount="4" promptText="Task description"
+                       VBox.vgrow="ALWAYS"/>
+          <Pane prefHeight="30.0"/>
+          <HBox>
+            <Label styleClass="mainLabel" text="Deadline"/>
+          </HBox>
+          <HBox alignment="CENTER_LEFT" spacing="15.0"
+                VBox.vgrow="ALWAYS">
+            <JFXDatePicker fx:id="deadlineDateField" promptText="Date"/>
+            <JFXTimePicker fx:id="deadlineTimeField" promptText="Time"/>
+          </HBox>
+          <Pane prefHeight="20.0"/>
+          <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="15.0"
+                VBox.vgrow="ALWAYS">
+            <Label styleClass="mainLabel" text="Category"/>
+            <JFXTextField fx:id="categoryField"/>
+            <Label styleClass="mainLabel" text="Priority"/>
+            <JFXComboBox fx:id="priorityField"/>
+          </HBox>
+        </VBox>
+      </AnchorPane>
+    </center>
+    <top>
+      <AnchorPane BorderPane.alignment="CENTER">
+        <Label fx:id="titleText" alignment="CENTER" text="New task"
+               textFill="#fcfcfc" AnchorPane.bottomAnchor="20.0"
+               AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+               AnchorPane.topAnchor="20.0">
+          <font>
+            <Font size="39.0"/>
+          </font>
+        </Label>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text"/>
+      </AnchorPane>
+    </top>
+    <bottom>
+      <AnchorPane BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" AnchorPane.bottomAnchor="15.0"
+              AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+          <JFXButton fx:id="cancelButton" buttonType="RAISED"
+                     styleClass="secondaryButton" text="Cancel"/>
+          <Region prefWidth="15.0"/>
+          <JFXButton fx:id="saveButton"
+                     style="-jfx-button-type: RAISED;"
+                     styleClass="primaryButton" text="Save"/>
+        </HBox>
+      </AnchorPane>
+    </bottom>
+  </BorderPane>
 </StackPane>

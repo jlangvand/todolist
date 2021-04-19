@@ -1,27 +1,49 @@
+/*
+ *     Copyright © 2021 Mona Mahmoud Mousa
+ *
+ *      Authors (in alphabetical order):
+ *      Ask Brandsnes Røsand
+ *      Joakim Skogø Langvand
+ *      Leonard Sandløkk Schiller
+ *      Moaaz Bassam Yanes
+ *      Mona Mahmoud Mousa
+ *
+ *     This file is part of Todolist.
+ *
+ *     Todolist is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Todolist is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Todolist.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package models;
 
 import dao.PersistentRegistry;
-import utilities.Priority;
 import utilities.Status;
 
 import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static utilities.Utilities.dateIsInRange;
-
 /**
  * Persistent, ordered list of Task objects.
  *
  * <p>Provides methods for filtering and reordering tasks. Upon creation, it
- * loads tasks from a file if it exists, else it creates a new file. Tasks
- * are written to or removed from the file as they are added to or removed
- * from the list.
+ * loads tasks from a file if it exists, else it creates a new file. Tasks are
+ * written to or removed from the file as they are added to or removed from the
+ * list.
  */
 public class TaskRegistry extends ArrayList<Task> implements Serializable {
   @Serial private static final long serialVersionUID = 1L;
@@ -67,95 +89,44 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
   }
 
   /**
-   * @param priority enum Priority
-   * @return matching tasks as an ArrayList
-   */
-  public List<Task> getTasksByPriority(Priority priority) {
-    return stream().filter(t -> t.getPriority().equals(priority))
-        .collect(Collectors.toList());
-  }
-
-  /**
-   * Get tasks added within an inclusive range of dates.
+   * Get done tasks.
    *
-   * @param from filter tasks added on of after this date
-   * @param to   filter tasks added on or before this date
-   * @return a list of tasks matching the query
-   */
-  public List<Task> getTasksByDateAdded(LocalDate from, LocalDate to) {
-    return stream().filter(t -> dateIsInRange(t.getDateAdded(), from, to))
-        .collect(Collectors.toList());
-  }
-
-  /**
-   * Get tasks added on a given date.
-   *
-   * @param date filter tasks added on this date
-   * @return a list of tasks matching the query
-   */
-  public List<Task> getTasksByDateAdded(LocalDate date) {
-    return getTasksByDateAdded(date, date);
-  }
-
-  /**
-   * Get tasks with deadline within an inclusive range of dates.
-   *
-   * @param from filter tasks with deadline on of after this date
-   * @param to   filter tasks with deadline on or before this date
-   * @return a list of tasks matching the query
-   */
-  public List<Task> getTasksByDeadline(LocalDate from, LocalDate to) {
-    return stream().filter(t -> dateIsInRange(t.getDeadline(), from, to))
-        .collect(Collectors.toList());
-  }
-
-  /**
-   * Get tasks with deadline on a given date.
-   *
-   * @param date filter tasks with deadline on this date
-   * @return a list of tasks matching the query
-   */
-  public List<Task> getTasksByDeadline(LocalDate date) {
-    return getTasksByDeadline(date, date);
-  }
-
-  /**
-   * @return List of high priority tasks
-   */
-  public List<Task> getHighPriorityTasks() {
-    return getTasksByPriority(Priority.HIGH);
-  }
-
-  /**
-   * @return List of medium priority tasks
-   */
-  public List<Task> getMediumPriorityTasks() {
-    return getTasksByPriority(Priority.MEDIUM);
-  }
-
-  /**
-   * @return List of low priority tasks
-   */
-  public List<Task> getLowPriorityTasks() {
-    return getTasksByPriority(Priority.LOW);
-  }
-
-  /**
-   * @return List of done tasks
+   * @return list of done tasks
    */
   public List<Task> getDoneTasks() {
     return getTasksByStatus(Status.DONE);
   }
 
   /**
-   * @return List of active tasks
+   * Get active tasks.
+   *
+   * @return list of active tasks
    */
   public List<Task> getActiveTasks() {
     return getTasksByStatus(Status.ACTIVE);
   }
 
   /**
-   * @return String representation of TaskRegistry object.
+   * Get array of indexes of active tasks in increasing order.
+   *
+   * @return int array of indexes
+   */
+  public int[] getActiveTasksIndex() {
+    int[] indexes = new int[getActiveTasks().size()];
+    int c = 0;
+    for (int i = 0; i < size(); i++) {
+      if (get(i).getStatus() == Status.ACTIVE) {
+        indexes[c] = i;
+        c++;
+      }
+    }
+    return indexes;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @return {@inheritDoc}
    */
   @Override
   public String toString() {
@@ -187,16 +158,6 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
   }
 
   /**
-   * Remove task by index, saves new list to file.
-   *
-   * @param index task to remove
-   * @throws IOException if file IO fails
-   */
-  public void removeTask(int index) throws IOException {
-    removeTask(get(index));
-  }
-
-  /**
    * Swaps the index of the task of index a with the task of index b.
    *
    * @param a Index of task A
@@ -211,15 +172,22 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
     save();
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * @param object {@inheritDoc}
+   * @return true {@inheritDoc}
+   */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
-    TaskRegistry registry = (TaskRegistry) o;
+  public boolean equals(Object object) {
+    if (this == object) return true;
+    if (object == null || getClass() != object.getClass()) return false;
+    if (!super.equals(object)) return false;
+    TaskRegistry registry = (TaskRegistry) object;
     return fileHandle.equals(registry.fileHandle);
   }
 
+  /** {@inheritDoc} */
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), fileHandle);

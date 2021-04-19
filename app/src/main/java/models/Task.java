@@ -1,3 +1,29 @@
+/*
+ *     Copyright © 2021 Mona Mahmoud Mousa
+ *
+ *      Authors (in alphabetical order):
+ *      Ask Brandsnes Røsand
+ *      Joakim Skogø Langvand
+ *      Leonard Sandløkk Schiller
+ *      Moaaz Bassam Yanes
+ *      Mona Mahmoud Mousa
+ *
+ *     This file is part of Todolist.
+ *
+ *     Todolist is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Todolist is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Todolist.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package models;
 
 import utilities.Priority;
@@ -18,27 +44,29 @@ import java.util.Objects;
 public class Task implements Serializable {
   @Serial private static final long serialVersionUID = 1L;
 
+  /** @serial date added */
+  private final LocalDate dateAdded;
+  /** @serial task title */
   private String title;
+  /** @serial task description */
   private String description;
+  /** @serial task priority */
   private Priority priority;
+  /** @serial task category */
   private String category;
-  private LocalDate dateAdded;
+  /** @serial task date finished */
   private LocalDate finishedDate;
+
+  /** @serial deadline */
   private LocalDate deadline;
+
+  /** @serial task deadline time of day */
   private LocalTime deadLineTime;
+
+  /** @serial task status */
   private Status status;
 
-  /** Create task providing a title. */
-  public Task(String title) {
-    this();
-    this.setTitle(title);
-  }
-
-  /**
-   * Default constructor.
-   * <p>
-   * Creates a Task object with valid data.
-   */
+  /** Default constructor. */
   public Task() {
     this.dateAdded = LocalDate.now();
     this.title = "";
@@ -51,109 +79,162 @@ public class Task implements Serializable {
     this.deadLineTime = LocalTime.now();
   }
 
-  /** Get description. */
+  /**
+   * Get description.
+   *
+   * @return description
+   */
   public String getDescription() {
     return description;
   }
 
-  /** Set description. */
+  /**
+   * Set description.
+   *
+   * @param description description
+   */
   public void setDescription(String description) {
     this.description = description;
   }
 
-  /** Get priority. */
+  /**
+   * Get priority.
+   *
+   * @return priority
+   */
   public Priority getPriority() {
     return priority;
   }
 
-  /** Set priority. */
+  /**
+   * Set priority.
+   *
+   * @param priority description
+   */
   public void setPriority(Priority priority) {
     this.priority = priority;
   }
 
-  /** Get category. */
+  /**
+   * Get category.
+   *
+   * @return category
+   */
   public String getCategory() {
     return category;
   }
 
-  /** Set category. */
+  /**
+   * Set category.
+   *
+   * @param category description
+   */
   public void setCategory(String category) {
     this.category = category;
   }
 
-  /** Get start date */
+  /**
+   * Get date added.
+   *
+   * @return date added
+   */
   public LocalDate getDateAdded() {
     return dateAdded;
   }
 
-  /** Set started date. */
-  public void setDateAdded(LocalDate dateAdded) {
-    this.dateAdded = dateAdded;
-  }
-
-  /** Get finished date. */
+  /**
+   * Get date finished.
+   *
+   * @return date finished
+   */
   public LocalDate getFinishedDate() {
     return finishedDate;
   }
 
-  /** Get status. */
-  public Status getStatus() {
-    return status;
-  }
-
-  /** Set finished date. */
+  /**
+   * Set date finished.
+   *
+   * @param finishedDate date finished
+   */
   public void setFinishedDate(LocalDate finishedDate) {
     this.finishedDate = finishedDate;
   }
 
-  /** Get deadline. */
-  public LocalDate getDeadline() {
-    return deadline;
+  /**
+   * Get status.
+   *
+   * @return status
+   */
+  public Status getStatus() {
+    return status;
   }
 
-  /** Set deadline. */
-  public void setDeadline(LocalDate deadline) {
-    this.deadline = deadline;
-  }
-
-  /** Get title. */
-  public String getTitle() {
-    return title;
-  }
-
-  /** Set title. */
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public LocalTime getDeadLineTime() {
-    return deadLineTime;
-  }
-
-  public void setDeadLineTime(LocalTime deadLineTime) {
-    this.deadLineTime = deadLineTime;
-  }
-
-  /** Sets the task's status. */
+  /**
+   * Set status.
+   *
+   * @param status status
+   */
   public void setStatus(Status status) {
     this.status = status;
   }
 
-
-  /** Get priority as String */
-  public String getPriorityString() {
-    return priority.toString();
+  /**
+   * Get deadline.
+   *
+   * @return deadline
+   */
+  public LocalDate getDeadline() {
+    return deadline;
   }
 
   /**
-   * Check equality.
+   * Set deadline.
    *
-   * @param object Task instance to compare to
-   * @return true if equal, else false
+   * @param deadline deadline
    */
+  public void setDeadline(LocalDate deadline) {
+    this.deadline = deadline;
+  }
+
+  /**
+   * Get title.
+   *
+   * @return title
+   */
+  public String getTitle() {
+    return title;
+  }
+
+  /**
+   * Set title.
+   *
+   * @param title title
+   */
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  /**
+   * Get deadline time of day.
+   *
+   * @return deadline time of day
+   */
+  public LocalTime getDeadLineTime() {
+    return deadLineTime;
+  }
+
+  /**
+   * Set deadline time of day.
+   *
+   * @param deadLineTime deadline time of day
+   */
+  public void setDeadLineTime(LocalTime deadLineTime) {
+    this.deadLineTime = deadLineTime;
+  }
+
+  /** {@inheritDoc} */
   @Override
   public boolean equals(Object object) {
-    // TODO(joakilan): Any reason not to simply return equality of hashCode()?
     boolean result;
     if (this == object) {
       result = true;
@@ -172,14 +253,14 @@ public class Task implements Serializable {
     return result;
   }
 
-  /** Get hash of this instance. */
+  /** {@inheritDoc} */
   @Override
   public int hashCode() {
     return Objects.hash(getPriority(), getCategory(), getDateAdded(),
         getFinishedDate(), getDeadline(), getTitle());
   }
 
-  /** Get String representation of this instance. */
+  /** {@inheritDoc} */
   @Override
   public String toString() {
     return "Task{" +

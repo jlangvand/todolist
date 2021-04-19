@@ -1,10 +1,36 @@
+/*
+ *     Copyright © 2021 Mona Mahmoud Mousa
+ *
+ *      Authors (in alphabetical order):
+ *      Ask Brandsnes Røsand
+ *      Joakim Skogø Langvand
+ *      Leonard Sandløkk Schiller
+ *      Moaaz Bassam Yanes
+ *      Mona Mahmoud Mousa
+ *
+ *     This file is part of Todolist.
+ *
+ *     Todolist is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Todolist is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Todolist.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
@@ -12,84 +38,53 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import models.Task;
-import utilities.Utilities;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import static utilities.Utilities.deadlineRemainingTimeString;
 import static utilities.Utilities.getDialog;
 
-public class ViewTaskController {
+/**
+ * Controller for task details view.
+ */
+public class ViewTaskController implements TaskDetailController, Initializable {
 
-  @FXML
-  private ResourceBundle resources;
-
-  @FXML
-  private URL location;
-
-  @FXML
-  private Label taskTitle;
-
-  @FXML
-  private Label taskDescription;
-
-  @FXML
-  private Label deadlineTimeLeft;
-
-  @FXML
-  private Label deadlineDateTime;
-
-  @FXML
-  private Label taskPriority;
-
-  @FXML
-  private Label taskCategory;
-
-  @FXML
-  private Label taskStartedDate;
-
-  @FXML
-  private JFXButton editButton;
-
-  @FXML
-  private Pane viewPane;
-
-  @FXML
-  private StackPane stackPane;
-
+  @FXML private ResourceBundle resources;
+  @FXML private URL location;
+  @FXML private Label taskTitle;
+  @FXML private Label taskDescription;
+  @FXML private Label deadlineTimeLeft;
+  @FXML private Label deadlineDateTime;
+  @FXML private Label taskPriority;
+  @FXML private Label taskCategory;
+  @FXML private Label taskStartedDate;
+  @FXML private JFXButton editButton;
+  @FXML private JFXButton backButton;
+  @FXML private Pane viewPane;
+  @FXML private StackPane stackPane;
   @FXML private BorderPane mainPane;
-
-  @FXML
-  private ImageView statusImage;
+  @FXML private ImageView statusImage;
 
   private Task task;
   private MainController mainController;
 
   /**
-   * Method called when user clicks edit button.
-   *
-   * @param event
-   * @throws IOException
+   * {@inheritDoc}
    */
-  @FXML
-  void displayEdit(ActionEvent event) throws IOException {
-    mainController.loadEditTaskView(task);
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    editButton.setOnAction(event -> mainController.loadTaskFormView(task));
+    backButton.setOnAction(event -> mainController.loadTaskListView());
   }
 
-  /**
-   * Method called right after object is initialized
-   *
-   * @param task
-   */
-  public void initData(Task task, MainController mainController) {
+  /** {@inheritDoc} */
+  public void initData(MainController mainController, Task task) {
     this.task = task;
     taskTitle.setText(task.getTitle());
-    taskPriority.setText(task.getPriorityString());
+    taskPriority.setText(task.getPriority().toString());
     taskCategory.setText(task.getCategory());
     taskDescription.setText(task.getDescription());
     taskStartedDate.setText(task.getDateAdded().toString());
@@ -102,24 +97,19 @@ public class ViewTaskController {
     this.mainController = mainController;
   }
 
-  @FXML
-  public void refreshData() {
-    initData(task, mainController);
-  }
-
-  @FXML
-  public void backEvent() throws IOException {
-    mainController.displayAllTasks(null);
-  }
-
+  /**
+   * Delete task.
+   *
+   * <p>Displays a dialog for the user to confirm before deleting.
+   */
   @FXML
   public void deleteAction() {
     BoxBlur blur = new BoxBlur(3, 3, 3);
     JFXDialogLayout dialogLayout = new JFXDialogLayout();
     JFXButton delete = new JFXButton("Delete");
     JFXButton cancel = new JFXButton("Cancel");
-    String styleSheetPath = ViewTaskController.class.getResource("/css" +
-        "/dialogJFX.css").toString();
+    String styleSheetPath = ViewTaskController.class.
+        getResource("/css/dialogJFX.css").toString();
     delete.getStylesheets().add(styleSheetPath);
     cancel.getStylesheets().add(styleSheetPath);
 
@@ -130,15 +120,12 @@ public class ViewTaskController {
       try {
         mainController.getTaskRegistry().removeTask(task);
 
-        JFXDialog deletedDialog = getDialog(stackPane, mainPane, "The " +
-            "task has been deleted successfully");
+        JFXDialog deletedDialog = getDialog(stackPane, mainPane,
+            "The task has been deleted successfully");
         deletedDialog.setOnDialogClosed(
             event2 -> {
-              try {
-                mainController.displayAllTasks(null);
-              } catch (IOException e) {
-                mainController.exceptionHandler(e, "Failed to load tasks");
-              }
+              mainController.loadTaskListView();
+              dialog.close();
             });
       } catch (IOException e) {
         e.printStackTrace();
@@ -155,22 +142,5 @@ public class ViewTaskController {
     mainPane.setEffect(blur);
     dialog.show();
     dialog.setEffect(null);
-  }
-
-  /**
-   * @return deadline in form: x days, x hours, x minutes.
-   */
-  public String getDeadlineString(Task task) {
-    //if deadline date is today and the time passed  OR  the deadline date
-    // passed(before today)
-    if ((task.getDeadline().isEqual(LocalDate.now())
-        && task.getDeadLineTime().isBefore(LocalTime.now()))
-        || (task.getDeadline().isBefore(LocalDate.now()))) {
-      return "The deadline has passed   (%s %s)".formatted(task.getDeadline()
-          , task.getDeadLineTime());
-    } else {
-      return "%s until deadline".formatted(Utilities.deadlineRemainingTimeString(
-          task.getDeadline(), task.getDeadLineTime()));
-    }
   }
 }

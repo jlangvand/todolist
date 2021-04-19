@@ -1,12 +1,38 @@
+/*
+ *     Copyright © 2021 Mona Mahmoud Mousa
+ *
+ *      Authors (in alphabetical order):
+ *      Ask Brandsnes Røsand
+ *      Joakim Skogø Langvand
+ *      Leonard Sandløkk Schiller
+ *      Moaaz Bassam Yanes
+ *      Mona Mahmoud Mousa
+ *
+ *     This file is part of Todolist.
+ *
+ *     Todolist is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Todolist is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Todolist.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -20,149 +46,192 @@ import java.util.function.Function;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.SEVERE;
+import static utilities.Constants.ALL_TASKS_FXML_NAME;
+import static utilities.Constants.DONE_TASKS_FXML_NAME;
+import static utilities.Constants.TASK_FORM_FXML_NAME;
+import static utilities.Constants.VIEW_TASK_FXML_NAME;
 import static utilities.Priority.HIGH;
 import static utilities.Priority.LOW;
 import static utilities.Priority.MEDIUM;
 import static utilities.Utilities.getDialog;
 import static utilities.Utilities.getFXMLLoader;
 
+/**
+ * Controller for the app's main view.
+ *
+ * <p>Renders the left navigation bar and handles switching of views.
+ */
 public class MainController implements Initializable {
   private static final Logger LOGGER =
       Logger.getLogger(MainController.class.getName());
 
-  private static final String ALL_TASKS_FXML_NAME = "AllTasks";
-  private static final String DONE_TASKS_FXML_NAME = "DoneTasks";
-  private static final String TASK_FORM_FXML_NAME = "TaskForm";
-  private static final String VIEW_TASK_FXML_NAME = "ViewTask";
-
-  @FXML
-  BorderPane pane;
+  @FXML BorderPane pane;
+  @FXML JFXButton allTasksButton;
+  @FXML JFXButton highPriorityButton;
+  @FXML JFXButton mediumPriorityButton;
+  @FXML JFXButton lowPriorityButton;
+  @FXML JFXButton doneTasksButton;
 
   private TaskRegistry taskRegistry;
-  private FXMLLoader taskFormLoader;
-  private FXMLLoader displayTaskLoader;
+  private Parent taskFormParent;
+  private TaskDetailController taskFormController;
+  private Parent taskViewParent;
+  private TaskDetailController taskViewController;
+  private Parent taskListParent;
+  private TaskListController taskListController;
+  private Parent doneTasksParent;
+  private TrashController doneTasksController;
 
   /**
-   * Called when the navBarController is initialized.
-   *
-   * @param location
-   * @param resources
+   * {@inheritDoc}
    */
   @FXML
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     try {
       taskRegistry = new TaskRegistry();
-      loadAllTasksView(t -> true);
-      taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
-      displayTaskLoader = getFXMLLoader(VIEW_TASK_FXML_NAME);
     } catch (IOException e) {
-      e.printStackTrace();
+      LOGGER.log(SEVERE, () ->
+          "Caught exception while initializing: %s".formatted(e.toString()));
+      exceptionHandler(e, "Exception caught in MainController::initialize");
+    }
+    initViews();
+    initButtons();
+  }
+
+  /**
+   * Initialise parents and controllers for sub views.
+   */
+  private void initViews() {
+    try {
+      FXMLLoader taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
+      taskFormParent = taskFormLoader.load();
+      taskFormController = taskFormLoader.getController();
+      FXMLLoader displayTaskLoader = getFXMLLoader(VIEW_TASK_FXML_NAME);
+      taskViewParent = displayTaskLoader.load();
+      taskViewController = displayTaskLoader.getController();
+      FXMLLoader taskListLoader = getFXMLLoader(ALL_TASKS_FXML_NAME);
+      taskListParent = taskListLoader.load();
+      taskListController = taskListLoader.getController();
+      FXMLLoader doneTasksLoader = getFXMLLoader(DONE_TASKS_FXML_NAME);
+      doneTasksParent = doneTasksLoader.load();
+      doneTasksController = doneTasksLoader.getController();
+      doneTasksController.initData(this);
+      loadTaskListView();
+    } catch (IOException e) {
+      LOGGER.log(SEVERE, () ->
+          "Failed to init views: %s".formatted(e.toString()));
+      exceptionHandler(e, "Error: Could not load views!");
     }
   }
 
   /**
-   * Called when allTasksButton is clicked.
-   *
-   * @param event
+   * Set button actions.
    */
-  @FXML
-  void displayAllTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(t -> true);
+  private void initButtons() {
+    allTasksButton.setOnMouseReleased(event -> loadTaskListView());
+    highPriorityButton.setOnMouseReleased(event ->
+        loadTaskListView(task -> task.getPriority() == HIGH,
+            "High priority tasks"));
+    mediumPriorityButton.setOnMouseReleased(event ->
+        loadTaskListView(task -> task.getPriority() == MEDIUM,
+            "Medium priority tasks"));
+    lowPriorityButton.setOnMouseReleased(event ->
+        loadTaskListView(task -> task.getPriority() == LOW,
+            "Low priority tasks"));
+    doneTasksButton.setOnMouseReleased(event -> {
+      doneTasksController.refreshData();
+      pane.setCenter(doneTasksParent);
+    });
   }
 
   /**
-   * Called when highPriorityButton is clicked.
+   * Loads the Task List view.
    *
-   * @param event
+   * <p>This includes displaying the view as center and initializing allTasks
+   * variable in allTasksController.
    */
-  @FXML
-  void displayHighPriorityTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(task -> task.getPriority().equals(HIGH));
+  public void loadTaskListView() {
+    loadTaskListView(task -> true, "All Tasks", true);
   }
 
   /**
-   * Called when mediumPriorityButton is clicked.
+   * Loads the Task List view.
    *
-   * @param event
+   * <p>This includes displaying the view as center and initializing allTasks
+   * variable in allTasksController.
+   *
+   * @param filter function for filtering tasks (boolean test)
+   * @param title  title for view
    */
-  @FXML
-  void displayMediumPriorityTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(task -> task.getPriority().equals(MEDIUM));
+  public void loadTaskListView(Function<Task, Boolean> filter,
+                               String title) {
+    loadTaskListView(filter, title, false);
   }
 
   /**
-   * Called when lowPriorityButton is clicked.
+   * Loads the Task List view.
    *
-   * @param event
-   */
-  @FXML
-  void displayLowPriorityTasks(MouseEvent event) throws IOException {
-    loadAllTasksView(task -> task.getPriority().equals(LOW));
-  }
-
-  /**
-   * Called when trashButton is clicked.
+   * <p>This includes displaying the view as center and initializing allTasks
+   * variable in allTasksController.
    *
-   * @param event
+   * @param filter           function for filtering tasks (boolean test)
+   * @param title            title for view
+   * @param dragAndDroppable true if list can be rearranged
    */
-  @FXML
-  void displayDoneTasks(MouseEvent event) throws IOException {
-    loadDoneTasksView();
+  public void loadTaskListView(Function<Task, Boolean> filter,
+                               String title, boolean dragAndDroppable) {
+    try {
+      taskListController.initData(this, filter, title, dragAndDroppable);
+      pane.setCenter(taskListParent);
+    } catch (IOException e) {
+      exceptionHandler(e, "Failed to load task list");
+    }
   }
 
-  /**
-   * Loads the view allTasks. This includes displaying the view as center and
-   * initializing allTasks variable in allTasksController.
-   *
-   * @throws IOException
-   */
-  public void loadAllTasksView(Function<Task, Boolean> filter) throws IOException {
-    FXMLLoader fxmlLoader = getFXMLLoader(ALL_TASKS_FXML_NAME);
-    Parent root = fxmlLoader.load();
-    AllTasksController allTasksController = fxmlLoader.getController();
-    allTasksController.initData(taskRegistry, filter, this);
-    pane.setCenter(root);
-  }
-
-  public void loadNewTaskView() throws IOException {
-    taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
-    Parent root = taskFormLoader.load();
-    TaskFormController taskFormController = taskFormLoader.getController();
-    taskFormController.initData(this, new Task());
-    pane.setCenter(root);
-  }
-
-  public void loadDisplayTaskView(Task task) throws IOException {
-    displayTaskLoader = getFXMLLoader(VIEW_TASK_FXML_NAME);
-    Parent root = displayTaskLoader.load();
-    ViewTaskController controller = displayTaskLoader.getController();
-    controller.initData(task, this);
-    pane.setCenter(root);
-  }
-
-  public void loadEditTaskView(Task task) throws IOException {
-    taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
-    Parent root = taskFormLoader.load();
-    TaskFormController controller = taskFormLoader.getController();
+  private void loadTaskDetailView(Task task, Parent parent,
+                                  TaskDetailController controller) {
     controller.initData(this, task);
-    pane.setCenter(root);
+    pane.setCenter(parent);
   }
 
-  public void loadDoneTasksView() throws IOException {
-    FXMLLoader fxmlLoader = getFXMLLoader(DONE_TASKS_FXML_NAME);
-    Parent root = fxmlLoader.load();
-    TrashController trashController = fxmlLoader.getController();
-    trashController.initData(taskRegistry, this);
-    pane.setCenter(root);
+  /**
+   * Load view for new task.
+   */
+  public void loadTaskFormView() {
+    loadTaskFormView(new Task());
   }
 
+  /**
+   * Load view for editing task.
+   *
+   * @param task task to edit
+   */
+  public void loadTaskFormView(Task task) {
+    loadTaskDetailView(task, taskFormParent, taskFormController);
+  }
+
+  /**
+   * Load view for displaying task.
+   *
+   * @param task task to display
+   */
+  public void loadDisplayTaskView(Task task) {
+    loadTaskDetailView(task, taskViewParent, taskViewController);
+  }
+
+  /**
+   * Log exceptions and show a dialog to the user.
+   *
+   * @param e       Throwable object
+   * @param message text to display to the user
+   */
   public void exceptionHandler(Throwable e, String message) {
     LOGGER.log(SEVERE, () -> ("""
         %s caught
         Message from caller: %s
-        Exception message: %s%s""").formatted(e.getClass().getName(), message
-        , e.getMessage(), e.toString()));
+        Exception message: %s%s""").formatted(e.getClass().getName(), message,
+        e.getMessage(), e.toString()));
     StackPane container = new StackPane();
     Node center = pane.getCenter();
     pane.setCenter(container);
@@ -170,6 +239,11 @@ public class MainController implements Initializable {
     dialog.setOnDialogClosed(event -> pane.setCenter(center));
   }
 
+  /**
+   * Get task registry.
+   *
+   * @return registry of all tasks
+   */
   public TaskRegistry getTaskRegistry() {
     return taskRegistry;
   }
