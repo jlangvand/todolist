@@ -24,5 +24,5 @@
  *     along with Todolist.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-moduleSearchIndex = [{"l": "todolist.app.main"}];
+tagSearchIndex = [];
 updateSearchResults();
