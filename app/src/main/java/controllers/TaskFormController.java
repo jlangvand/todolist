@@ -85,19 +85,18 @@ public class TaskFormController implements TaskDetailController, Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     cancelButton.setOnMouseReleased(this::back);
     saveButton.setOnMouseReleased(event -> {
-      if (nameField.validate()) {
-        try {
-          saveOrExcept();
-          getDialog(stackPane, mainPane, "Task saved")
-              .setOnDialogClosed(this::back);
-          LOGGER.log(INFO, () ->
-              "Task saved! Title: %s".formatted(task.getTitle()));
-        } catch (IllegalArgumentException e) {
-          getDialog(stackPane, mainPane, e.getMessage());
-        } catch (IOException e) {
-          mainController.exceptionHandler(e,
-              "Could not save file: %s".formatted(e.getMessage()));
-        }
+      nameField.validate();
+      try {
+        saveOrExcept();
+        getDialog(stackPane, mainPane, "Task saved")
+            .setOnDialogClosed(this::back);
+        LOGGER.log(INFO, () ->
+            "Task saved! Title: %s".formatted(task.getTitle()));
+      } catch (IllegalArgumentException e) {
+        getDialog(stackPane, mainPane, e.getMessage());
+      } catch (IOException e) {
+        mainController.exceptionHandler(e,
+            "Could not save file: %s".formatted(e.getMessage()));
       }
     });
     nameField.setValidators(new RequiredFieldValidator(
@@ -124,13 +123,18 @@ public class TaskFormController implements TaskDetailController, Initializable {
    * @throws IOException              if task save failed
    */
   private void saveOrExcept() throws IllegalArgumentException, IOException {
+    if (nameField.getText().isEmpty()) {
+      throw new IllegalArgumentException(
+          "Task must have a title");
+    }
     LocalDate deadlineDate = deadlineDateField.getValue();
     LocalTime deadlineTime = deadlineTimeField.getValue();
     final String deadlineError = "Deadline must be in the future";
-    if (deadlineDate.isBefore(LocalDate.now()))
+    if (deadlineDate.isBefore(LocalDate.now())
+        || (deadlineDate.equals(LocalDate.now())
+        && deadlineTime.isBefore(LocalTime.now()))) {
       throw new IllegalArgumentException(deadlineError);
-    if (deadlineDate.equals(LocalDate.now()) && deadlineTime.isBefore(LocalTime.now()))
-      throw new IllegalArgumentException(deadlineError);
+    }
     task.setTitle(nameField.getText());
     task.setDescription(descriptionField.getText());
     task.setCategory(categoryField.getText());
