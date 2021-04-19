@@ -123,17 +123,17 @@ public class MainController implements Initializable {
   }
 
   private void initButtons() {
-    allTasksButton.setOnAction(event -> loadTaskListView());
-    highPriorityButton.setOnAction(event ->
+    allTasksButton.setOnMouseReleased(event -> loadTaskListView());
+    highPriorityButton.setOnMouseReleased(event ->
         loadTaskListView(task -> task.getPriority() == HIGH,
             "High priority tasks"));
-    mediumPriorityButton.setOnAction(event ->
+    mediumPriorityButton.setOnMouseReleased(event ->
         loadTaskListView(task -> task.getPriority() == MEDIUM,
             "Medium priority tasks"));
-    lowPriorityButton.setOnAction(event ->
+    lowPriorityButton.setOnMouseReleased(event ->
         loadTaskListView(task -> task.getPriority() == LOW,
             "Low priority tasks"));
-    doneTasksButton.setOnAction(event -> {
+    doneTasksButton.setOnMouseReleased(event -> {
       doneTasksController.refreshData();
       pane.setCenter(doneTasksParent);
     });
