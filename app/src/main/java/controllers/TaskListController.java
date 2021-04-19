@@ -29,10 +29,8 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import models.Task;
 import models.TaskRegistry;
@@ -43,6 +41,9 @@ import java.util.ResourceBundle;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for displaying a filtered list of tasks.
+ */
 public class TaskListController implements ListController, Initializable {
 
   @FXML private JFXListView<Task> allTasksList;
@@ -53,6 +54,7 @@ public class TaskListController implements ListController, Initializable {
   private MainController mainController;
   private Function<Task, Boolean> filter;
 
+  /** {@inheritDoc} */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     allTasksList.setOnMouseReleased(event -> {
@@ -62,17 +64,6 @@ public class TaskListController implements ListController, Initializable {
       }
     });
     addTaskButton.setOnMouseReleased(event -> mainController.loadTaskFormView());
-  }
-
-  /**
-   * Method called when user clicks on add button.
-   *
-   * @param event ActionEvent from view
-   * @throws IOException if IO fails
-   */
-  @FXML
-  void displayNewTask(ActionEvent event) throws IOException {
-    mainController.loadTaskFormView(new Task());
   }
 
   /**
@@ -93,6 +84,7 @@ public class TaskListController implements ListController, Initializable {
     this.title.setText(title);
   }
 
+  /** {@inheritDoc} */
   @FXML
   @Override
   public void refreshData() {

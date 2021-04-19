@@ -189,8 +189,8 @@ public class MainController implements Initializable {
     }
   }
 
-  public void loadTaskDetailView(Task task, Parent parent,
-                                 TaskDetailController controller) {
+  private void loadTaskDetailView(Task task, Parent parent,
+                                  TaskDetailController controller) {
     controller.initData(this, task);
     pane.setCenter(parent);
   }
@@ -220,6 +220,12 @@ public class MainController implements Initializable {
     loadTaskDetailView(task, taskViewParent, taskViewController);
   }
 
+  /**
+   * Log exceptions and show a dialog to the user.
+   *
+   * @param e       Throwable object
+   * @param message text to display to the user
+   */
   public void exceptionHandler(Throwable e, String message) {
     LOGGER.log(SEVERE, () -> ("""
         %s caught
@@ -233,6 +239,11 @@ public class MainController implements Initializable {
     dialog.setOnDialogClosed(event -> pane.setCenter(center));
   }
 
+  /**
+   * Get task registry.
+   *
+   * @return registry of all tasks
+   */
   public TaskRegistry getTaskRegistry() {
     return taskRegistry;
   }

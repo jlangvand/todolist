@@ -47,6 +47,9 @@ import java.util.ResourceBundle;
 import static utilities.Utilities.deadlineRemainingTimeString;
 import static utilities.Utilities.getDialog;
 
+/**
+ * Controller for task details view.
+ */
 public class ViewTaskController implements TaskDetailController, Initializable {
 
   @FXML private ResourceBundle resources;
@@ -77,11 +80,7 @@ public class ViewTaskController implements TaskDetailController, Initializable {
     backButton.setOnAction(event -> mainController.loadTaskListView());
   }
 
-  /**
-   * Method called right after object is initialized
-   *
-   * @param task
-   */
+  /** {@inheritDoc} */
   public void initData(MainController mainController, Task task) {
     this.task = task;
     taskTitle.setText(task.getTitle());
@@ -98,6 +97,11 @@ public class ViewTaskController implements TaskDetailController, Initializable {
     this.mainController = mainController;
   }
 
+  /**
+   * Delete task.
+   *
+   * <p>Displays a dialog for the user to confirm before deleting.
+   */
   @FXML
   public void deleteAction() {
     BoxBlur blur = new BoxBlur(3, 3, 3);

@@ -30,11 +30,21 @@ package utilities;
  * Utility class holding project wide constants.
  */
 public class Constants {
+
+  /** Task list FXML name. */
   public static final String ALL_TASKS_FXML_NAME = "AllTasks";
+
+  /** Done tasks FXML name */
   public static final String DONE_TASKS_FXML_NAME = "DoneTasks";
+
+  /** Task form FXML name */
   public static final String TASK_FORM_FXML_NAME = "TaskForm";
+
+  /** View task FXML name */
   public static final String VIEW_TASK_FXML_NAME = "ViewTask";
-  public static final String DEFAULT_FILE_NAME = "default";
+
+  /** Default file name for persistent registry */
+  public static final String DEFAULT_FILE_NAME = "registry.todo";
 
   private Constants() {
     // Hiding the implicit constructor

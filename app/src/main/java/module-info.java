@@ -1,3 +1,6 @@
+/**
+ * Main application module.
+ */
 module todolist.app.main {
   requires javafx.fxml;
   requires javafx.graphics;

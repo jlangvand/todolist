@@ -48,23 +48,13 @@ public class Task implements Serializable {
   private String description;
   private Priority priority;
   private String category;
-  private LocalDate dateAdded;
+  private final LocalDate dateAdded;
   private LocalDate finishedDate;
   private LocalDate deadline;
   private LocalTime deadLineTime;
   private Status status;
 
-  /** Create task providing a title. */
-  public Task(String title) {
-    this();
-    this.setTitle(title);
-  }
-
-  /**
-   * Default constructor.
-   * <p>
-   * Creates a Task object with valid data.
-   */
+  /** Default constructor. */
   public Task() {
     this.dateAdded = LocalDate.now();
     this.title = "";
@@ -77,102 +67,160 @@ public class Task implements Serializable {
     this.deadLineTime = LocalTime.now();
   }
 
-  /** Get description. */
+  /**
+   * Get description.
+   *
+   * @return description
+   */
   public String getDescription() {
     return description;
   }
 
-  /** Set description. */
+  /**
+   * Set description.
+   *
+   * @param description description
+   */
   public void setDescription(String description) {
     this.description = description;
   }
 
-  /** Get priority. */
+  /**
+   * Get priority.
+   *
+   * @return priority
+   */
   public Priority getPriority() {
     return priority;
   }
 
-  /** Set priority. */
+  /**
+   * Set priority.
+   *
+   * @param priority description
+   */
   public void setPriority(Priority priority) {
     this.priority = priority;
   }
 
-  /** Get category. */
+  /**
+   * Get category.
+   *
+   * @return category
+   */
   public String getCategory() {
     return category;
   }
 
-  /** Set category. */
+  /**
+   * Set category.
+   *
+   * @param category description
+   */
   public void setCategory(String category) {
     this.category = category;
   }
 
-  /** Get start date */
+  /**
+   * Get date added.
+   *
+   * @return date added
+   */
   public LocalDate getDateAdded() {
     return dateAdded;
   }
 
-  /** Set started date. */
-  public void setDateAdded(LocalDate dateAdded) {
-    this.dateAdded = dateAdded;
-  }
-
-  /** Get finished date. */
+  /**
+   * Get date finished.
+   *
+   * @return date finished
+   */
   public LocalDate getFinishedDate() {
     return finishedDate;
   }
 
-  /** Get status. */
-  public Status getStatus() {
-    return status;
-  }
-
-  /** Set finished date. */
+  /**
+   * Set date finished.
+   *
+   * @param finishedDate date finished
+   */
   public void setFinishedDate(LocalDate finishedDate) {
     this.finishedDate = finishedDate;
   }
 
-  /** Get deadline. */
-  public LocalDate getDeadline() {
-    return deadline;
+  /**
+   * Get status.
+   *
+   * @return status
+   */
+  public Status getStatus() {
+    return status;
   }
 
-  /** Set deadline. */
-  public void setDeadline(LocalDate deadline) {
-    this.deadline = deadline;
-  }
-
-  /** Get title. */
-  public String getTitle() {
-    return title;
-  }
-
-  /** Set title. */
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  /** Get deadline time. */
-  public LocalTime getDeadLineTime() {
-    return deadLineTime;
-  }
-
-  /** Set deadline time. */
-  public void setDeadLineTime(LocalTime deadLineTime) {
-    this.deadLineTime = deadLineTime;
-  }
-
-  /** Sets the task's status. */
+  /**
+   * Set status.
+   *
+   * @param status status
+   */
   public void setStatus(Status status) {
     this.status = status;
   }
 
   /**
-   * Indicates whether some other object is "equal to" this one.
+   * Get deadline.
    *
-   * @param object Task instance to compare to
-   * @return true if equal, else false
+   * @return deadline
    */
+  public LocalDate getDeadline() {
+    return deadline;
+  }
+
+  /**
+   * Set deadline.
+   *
+   * @param deadline deadline
+   */
+  public void setDeadline(LocalDate deadline) {
+    this.deadline = deadline;
+  }
+
+  /**
+   * Get title.
+   *
+   * @return title
+   */
+  public String getTitle() {
+    return title;
+  }
+
+  /**
+   * Set title.
+   *
+   * @param title title
+   */
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  /**
+   * Get deadline time of day.
+   *
+   * @return deadline time of day
+   */
+  public LocalTime getDeadLineTime() {
+    return deadLineTime;
+  }
+
+  /**
+   * Set deadline time of day.
+   *
+   * @param deadLineTime deadline time of day
+   */
+  public void setDeadLineTime(LocalTime deadLineTime) {
+    this.deadLineTime = deadLineTime;
+  }
+
+  /** {@inheritDoc} */
   @Override
   public boolean equals(Object object) {
     boolean result;
@@ -193,14 +241,14 @@ public class Task implements Serializable {
     return result;
   }
 
-  /** Get hash of this instance. */
+  /** {@inheritDoc} */
   @Override
   public int hashCode() {
     return Objects.hash(getPriority(), getCategory(), getDateAdded(),
         getFinishedDate(), getDeadline(), getTitle());
   }
 
-  /** Returns a String representation of this instance. */
+  /** {@inheritDoc} */
   @Override
   public String toString() {
     return "Task{" +

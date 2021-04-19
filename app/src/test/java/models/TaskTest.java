@@ -50,7 +50,8 @@ class TaskTest {
 
   @BeforeEach
   public void initTask() {
-    task = new Task("Title");
+    task = new Task();
+    task.setTitle("Title");
     task.setDescription("Description may be a little longer than the title.");
     task.setFinishedDate(LocalDate.now().plusDays(2));
     task.setDeadline(LocalDate.now().plusDays(3));

@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PersistentRegistryTest {
   static final String FILENAME = "test.bin";
-  Task taskA = new Task("Task A");
+  Task taskA = new Task();
 
   @BeforeEach
   void setUp() {
@@ -66,7 +66,7 @@ class PersistentRegistryTest {
   void testSave() {
     try {
       PersistentRegistry pr = new PersistentRegistry(FILENAME);
-      Task taskB = new Task("Task B");
+      Task taskB = new Task();
       List<Task> tasks = pr.read();
       tasks.add(taskB);
       pr.save(tasks);
