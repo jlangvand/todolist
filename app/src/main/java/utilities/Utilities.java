@@ -78,8 +78,10 @@ public class Utilities {
     JFXDialog dialog = new JFXDialog(dialogContainer, dialogLayout,
         JFXDialog.DialogTransition.TOP);
 
-    okButton.setOnAction(event -> dialog.close());
-    dialog.setOnDialogClosed(event1 -> blurredRegion.setEffect(null));
+    okButton.setOnAction(event -> {
+      dialog.close();
+      blurredRegion.setEffect(null);
+    });
 
     Label label = new Label(dialogText);
     label.setStyle("-fx-text-fill: #2c3e50; -fx-font-size: 17pt");
@@ -113,6 +115,7 @@ public class Utilities {
 
   /**
    * Get path to a CSS resource
+   *
    * @param file name of stylesheet
    * @return absolute path
    */
