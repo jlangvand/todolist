@@ -46,14 +46,19 @@ public class Task implements Serializable {
 
   /** @serial date added */
   private final LocalDate dateAdded;
+
   /** @serial task title */
   private String title;
+
   /** @serial task description */
   private String description;
+
   /** @serial task priority */
   private Priority priority;
+
   /** @serial task category */
   private String category;
+
   /** @serial task date finished */
   private LocalDate finishedDate;
 
