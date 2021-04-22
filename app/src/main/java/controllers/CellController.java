@@ -222,6 +222,7 @@ public class CellController extends JFXListCell<Task> {
       success = true;
     }
 
+    listController.refreshData();
     event.setDropCompleted(success);
     event.consume();
   }
