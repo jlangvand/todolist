@@ -29,7 +29,6 @@ package todolist.app;
 import com.jfoenix.controls.JFXDecorator;
 import controllers.MainController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import utilities.Utilities;
@@ -63,7 +62,7 @@ public class App extends Application {
   @Override
   public void start(Stage stage) {
     stage.setTitle(TITLE);
-    FXMLLoader mainLoader = getFXMLLoader("Main");
+    var mainLoader = getFXMLLoader("Main");
     Thread.setDefaultUncaughtExceptionHandler((thread, throwable) ->
         ((MainController) mainLoader.getController())
             .exceptionHandler(throwable, """
@@ -71,10 +70,10 @@ public class App extends Application {
                                 
                 Error type: %s""".formatted(throwable.getMessage())));
     try {
-      JFXDecorator decorator = new JFXDecorator(stage, mainLoader.load());
+      var decorator = new JFXDecorator(stage, mainLoader.load());
       decorator.setCustomMaximize(true);
       decorator.setTitle(TITLE);
-      Scene scene =
+      var scene =
           new Scene(decorator, DEFAULT_STAGE_WIDTH, DEFAULT_STAGE_HEIGHT);
       scene.getStylesheets().add(Utilities.getCSSPath("main.css"));
       stage.setScene(scene);

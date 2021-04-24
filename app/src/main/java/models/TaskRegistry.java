@@ -112,9 +112,9 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
    * @return int array of indexes
    */
   public int[] getActiveTasksIndex() {
-    int[] indexes = new int[getActiveTasks().size()];
-    int c = 0;
-    for (int i = 0; i < size(); i++) {
+    var indexes = new int[getActiveTasks().size()];
+    var c = 0;
+    for (var i = 0; i < size(); i++) {
       if (get(i).getStatus() == Status.ACTIVE) {
         indexes[c] = i;
         c++;
@@ -165,8 +165,8 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
    * @throws IOException throws exception if file IO fails
    */
   public void swapTasksByIndex(int a, int b) throws IOException {
-    Task taskA = get(a);
-    Task taskB = get(b);
+    var taskA = get(a);
+    var taskB = get(b);
     set(a, taskB);
     set(b, taskA);
     save();
@@ -183,7 +183,7 @@ public class TaskRegistry extends ArrayList<Task> implements Serializable {
     if (this == object) return true;
     if (object == null || getClass() != object.getClass()) return false;
     if (!super.equals(object)) return false;
-    TaskRegistry registry = (TaskRegistry) object;
+    var registry = (TaskRegistry) object;
     return fileHandle.equals(registry.fileHandle);
   }
 

@@ -42,6 +42,7 @@ import models.Task;
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static utilities.Utilities.deadlineRemainingTimeString;
@@ -104,23 +105,23 @@ public class ViewTaskController implements TaskDetailController, Initializable {
    */
   @FXML
   public void deleteAction() {
-    BoxBlur blur = new BoxBlur(3, 3, 3);
-    JFXDialogLayout dialogLayout = new JFXDialogLayout();
-    JFXButton delete = new JFXButton("Delete");
-    JFXButton cancel = new JFXButton("Cancel");
-    String styleSheetPath = ViewTaskController.class.
-        getResource("/css/dialogJFX.css").toString();
+    var blur = new BoxBlur(3, 3, 3);
+    var dialogLayout = new JFXDialogLayout();
+    var delete = new JFXButton("Delete");
+    var cancel = new JFXButton("Cancel");
+    var styleSheetPath = Objects.requireNonNull(ViewTaskController.class
+        .getResource("/css/dialogJFX.css")).toString();
     delete.getStylesheets().add(styleSheetPath);
     cancel.getStylesheets().add(styleSheetPath);
 
-    JFXDialog dialog = new JFXDialog(stackPane, dialogLayout,
+    var dialog = new JFXDialog(stackPane, dialogLayout,
         JFXDialog.DialogTransition.TOP);
 
     delete.setOnAction(event1 -> {
       try {
         mainController.getTaskRegistry().removeTask(task);
 
-        JFXDialog deletedDialog = getDialog(stackPane, mainPane,
+        var deletedDialog = getDialog(stackPane, mainPane,
             "The task has been deleted successfully");
         deletedDialog.setOnDialogClosed(
             event2 -> {
@@ -135,7 +136,7 @@ public class ViewTaskController implements TaskDetailController, Initializable {
     cancel.setOnAction(event1 -> dialog.close());
     dialog.setOnDialogClosed(event1 -> mainPane.setEffect(null));
 
-    Label label = new Label("Delete this task?");
+    var label = new Label("Delete this task?");
     label.setStyle("-fx-text-fill: #2c3e50; -fx-font-size: 17pt");
     dialogLayout.setBody(label);
     dialogLayout.setActions(delete, cancel);

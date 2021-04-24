@@ -36,7 +36,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
@@ -164,8 +163,8 @@ public class CellController extends JFXListCell<Task> {
     ObservableList<Task> items = getListView().getItems();
     // No reordering in trash list
     if (getItem().getStatus() == ACTIVE) {
-      Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
-      ClipboardContent content = new ClipboardContent();
+      var dragboard = startDragAndDrop(TransferMode.MOVE);
+      var content = new ClipboardContent();
       content.putString(String.valueOf(items.indexOf(getItem())));
       dragboard.setContent(content);
       dragboard.setDragView(new Image(getImagePath("Task_icon" +
@@ -195,23 +194,22 @@ public class CellController extends JFXListCell<Task> {
   private void onDragDropped(DragEvent event) {
     if (getItem() == null) return;
 
-    Dragboard db = event.getDragboard();
-
-    boolean success = false;
+    var db = event.getDragboard();
+    var success = false;
 
     if (db.hasString()) {
       ObservableList<Task> items = getListView().getItems();
-      int draggedIdx = Integer.parseInt(db.getString());
-      int thisIdx = items.indexOf(getItem());
+      var draggedIdx = Integer.parseInt(db.getString());
+      var thisIdx = items.indexOf(getItem());
 
       try {
         if (thisIdx > draggedIdx) {
-          for (int i = draggedIdx; i < thisIdx; i++) {
+          for (var i = draggedIdx; i < thisIdx; i++) {
             tasks.swapTasksByIndex(tasks.getActiveTasksIndex()[i],
                 tasks.getActiveTasksIndex()[i + 1]);
           }
         } else if (draggedIdx > thisIdx) {
-          for (int i = draggedIdx; i > thisIdx; i--) {
+          for (var i = draggedIdx; i > thisIdx; i--) {
             tasks.swapTasksByIndex(tasks.getActiveTasksIndex()[i],
                 tasks.getActiveTasksIndex()[i - 1]);
           }

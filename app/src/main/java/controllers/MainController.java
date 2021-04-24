@@ -29,7 +29,6 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -104,16 +103,16 @@ public class MainController implements Initializable {
    */
   private void initViews() {
     try {
-      FXMLLoader taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
+      var taskFormLoader = getFXMLLoader(TASK_FORM_FXML_NAME);
       taskFormParent = taskFormLoader.load();
       taskFormController = taskFormLoader.getController();
-      FXMLLoader displayTaskLoader = getFXMLLoader(VIEW_TASK_FXML_NAME);
+      var displayTaskLoader = getFXMLLoader(VIEW_TASK_FXML_NAME);
       taskViewParent = displayTaskLoader.load();
       taskViewController = displayTaskLoader.getController();
-      FXMLLoader taskListLoader = getFXMLLoader(ALL_TASKS_FXML_NAME);
+      var taskListLoader = getFXMLLoader(ALL_TASKS_FXML_NAME);
       taskListParent = taskListLoader.load();
       taskListController = taskListLoader.getController();
-      FXMLLoader doneTasksLoader = getFXMLLoader(DONE_TASKS_FXML_NAME);
+      var doneTasksLoader = getFXMLLoader(DONE_TASKS_FXML_NAME);
       doneTasksParent = doneTasksLoader.load();
       doneTasksController = doneTasksLoader.getController();
       doneTasksController.initData(this);
@@ -232,7 +231,7 @@ public class MainController implements Initializable {
         Message from caller: %s
         Exception message: %s%s""").formatted(e.getClass().getName(), message,
         e.getMessage(), e.toString()));
-    StackPane container = new StackPane();
+    var container = new StackPane();
     Node center = pane.getCenter();
     pane.setCenter(container);
     JFXDialog dialog = getDialog(container, new Pane(), message);

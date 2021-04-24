@@ -129,7 +129,7 @@ public class TaskFormController implements TaskDetailController, Initializable {
     }
     LocalDate deadlineDate = deadlineDateField.getValue();
     LocalTime deadlineTime = deadlineTimeField.getValue();
-    final String deadlineError = "Deadline must be in the future";
+    final var deadlineError = "Deadline must be in the future";
     if (deadlineDate.isBefore(LocalDate.now())
         || (deadlineDate.equals(LocalDate.now())
         && deadlineTime.isBefore(LocalTime.now()))) {

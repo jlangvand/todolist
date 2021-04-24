@@ -103,8 +103,8 @@ public class PersistentRegistry {
    */
   @SuppressWarnings("unchecked")
   public List<Task> read() throws IOException {
-    try (FileInputStream fis = new FileInputStream(file.getAbsolutePath());
-         ObjectInputStream ois = new ObjectInputStream(fis)) {
+    try (var fis = new FileInputStream(file.getAbsolutePath());
+         var ois = new ObjectInputStream(fis)) {
       return (ArrayList<Task>) ois.readObject();
     } catch (ClassNotFoundException | InvalidClassException
         | ClassCastException e) {
@@ -131,8 +131,8 @@ public class PersistentRegistry {
    *                     fails
    */
   public void save(List<Task> tasks) throws IOException {
-    try (FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-         ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+    try (var fos = new FileOutputStream(file.getAbsolutePath());
+         var oos = new ObjectOutputStream(fos)) {
       oos.writeObject(tasks);
       LOGGER.log(INFO, () -> "Saved to file");
     }
