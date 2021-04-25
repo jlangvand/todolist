@@ -72,13 +72,13 @@ public class Utilities {
    */
   public static JFXDialog getDialog(StackPane dialogContainer,
                                     Region blurredRegion, String dialogText) {
-    BoxBlur blur = new BoxBlur(3, 3, 3);
-    JFXDialogLayout dialogLayout = new JFXDialogLayout();
-    JFXButton okButton = new JFXButton("Ok!");
+    var blur = new BoxBlur(3, 3, 3);
+    var dialogLayout = new JFXDialogLayout();
+    var okButton = new JFXButton("Ok!");
 
     okButton.getStylesheets().add(getCSSPath("dialogJFX.css"));
 
-    JFXDialog dialog = new JFXDialog(dialogContainer, dialogLayout,
+    var dialog = new JFXDialog(dialogContainer, dialogLayout,
         JFXDialog.DialogTransition.TOP);
 
     okButton.setOnAction(event -> {
@@ -86,7 +86,7 @@ public class Utilities {
       blurredRegion.setEffect(null);
     });
 
-    Label label = new Label(dialogText);
+    var label = new Label(dialogText);
     label.setStyle("-fx-text-fill: #2c3e50; -fx-font-size: 17pt");
     dialogLayout.setBody(label);
     dialogLayout.setActions(okButton);
@@ -135,14 +135,14 @@ public class Utilities {
    */
   public static String deadlineRemainingTimeString(LocalDate date,
                                                    LocalTime time) {
-    final int HIDE_HOURS_IF_DAYS_MORE_THAN = 1;
-    final int HIDE_MINUTES_IF_HOURS_MORE_THAN = 10;
+    final var HIDE_HOURS_IF_DAYS_MORE_THAN = 1;
+    final var HIDE_MINUTES_IF_HOURS_MORE_THAN = 10;
     if (LocalDateTime.of(date, time).isBefore(LocalDateTime.now()))
       return "Deadline had passed";
     int days = (int) ChronoUnit.DAYS.between(LocalDate.now(), date);
     int hours = (int) ChronoUnit.HOURS.between(LocalTime.now(), time) % 24;
     int minutes = (int) ChronoUnit.MINUTES.between(LocalTime.now(), time) % 60;
-    StringBuilder sb = new StringBuilder();
+    var sb = new StringBuilder();
     if (days > HIDE_HOURS_IF_DAYS_MORE_THAN) {
       sb.append(plural("day", days));
     } else if (days > 0) {
@@ -192,7 +192,7 @@ public class Utilities {
   public static boolean dateIsInRange(LocalDate date, LocalDate from,
                                       LocalDate to) {
     if (to.isBefore(from)) {
-      LocalDate temp = to;
+      var temp = to;
       to = from;
       from = temp;
     }
