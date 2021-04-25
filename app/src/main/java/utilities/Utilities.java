@@ -139,7 +139,7 @@ public class Utilities {
     final var HIDE_HOURS_IF_DAYS_MORE_THAN = 1;
     final var HIDE_MINUTES_IF_HOURS_MORE_THAN = 10;
     if (LocalDateTime.of(date, time).isBefore(LocalDateTime.now()))
-      return "Deadline had passed";
+      return "Deadline has passed";
     int days = (int) ChronoUnit.DAYS.between(LocalDate.now(), date);
     int hours = (int) ChronoUnit.HOURS.between(LocalTime.now(), time) % 24;
     int minutes = (int) ChronoUnit.MINUTES.between(LocalTime.now(), time) % 60;
@@ -147,8 +147,10 @@ public class Utilities {
     if (days > HIDE_HOURS_IF_DAYS_MORE_THAN) {
       sb.append(plural("day", days));
     } else if (days > 0) {
-      sb.append("%s and %s".formatted(plural("day", days),
-          plural("hour", hours)));
+      if (hours > 0)
+        sb.append("%s and %s".formatted(plural("day", days),
+            plural("hour", hours)));
+      else sb.append("%s".formatted(plural("hour", hours + 24)));
     } else if (hours < HIDE_MINUTES_IF_HOURS_MORE_THAN) {
       if (hours < 1) {
         sb.append(plural("minute", minutes));
