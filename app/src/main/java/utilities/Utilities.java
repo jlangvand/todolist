@@ -39,6 +39,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 /**
  * Utility class providing project wide convenience methods.
@@ -103,7 +104,7 @@ public class Utilities {
    * @return absolute path
    */
   private static String getResourcePath(String path) {
-    return Utilities.class.getResource(path).toString();
+    return Objects.requireNonNull(Utilities.class.getResource(path)).toString();
   }
 
   /**
